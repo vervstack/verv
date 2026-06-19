@@ -130,6 +130,7 @@ func readIgnoredFiles(projectPath string) ([]string, error) {
 	out := make([]string, 0, len(ignoredFiles))
 
 	for _, igFile := range ignoredFiles {
+		igFile = strings.TrimRight(igFile, "\r\n ")
 		if igFile != "" && igFile[0] != '#' {
 			out = append(out, igFile)
 		}

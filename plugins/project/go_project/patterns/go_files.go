@@ -41,6 +41,7 @@ const (
 	ConfigDataSourcesFileName = "data_sources.go"
 	ConfigEnvironmentFileName = "environment.go"
 	ConfigServersFileName     = "servers.go"
+	ConfigEnvExampleFile      = ".env.example"
 
 	GoMod = "go.mod"
 

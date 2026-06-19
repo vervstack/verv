@@ -3,8 +3,7 @@ package folder
 import (
 	"os"
 	"path"
-
-	"github.com/Red-Sock/rscli/internal/utils/slices"
+	"strings"
 )
 
 func Load(root string, ops ...opt) (*Folder, error) {
@@ -35,8 +34,30 @@ func Load(root string, ops ...opt) (*Folder, error) {
 	return f, nil
 }
 
+func matchesAnyPattern(patterns []string, name, parent string) bool {
+	relPath := path.Join(parent, name)
+
+	for _, pattern := range patterns {
+		pattern = strings.TrimRight(pattern, "/\r ")
+		if pattern == "" {
+			continue
+		}
+
+		if strings.Contains(pattern, "/") {
+			if matched, _ := path.Match(pattern, relPath); matched {
+				return true
+			}
+		} else {
+			if matched, _ := path.Match(pattern, name); matched {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func load(root, parent string, o opts) (*Folder, error) {
-	if slices.Contains(o.ignoredPaths, path.Base(root)) {
+	if matchesAnyPattern(o.ignoredPaths, path.Base(root), parent) {
 		return nil, nil
 	}
 

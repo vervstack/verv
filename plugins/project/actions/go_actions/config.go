@@ -4,6 +4,7 @@ import (
 	"path"
 	"sort"
 
+	"go.redsock.ru/evon"
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/environment"
@@ -88,6 +89,11 @@ func (a PrepareConfigFolder) Do(p project.IProject) (err error) {
 	err = a.generateConfigYamlFile(p)
 	if err != nil {
 		return rerrors.Wrap(err, "error generating config yaml-files")
+	}
+
+	err = a.generateEnvExampleFile(p)
+	if err != nil {
+		return rerrors.Wrap(err, "error generating .env.example file")
 	}
 
 	return nil
@@ -177,4 +183,42 @@ func sortEnv(cfg matreshka.AppConfig) {
 	sort.Slice(cfg.Environment, func(i, j int) bool {
 		return cfg.Environment[i].Name < cfg.Environment[j].Name
 	})
+}
+
+func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
+	cfg := p.GetConfig()
+
+	var allNodes []*evon.Node
+
+	if len(cfg.Environment) > 0 {
+		nodes, err := cfg.Environment.MarshalEnv("ENVIRONMENT")
+		if err != nil {
+			return rerrors.Wrap(err, "error marshalling environment to env")
+		}
+		allNodes = append(allNodes, nodes...)
+	}
+
+	if len(cfg.DataSources) > 0 {
+		nodes, err := cfg.DataSources.MarshalEnv("DATA_SOURCES")
+		if err != nil {
+			return rerrors.Wrap(err, "error marshalling data sources to env")
+		}
+		allNodes = append(allNodes, nodes...)
+	}
+
+	if len(cfg.Servers) > 0 {
+		nodes, err := cfg.Servers.MarshalEnv("SERVERS")
+		if err != nil {
+			return rerrors.Wrap(err, "error marshalling servers to env")
+		}
+		allNodes = append(allNodes, nodes...)
+	}
+
+	configFolder := p.GetFolder().GetByPath(patterns.ConfigsFolder)
+	configFolder.Add(&folder.Folder{
+		Name:    patterns.ConfigEnvExampleFile,
+		Content: evon.Marshal(allNodes),
+	})
+
+	return nil
 }
