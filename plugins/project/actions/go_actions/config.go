@@ -1,14 +1,16 @@
 package go_actions
 
 import (
+	"bytes"
+	"fmt"
 	"path"
 	"sort"
+	"strings"
 
 	"go.redsock.ru/evon"
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/environment"
-	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
 	"github.com/Red-Sock/rscli/internal/io/folder"
 	"github.com/Red-Sock/rscli/plugins/project"
@@ -109,19 +111,6 @@ func (a PrepareConfigFolder) generateConfigYamlFile(p project.IProject) (err err
 
 	sortEnv(newConfig.AppConfig)
 
-	devCfgFile := configFolder.GetByPath(patterns.ConfigDevYamlFile)
-	if devCfgFile == nil {
-		devCfgFile = &folder.Folder{
-			Name: patterns.ConfigDevYamlFile,
-		}
-		configFolder.Add(devCfgFile)
-		devCfg := makeDevConfig(newConfig.AppConfig)
-		devCfgFile.Content, err = devCfg.Marshal()
-		if err != nil {
-			return rerrors.Wrap(err, "error marshalling dev config")
-		}
-	}
-
 	for _, cfgName := range []string{
 		patterns.ConfigTemplateYaml,
 		patterns.ConfigMasterYamlFile,
@@ -134,21 +123,6 @@ func (a PrepareConfigFolder) generateConfigYamlFile(p project.IProject) (err err
 	}
 
 	return nil
-}
-
-func makeDevConfig(cfg matreshka.AppConfig) matreshka.AppConfig {
-	marshalled, _ := cfg.Marshal()
-	cfg = matreshka.NewEmptyConfig()
-	_ = cfg.Unmarshal(marshalled)
-
-	for _, ds := range cfg.DataSources {
-		switch v := ds.(type) {
-		case *resources.Postgres:
-			v.SslMode = "disable"
-		}
-	}
-
-	return cfg
 }
 
 func appendToConfig(newConfig matreshka.AppConfig, configFolder *folder.Folder, path string) (err error) {
@@ -217,8 +191,38 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 	configFolder := p.GetFolder().GetByPath(patterns.ConfigsFolder)
 	configFolder.Add(&folder.Folder{
 		Name:    patterns.ConfigEnvExampleFile,
-		Content: evon.Marshal(allNodes),
+		Content: marshalEnvExample(allNodes),
 	})
 
 	return nil
+}
+
+// marshalEnvExample serializes evon nodes to .env format.
+// Nodes with a Value are printed directly (env vars and plain struct fields);
+// nodes without a Value are structural containers whose InnerNodes are visited.
+// Dashes are replaced with underscores so names match the form apps read.
+// Nodes whose names contain characters outside [A-Z0-9_] (e.g. route path
+// entries like "/{GRPC}") are skipped — they cannot be valid env var names.
+func marshalEnvExample(nodes []*evon.Node) []byte {
+	b := &bytes.Buffer{}
+	for _, node := range nodes {
+		if node.Value != nil {
+			name := strings.ReplaceAll(node.Name, "-", "_")
+			if isEnvVarName(name) {
+				fmt.Fprintf(b, "%s=%v\n", name, node.Value)
+			}
+		} else {
+			b.Write(marshalEnvExample(node.InnerNodes))
+		}
+	}
+	return b.Bytes()
+}
+
+func isEnvVarName(s string) bool {
+	for _, r := range s {
+		if !((r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') || r == '_') {
+			return false
+		}
+	}
+	return true
 }
