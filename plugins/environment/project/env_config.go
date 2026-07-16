@@ -52,7 +52,10 @@ func (e *envConfig) fetch(cfg *config.RsCliConfig, pathToProjectEnv, pathToProje
 
 	projConfig, err := project.LoadProjectConfig(pathToProject, cfg)
 	if err != nil {
-		return nil
+		if rerrors.Is(err, os.ErrNotExist) {
+			return nil
+		}
+		return rerrors.Wrap(err, "error loading project config")
 	}
 
 	matreshka.MergeConfigs(projConfig.AppConfig, e.AppConfig)

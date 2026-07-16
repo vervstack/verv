@@ -15,6 +15,7 @@ import (
 	"go.vervstack.ru/verv/internal/utils/renamer"
 	"go.vervstack.ru/verv/plugins/project"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/server_generators/impl_gen"
@@ -86,6 +87,16 @@ func (a PrepareClients) Do(p project.IProject) error {
 				errs = append(errs, err)
 			}
 		}
+	}
+
+	grpcClient := link_service.GrpcClient{
+		Modules: grpcClients,
+		Cfg:     a.C,
+		Io:      a.IO,
+	}
+	err := grpcClient.AppendToProject(p)
+	if err != nil {
+		errs = append(errs, err)
 	}
 
 	if len(errs) != 0 {

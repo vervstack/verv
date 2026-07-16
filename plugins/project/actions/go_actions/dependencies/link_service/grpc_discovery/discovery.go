@@ -36,7 +36,7 @@ func GetPathToGlobalModule(packageName string) (pathToModule string, err error) 
 	potentialDirs = potentialDirs[moveIdx:]
 
 	sort.Slice(potentialDirs, func(i, j int) bool {
-		return potentialDirs[i].Name() < potentialDirs[i].Name()
+		return potentialDirs[i].Name() < potentialDirs[j].Name()
 	})
 
 	packagePath = path.Join(root, potentialDirs[0].Name())
