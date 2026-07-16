@@ -7,9 +7,9 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/compose/env"
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	projPatterns "github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/internal/compose/env"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	projPatterns "go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 type envVariables struct {

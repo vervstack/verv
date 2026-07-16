@@ -6,10 +6,10 @@ import (
 	mm_atomic "sync/atomic"
 	mm_time "time"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	mm_project "github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/config"
 	"github.com/gojuno/minimock/v3"
+	"go.vervstack.ru/verv/internal/io/folder"
+	mm_project "go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/config"
 )
 
 // IProjectMock implements project.IProject

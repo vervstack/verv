@@ -3,11 +3,11 @@ package project
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/Red-Sock/rscli/cmd/project/add"
-	"github.com/Red-Sock/rscli/cmd/project/init_new"
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/processor"
+	"go.vervstack.ru/verv/cmd/project/add"
+	"go.vervstack.ru/verv/cmd/project/init_new"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/processor"
 )
 
 func NewCmd() *cobra.Command {

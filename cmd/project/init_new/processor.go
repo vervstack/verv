@@ -6,9 +6,9 @@ import (
 	"github.com/spf13/cobra"
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io/colors"
-	"github.com/Red-Sock/rscli/internal/processor"
-	"github.com/Red-Sock/rscli/plugins/project"
+	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/internal/processor"
+	"go.vervstack.ru/verv/plugins/project"
 )
 
 const newProjectInitMessage = `New project with name %s initialized at %s`

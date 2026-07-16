@@ -5,10 +5,10 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"github.com/Red-Sock/rscli/internal/rw"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators"
+	"go.vervstack.ru/verv/internal/rw"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
 )
 
 func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppContent, []byte, error) {

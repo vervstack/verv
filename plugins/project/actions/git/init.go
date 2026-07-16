@@ -3,7 +3,7 @@ package git
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
+	"go.vervstack.ru/verv/internal/cmd"
 )
 
 func Init(workingDir string) error {

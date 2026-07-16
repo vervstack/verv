@@ -11,8 +11,8 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
-	"github.com/Red-Sock/rscli/plugins/tools/shared/ghversion"
+	"go.vervstack.ru/verv/internal/cmd"
+	"go.vervstack.ru/verv/plugins/tools/shared/ghversion"
 )
 
 const (

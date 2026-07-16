@@ -3,8 +3,8 @@ package environment
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
 )
 
 func newEnvInstallCmd(io io.IO, cfg *config.RsCliConfig) *cobra.Command {

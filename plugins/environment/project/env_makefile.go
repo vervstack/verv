@@ -8,9 +8,9 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/makefile"
-	"github.com/Red-Sock/rscli/internal/utils/renamer"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/makefile"
+	"go.vervstack.ru/verv/internal/utils/renamer"
 )
 
 type envMakefile struct {

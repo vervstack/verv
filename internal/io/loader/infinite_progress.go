@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Red-Sock/rscli/internal/io/colors"
+	"go.vervstack.ru/verv/internal/io/colors"
 )
 
 type InfiniteLoader struct {

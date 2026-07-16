@@ -10,8 +10,8 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/environment"
 
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/tests/project_mock"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/tests/project_mock"
 )
 
 func Test_PrepareConfig(t *testing.T) {

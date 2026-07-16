@@ -8,9 +8,9 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/io/folder"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/io/folder"
 )
 
 func (e *GlobalEnvironment) Init() error {

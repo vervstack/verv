@@ -6,7 +6,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/compose/env"
+	"go.vervstack.ru/verv/internal/compose/env"
 )
 
 var (

@@ -5,14 +5,14 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/compose"
-	"github.com/Red-Sock/rscli/internal/compose/env"
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/makefile"
-	"github.com/Red-Sock/rscli/internal/ports"
-	"github.com/Red-Sock/rscli/internal/utils/renamer"
+	"go.vervstack.ru/verv/internal/compose"
+	"go.vervstack.ru/verv/internal/compose/env"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/makefile"
+	"go.vervstack.ru/verv/internal/ports"
+	"go.vervstack.ru/verv/internal/utils/renamer"
 )
 
 var ErrNoConfig = rerrors.New("no config found")

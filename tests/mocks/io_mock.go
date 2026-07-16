@@ -7,8 +7,8 @@ import (
 	mm_atomic "sync/atomic"
 	mm_time "time"
 
-	"github.com/Red-Sock/rscli/internal/io/colors"
 	"github.com/gojuno/minimock/v3"
+	"go.vervstack.ru/verv/internal/io/colors"
 )
 
 // IOMock implements io.IO

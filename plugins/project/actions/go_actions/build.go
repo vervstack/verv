@@ -1,8 +1,8 @@
 package go_actions
 
 import (
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/renamer"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 )
 
 type BuildProjectAction struct{}

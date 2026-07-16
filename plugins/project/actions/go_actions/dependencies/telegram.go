@@ -6,9 +6,9 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/renamer"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 type Telegram struct {

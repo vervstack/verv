@@ -6,10 +6,10 @@ import (
 	"github.com/spf13/cobra"
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/plugins/environment"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/plugins/environment"
 )
 
 func newTidyEnvCmd(io io.IO, cfg *config.RsCliConfig) *cobra.Command {

@@ -6,16 +6,16 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/internal/processor"
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/actions"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/dependencies"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/tests"
-	"github.com/Red-Sock/rscli/tests/mocks"
-	"github.com/Red-Sock/rscli/tests/project_mock"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/internal/processor"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/tests"
+	"go.vervstack.ru/verv/tests/mocks"
+	"go.vervstack.ru/verv/tests/project_mock"
 )
 
 type testCase struct {

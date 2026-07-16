@@ -3,7 +3,7 @@ package grpc_discovery
 import (
 	"strings"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
+	"go.vervstack.ru/verv/internal/cmd"
 )
 
 func FetchPackage(packageName string) (ok bool) {

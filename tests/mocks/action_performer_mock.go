@@ -7,8 +7,8 @@ import (
 	mm_atomic "sync/atomic"
 	mm_time "time"
 
-	"github.com/Red-Sock/rscli/plugins/project"
 	"github.com/gojuno/minimock/v3"
+	"go.vervstack.ru/verv/plugins/project"
 )
 
 // ActionPerformerMock implements actions.ActionPerformer

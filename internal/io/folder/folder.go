@@ -5,7 +5,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/Red-Sock/rscli/internal/io"
+	"go.vervstack.ru/verv/internal/io"
 )
 
 type Folder struct {

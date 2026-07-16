@@ -1,8 +1,8 @@
 package go_actions
 
 import (
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project/config"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project/config"
 )
 
 type Action interface {

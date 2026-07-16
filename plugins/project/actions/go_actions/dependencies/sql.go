@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"path"
 
-	rscliconfig "github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/renamer"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
+	rscliconfig "go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 type sqlConn struct {

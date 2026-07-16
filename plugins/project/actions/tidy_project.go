@@ -1,10 +1,10 @@
 package actions
 
 import (
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/actions/git"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions"
-	"github.com/Red-Sock/rscli/plugins/project/actions/pipelines"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions/git"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions"
+	"go.vervstack.ru/verv/plugins/project/actions/pipelines"
 )
 
 func GetTidyActionsForProject(pt project.Type) []Action {

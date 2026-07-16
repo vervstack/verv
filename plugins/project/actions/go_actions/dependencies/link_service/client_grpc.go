@@ -15,15 +15,15 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
-	rscliconfig "github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators/config_generators"
+	"go.vervstack.ru/verv/internal/cmd"
+	rscliconfig "go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/config_generators"
 )
 
 var (

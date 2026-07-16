@@ -6,8 +6,8 @@ import (
 
 	"github.com/morikuni/aec"
 
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/io/colors"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/io/colors"
 )
 
 type progressStatus int

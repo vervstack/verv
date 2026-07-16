@@ -5,10 +5,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	rscliconfig "github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/tests/mocks"
+	rscliconfig "go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/tests/mocks"
 )
 
 func TestGenerateImpl(t *testing.T) {

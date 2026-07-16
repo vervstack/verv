@@ -3,10 +3,10 @@ package config_generators
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/internal/rw"
-	"github.com/Red-Sock/rscli/plugins/project/config"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/internal/rw"
+	"go.vervstack.ru/verv/plugins/project/config"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 type loadConfigFileGenArgs struct {

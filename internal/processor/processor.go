@@ -7,9 +7,9 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.redsock.ru/toolbox"
 
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/plugins/project"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/plugins/project"
 )
 
 const (

@@ -12,7 +12,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	rscliconfig "github.com/Red-Sock/rscli/internal/config"
+	rscliconfig "go.vervstack.ru/verv/internal/config"
 )
 
 type GrpcDiscovery struct {

@@ -3,10 +3,10 @@ package app_struct_generators
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/rw"
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators"
+	"go.vervstack.ru/verv/internal/rw"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
 )
 
 type AppFileGenArgs struct {

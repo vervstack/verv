@@ -12,10 +12,10 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 	"gopkg.in/yaml.v3"
 
-	"github.com/Red-Sock/rscli/internal/compose/env"
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/utils/copier"
-	"github.com/Red-Sock/rscli/internal/utils/nums"
+	"go.vervstack.ru/verv/internal/compose/env"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/utils/copier"
+	"go.vervstack.ru/verv/internal/utils/nums"
 )
 
 const (

@@ -5,8 +5,8 @@ package actions
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/plugins/project"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/plugins/project"
 )
 
 type Action interface {

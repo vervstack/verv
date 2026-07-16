@@ -3,7 +3,7 @@ package config_generators
 import (
 	"reflect"
 
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
 )
 
 type generalGenArgs struct {

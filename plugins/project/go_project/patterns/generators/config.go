@@ -3,7 +3,7 @@ package generators
 import (
 	"strings"
 
-	"github.com/Red-Sock/rscli/internal/utils/cases"
+	"go.vervstack.ru/verv/internal/utils/cases"
 )
 
 type KeyValue struct {

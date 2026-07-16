@@ -8,9 +8,9 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 
-	rscliconfig "github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project/config"
+	rscliconfig "go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project/config"
 )
 
 const (

@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/cobra"
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/processor"
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/actions"
-	"github.com/Red-Sock/rscli/plugins/project/actions/git"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/dependencies/link_service"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/processor"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions"
+	"go.vervstack.ru/verv/plugins/project/actions/git"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service"
 )
 
 type projectLink struct {

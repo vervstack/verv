@@ -8,8 +8,8 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"github.com/Red-Sock/rscli/plugins/tools/migrations"
-	"github.com/Red-Sock/rscli/plugins/tools/migrations/goose"
+	"go.vervstack.ru/verv/plugins/tools/migrations"
+	"go.vervstack.ru/verv/plugins/tools/migrations/goose"
 )
 
 var (

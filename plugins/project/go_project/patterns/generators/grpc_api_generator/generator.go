@@ -3,9 +3,9 @@ package grpc_api_generator
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/internal/rw"
-	"github.com/Red-Sock/rscli/plugins/project"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/internal/rw"
+	"go.vervstack.ru/verv/plugins/project"
 )
 
 type serviceProtoApiArgs struct {

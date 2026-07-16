@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/Red-Sock/rscli/internal/utils/slices"
+	"go.vervstack.ru/verv/internal/utils/slices"
 )
 
 func SnakeToPascal(v string) string {

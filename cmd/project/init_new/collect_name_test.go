@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io/colors"
-	"github.com/Red-Sock/rscli/plugins/project/validators"
-	"github.com/Red-Sock/rscli/tests/mocks"
+	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/plugins/project/validators"
+	"go.vervstack.ru/verv/tests/mocks"
 )
 
 const (

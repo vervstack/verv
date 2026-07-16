@@ -9,9 +9,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/tests"
-	"github.com/Red-Sock/rscli/tests/project_mock"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/tests"
+	"go.vervstack.ru/verv/tests/project_mock"
 )
 
 type BuildProjectSuite struct {

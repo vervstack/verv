@@ -3,7 +3,7 @@ package renamer
 import (
 	"bytes"
 
-	"github.com/Red-Sock/rscli/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/envpatterns"
 )
 
 func ReplaceProjectNameFull(src []byte, newName string) []byte {

@@ -9,14 +9,14 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io/colors"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/internal/processor"
-	"github.com/Red-Sock/rscli/plugins/project/actions/go_actions/renamer"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/tests"
-	"github.com/Red-Sock/rscli/tests/mocks"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/internal/processor"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/tests"
+	"go.vervstack.ru/verv/tests/mocks"
 )
 
 //go:embed expected/load_config/load_config_file.go

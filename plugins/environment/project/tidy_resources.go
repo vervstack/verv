@@ -7,10 +7,10 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/compose"
-	"github.com/Red-Sock/rscli/internal/compose/env"
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/utils/renamer"
+	"go.vervstack.ru/verv/internal/compose"
+	"go.vervstack.ru/verv/internal/compose/env"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/utils/renamer"
 )
 
 func (e *ProjEnv) tidyResources(enableService bool) error {

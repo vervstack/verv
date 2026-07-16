@@ -11,8 +11,8 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 	"go.vervstack.ru/matreshka/pkg/matreshka/server"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project/actions/git"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project/actions/git"
 )
 
 const testFolder = "test"

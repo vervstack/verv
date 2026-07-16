@@ -3,12 +3,12 @@ package go_actions
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
-	rscliconfig "github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/utils/bins/makefile"
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/internal/cmd"
+	rscliconfig "go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/utils/bins/makefile"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 const goBin = "go"

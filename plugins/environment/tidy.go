@@ -7,9 +7,9 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io/loader"
-	"github.com/Red-Sock/rscli/internal/ports"
-	"github.com/Red-Sock/rscli/plugins/environment/project"
+	"go.vervstack.ru/verv/internal/io/loader"
+	"go.vervstack.ru/verv/internal/ports"
+	"go.vervstack.ru/verv/plugins/environment/project"
 )
 
 func (e *GlobalEnvironment) Tidy() error {

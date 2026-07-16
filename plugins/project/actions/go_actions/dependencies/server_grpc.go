@@ -6,7 +6,7 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/server"
 
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators/grpc_api_generator"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/grpc_api_generator"
 )
 
 const grpcServerBasePath = "/{GRPC}"

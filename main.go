@@ -5,12 +5,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/Red-Sock/rscli/cmd/environment"
-	initCmd "github.com/Red-Sock/rscli/cmd/project"
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
-	"github.com/Red-Sock/rscli/internal/io/colors"
-	"github.com/Red-Sock/rscli/version"
+	"go.vervstack.ru/verv/cmd/environment"
+	initCmd "go.vervstack.ru/verv/cmd/project"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/version"
 )
 
 func main() {

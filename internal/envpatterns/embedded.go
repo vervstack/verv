@@ -3,7 +3,7 @@ package envpatterns
 import (
 	_ "embed"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
+	"go.vervstack.ru/verv/internal/io/folder"
 )
 
 const (

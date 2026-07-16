@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 
-	"github.com/Red-Sock/rscli/tests"
+	"go.vervstack.ru/verv/tests"
 )
 
 func TestGenServer(t *testing.T) {

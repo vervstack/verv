@@ -3,7 +3,7 @@ package git
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/plugins/project"
+	"go.vervstack.ru/verv/plugins/project"
 )
 
 const (

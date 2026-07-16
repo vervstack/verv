@@ -8,7 +8,7 @@ import (
 )
 
 func CanUpdate() (string, bool) {
-	resp, err := http.Get("https://api.github.com/repos/Red-Sock/rscli/releases/latest")
+	resp, err := http.Get("https://api.github.com/repos/vervstack/verv/releases/latest")
 	if err != nil {
 		return "", false
 	}

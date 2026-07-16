@@ -5,7 +5,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
+	"go.vervstack.ru/verv/internal/cmd"
 )
 
 func Status(pth string) (uncommitted StatusDiff, err error) {

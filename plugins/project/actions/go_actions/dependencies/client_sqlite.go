@@ -4,7 +4,7 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators/dockerfile_generator"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
 )
 
 type Sqlite struct {

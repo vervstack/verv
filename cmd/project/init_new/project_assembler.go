@@ -3,8 +3,8 @@ package init_new
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/actions"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions"
 )
 
 func (p *Proc) createProject(args project.CreateArgs) (project.IProject, error) {

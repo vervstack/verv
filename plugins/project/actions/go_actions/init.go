@@ -6,12 +6,12 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/cmd"
-	"github.com/Red-Sock/rscli/internal/io/folder"
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators/app_struct_generators"
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns/generators/dockerfile_generator"
+	"go.vervstack.ru/verv/internal/cmd"
+	"go.vervstack.ru/verv/internal/io/folder"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/app_struct_generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
 )
 
 type InitGoMod struct{}

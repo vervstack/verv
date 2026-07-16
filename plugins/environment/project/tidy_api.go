@@ -5,7 +5,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/envpatterns"
 )
 
 func (e *ProjEnv) tidyServerAPIs() error {

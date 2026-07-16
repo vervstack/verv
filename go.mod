@@ -1,4 +1,4 @@
-module github.com/Red-Sock/rscli
+module go.vervstack.ru/verv
 
 go 1.25.5
 

@@ -8,7 +8,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/io/colors"
+	"go.vervstack.ru/verv/internal/io/colors"
 )
 
 //go:generate minimock -i IO -o ./../../tests/mocks -g -s "_mock.go"

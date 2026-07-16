@@ -3,8 +3,8 @@ package renamer
 import (
 	"bytes"
 
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/io/folder"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/io/folder"
 )
 
 func ReplaceProjectName(name string, f *folder.Folder) {

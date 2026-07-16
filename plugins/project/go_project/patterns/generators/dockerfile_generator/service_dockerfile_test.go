@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/Red-Sock/rscli/plugins/project"
-	"github.com/Red-Sock/rscli/tests/project_mock"
+	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/tests/project_mock"
 )
 
 var (

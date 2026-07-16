@@ -5,7 +5,7 @@ import (
 
 	"go.vervstack.ru/matreshka/pkg/matreshka/server"
 
-	"github.com/Red-Sock/rscli/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 const defaultServerPort = 80

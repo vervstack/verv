@@ -1,8 +1,8 @@
 package processor
 
 import (
-	"github.com/Red-Sock/rscli/internal/config"
-	"github.com/Red-Sock/rscli/internal/io"
+	"go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
 )
 
 func WithIo(io io.IO) opt {

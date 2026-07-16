@@ -3,7 +3,7 @@ package patterns
 import (
 	_ "embed"
 
-	"github.com/Red-Sock/rscli/internal/io/folder"
+	"go.vervstack.ru/verv/internal/io/folder"
 )
 
 // GitHub Workflows

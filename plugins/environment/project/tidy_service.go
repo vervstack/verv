@@ -3,9 +3,9 @@ package project
 import (
 	"go.redsock.ru/rerrors"
 
-	"github.com/Red-Sock/rscli/internal/compose"
-	"github.com/Red-Sock/rscli/internal/envpatterns"
-	"github.com/Red-Sock/rscli/internal/utils/copier"
+	"go.vervstack.ru/verv/internal/compose"
+	"go.vervstack.ru/verv/internal/envpatterns"
+	"go.vervstack.ru/verv/internal/utils/copier"
 )
 
 var ErrNoProjectComposePattern = rerrors.New("")
