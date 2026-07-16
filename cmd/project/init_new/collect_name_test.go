@@ -18,15 +18,12 @@ const (
 )
 
 func Test_collectName(t *testing.T) {
-
 	type testCase struct {
-		userInput []string
-		args      []string
+		args []string
 
-		io            *mocks.IOMock
-		printMockCall func(in string)
-		expectedErr   error
-		expectedResp  string
+		io           *mocks.IOMock
+		expectedErr  error
+		expectedResp string
 	}
 
 	type testCaseConstructor struct {
@@ -36,7 +33,6 @@ func Test_collectName(t *testing.T) {
 	testCases := map[string]testCaseConstructor{
 		"OK_SHORT_NAME_ARG": {
 			new: func() (tc testCase) {
-
 				tc.args = []string{projName}
 				tc.io = mocks.NewIOMock(t)
 
@@ -66,7 +62,6 @@ func Test_collectName(t *testing.T) {
 
 		"OK_LONG_NAME_ARG": {
 			new: func() (tc testCase) {
-
 				tc.expectedResp = defaultGitPath + "/" + projName
 
 				tc.args = []string{tc.expectedResp}
@@ -80,7 +75,6 @@ func Test_collectName(t *testing.T) {
 
 		"OK_LONG_NAME_WITH_SEC_PROTOC_ARG": {
 			new: func() (tc testCase) {
-
 				tc.expectedResp = defaultGitPath + "/" + projName
 
 				tc.args = []string{"https://" + tc.expectedResp}
@@ -93,7 +87,6 @@ func Test_collectName(t *testing.T) {
 		},
 		"OK_LONG_NAME_WITH_PLAIN_PROTOC_ARG": {
 			new: func() (tc testCase) {
-
 				tc.expectedResp = defaultGitPath + "/" + projName
 
 				tc.args = []string{"http://" + tc.expectedResp}
@@ -146,5 +139,4 @@ func Test_collectName(t *testing.T) {
 			require.Equal(t, resp, tc.expectedResp)
 		})
 	}
-
 }

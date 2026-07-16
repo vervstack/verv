@@ -20,11 +20,10 @@ func (a CommitWithUntrackedAction) Do(p project.IProject) error {
 }
 
 func (a CommitWithUntrackedAction) NameInAction() string {
-	return "Commiting changes"
+	return "Committing changes"
 }
 
 func Commit(workingDir, msg string) error {
-
 	_, err := cmd.Execute(cmd.Request{
 		Tool:    bin,
 		Args:    []string{"commit", "-m", "\"" + msg + "\""},
@@ -35,7 +34,6 @@ func Commit(workingDir, msg string) error {
 	}
 
 	return nil
-
 }
 
 func CommitWithUntracked(workDir, msg string) error {

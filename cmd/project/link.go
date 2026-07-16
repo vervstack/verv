@@ -67,7 +67,7 @@ func (p *projectLink) run(_ *cobra.Command, args []string) (err error) {
 		return rerrors.Wrap(err, "error tiding project")
 	}
 
-	p.io.Println("Tidy executed. Commiting changes")
+	p.io.Println("Tidy executed. Committing changes")
 
 	err = git.CommitWithUntracked(p.proj.GetProjectPath(), "added "+strings.Join(args, "; "))
 	if err != nil {

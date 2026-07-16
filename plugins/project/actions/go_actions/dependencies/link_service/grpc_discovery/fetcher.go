@@ -15,9 +15,6 @@ func FetchPackage(packageName string) (ok bool) {
 		Tool: "go",
 		Args: []string{"get", packageName},
 	})
-	if err != nil {
-		return false
-	}
 
-	return true
+	return err == nil
 }

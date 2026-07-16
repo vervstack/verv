@@ -113,7 +113,7 @@ func goProjectLoader(p *Project) (name *string) {
 }
 
 func unknownProjectLoader(p *Project) *string {
-	name := p.Cfg.AppInfo.Name
+	name := p.Cfg.Name
 	return &name
 }
 

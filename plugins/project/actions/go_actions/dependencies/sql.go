@@ -52,5 +52,4 @@ import %s
 	}
 
 	proj.GetFolder().Add(sqlDriverFile)
-
 }

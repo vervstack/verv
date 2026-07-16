@@ -78,7 +78,6 @@ func (e *GlobalEnvironment) fetchFiles() error {
 	}
 
 	return nil
-
 }
 
 func (e *GlobalEnvironment) fetchSrcProjectDirs() (err error) {

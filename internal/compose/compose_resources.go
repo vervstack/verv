@@ -143,7 +143,6 @@ func (c *PatternManager) GetServiceDependencies(resource resources.Resource) (*P
 	}
 
 	return &pattern, nil
-
 }
 
 func AddEnvironmentBrackets(in string) string {
@@ -208,11 +207,7 @@ func extractEnvsFromComposeFile(b []byte) (*env.Container, error) {
 
 	out := &env.Container{}
 
-	for {
-		if startIdx == -1 {
-			break
-		}
-
+	for startIdx != -1 {
 		// Looks like a black magic BUT. NEED this for the 2nd (and others) loop.
 		// After next "${" was found, move pointer off last "${" location
 		// TODO maybe rewrite it to something more meaningful and easy
@@ -235,7 +230,6 @@ func extractEnvsFromComposeFile(b []byte) (*env.Container, error) {
 		out.AppendRaw(string(b[startIdx+1:endIdx]), string(val))
 
 		startIdx = bytes.Index(b[endIdx:], []byte{36, 123}) // "${"
-
 	}
 
 	return out, nil

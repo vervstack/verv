@@ -25,6 +25,8 @@ type MockProject struct {
 type Opt func(m *MockProject)
 
 func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
+	t.Helper()
+
 	p := &MockProject{
 		rscliConfig: rscliconfig.GetConfig(),
 		Project: &project.Project{
@@ -36,18 +38,18 @@ func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 		},
 	}
 
-	require.NoError(t, p.Cfg.AppConfig.Unmarshal(basicConfigFile))
+	require.NoError(t, p.Cfg.Unmarshal(basicConfigFile))
 
 	for _, o := range opts {
 		o(p)
 	}
 
-	cfgMarshalled, err := p.Cfg.AppConfig.Marshal()
+	cfgMarshalled, err := p.Cfg.Marshal()
 	require.NoError(t, err)
 
 	p.Cfg.AppConfig = matreshka.NewEmptyConfig()
 	// to be sure in types of env variables
-	require.NoError(t, p.Cfg.AppConfig.Unmarshal(cfgMarshalled))
+	require.NoError(t, p.Cfg.Unmarshal(cfgMarshalled))
 
 	masterConfigPath := path.Join(patterns.ConfigsFolder, patterns.ConfigMasterYamlFile)
 	if p.Root.GetByPath(masterConfigPath) == nil {
@@ -68,6 +70,8 @@ func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 }
 
 func (m *MockProject) WriteFile(t *testing.T, relativePath string, data []byte) {
+	t.Helper()
+
 	relativePath = path.Join(m.Path, relativePath)
 
 	require.NoError(t, os.MkdirAll(path.Dir(relativePath), 0777))

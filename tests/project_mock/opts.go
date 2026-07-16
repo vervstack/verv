@@ -33,6 +33,8 @@ func WithEnvironmentVariables(vars ...*environment.Variable) Opt {
 }
 
 func WithFileSystem(t *testing.T) Opt {
+	t.Helper()
+
 	return func(m *MockProject) {
 		m.Path = path.Join(testFolder, t.Name()[5:])
 		m.Root.Name = m.Path
@@ -41,15 +43,19 @@ func WithFileSystem(t *testing.T) Opt {
 }
 
 func WithBasicConfig(t *testing.T) Opt {
+	t.Helper()
+
 	return func(m *MockProject) {
 		require.NoError(t, m.Cfg.Unmarshal(BasicConfig()))
 	}
 }
 
 func WithGit(t *testing.T) Opt {
+	t.Helper()
+
 	return func(m *MockProject) {
 		require.NotEmpty(t, m.Path, "to enable git in mock project WithFileSystem is required")
-		require.NoError(t, git.Init(m.Project.GetProjectPath()))
+		require.NoError(t, git.Init(m.GetProjectPath()))
 	}
 }
 

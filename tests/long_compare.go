@@ -18,6 +18,8 @@ import (
 const PatternExt = ".pattern"
 
 func CompareLongStrings(t *testing.T, expected, actual []byte) (eq bool) {
+	t.Helper()
+
 	expectedReader := bytes.NewReader(expected)
 	actualReader := bytes.NewReader(actual)
 
@@ -47,17 +49,16 @@ func CompareLongStrings(t *testing.T, expected, actual []byte) (eq bool) {
 }
 
 func AssertFolderInFs(t *testing.T, dirPath string, expected *folder.Folder) {
+	t.Helper()
+
 	if len(expected.Content) != 0 {
-		targetFile := expected.Name
-		if strings.HasSuffix(targetFile, PatternExt) {
-			targetFile = targetFile[:len(targetFile)-len(PatternExt)]
-		}
+		targetFile := strings.TrimSuffix(expected.Name, PatternExt)
 
 		targetPath := path.Join(dirPath, targetFile)
 		file, err := os.ReadFile(targetPath)
 		require.NoError(t, err)
 
-		eq := false
+		var eq bool
 
 		if strings.HasSuffix(expected.Name, ".yaml") {
 			if !assert.YAMLEq(t, string(expected.Content), string(file)) {
@@ -84,6 +85,8 @@ func AssertFolderInFs(t *testing.T, dirPath string, expected *folder.Folder) {
 }
 
 func AssertVirtualFolder(t *testing.T, proj project.IProject, expected *folder.Folder) {
+	t.Helper()
+
 	if len(expected.Content) != 0 {
 		fileInProject := proj.GetFolder().GetByPath(expected.Name)
 		require.NotNil(t, fileInProject, "file not found in project %s", expected.Name)

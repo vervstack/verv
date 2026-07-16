@@ -20,7 +20,6 @@ type Rule struct {
 	PhonyName  []byte
 	Commands   [][]byte
 	isShortCut bool // flag indicating that each command is call of another make rule
-	isInline   bool // flag showing that this part is for calling multiple other make rules
 }
 
 type Makefile struct {
@@ -82,7 +81,6 @@ func (m *Makefile) GetRules() []Rule {
 }
 
 func (m *Makefile) GetRuleByName(name string) *Rule {
-
 	for _, item := range m.rules {
 		if string(item.Name) == name {
 			return &item
@@ -201,13 +199,12 @@ func parseRule(b [][]byte) (rule Rule, idx int, err error) {
 				"A proper format is \"rule-name:\", but \""+string(b[idx])+"\" is given")
 		}
 		rule.Name = b[idx][:delimeterIdx]
-
 	}
 
 	if delimeterIdx != len(b[idx])-1 {
 		rule.isShortCut = true
 		rule.Commands = bytes.Split(b[idx][delimeterIdx+1:], []byte(" "))
-		return
+		return rule, idx, err
 	}
 
 	idx++

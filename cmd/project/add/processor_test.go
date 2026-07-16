@@ -83,7 +83,7 @@ func Test_AddDependency(t *testing.T) {
 				command := Proc{
 					Processor: processor.New(
 						processor.WithIo(ioMock),
-						processor.WithWd(projectMock.Project.GetProjectPath()),
+						processor.WithWd(projectMock.GetProjectPath()),
 						processor.WithConfig(tc.cfg),
 					),
 					ActionPerformer: actions.NewActionPerformer(mocks.IoDevNul{}), //apMock(t),
@@ -106,36 +106,48 @@ func expectedGrpc(_ *testing.T) testCase {
 }
 
 func expectedRedis(t *testing.T) testCase {
+	t.Helper()
+
 	return testCase{
 		args: []string{dependencies.DependencyNameRedis},
 	}
 }
 
 func expectedPostgres(t *testing.T) testCase {
+	t.Helper()
+
 	return testCase{
 		args: []string{dependencies.DependencyNamePostgres},
 	}
 }
 
 func expectedTelegram(t *testing.T) testCase {
+	t.Helper()
+
 	return testCase{
 		args: []string{dependencies.DependencyNameTelegram},
 	}
 }
 
 func expectedSqlite(t *testing.T) testCase {
+	t.Helper()
+
 	return testCase{
 		args: []string{dependencies.DependencyNameSqlite},
 	}
 }
 
 func expectedEnv(t *testing.T) testCase {
+	t.Helper()
+
 	return testCase{
 		args: []string{dependencies.DependencyEnvVariable},
 	}
 }
 
 func setupPrintlnMock(t *testing.T, ioMock *mocks.IOMock, printlnCalls ...string) {
+	t.Helper()
+
 	prinlnIdx := 0
 	ioMock.PrintlnMock.Set(func(in ...string) {
 		if prinlnIdx >= len(printlnCalls) {

@@ -69,7 +69,6 @@ func RunMultiLoader(ctx context.Context, io io.IO, progresses []Progress) (done 
 				case <-ctx.Done():
 				}
 			}
-
 		}(uint(idx))
 	}
 

@@ -18,7 +18,7 @@ func postgresClient(dep dependencyBase) Dependency {
 
 func (p Postgres) AppendToProject(proj Project) error {
 	sc := sqlConn{
-		Cfg: p.dependencyBase.Cfg,
+		Cfg: p.Cfg,
 	}
 
 	err := sc.applySqlConnectionFile(proj)

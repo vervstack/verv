@@ -154,7 +154,6 @@ func readGrpcPackageFromPackageClientPath(projectPath, apiContractPath string) (
 			}
 
 			if fn.Type == nil || fn.Type.Params == nil || len(fn.Type.Params.List) != 1 || fn.Type.Params.List[0] == nil {
-
 				return true
 			}
 

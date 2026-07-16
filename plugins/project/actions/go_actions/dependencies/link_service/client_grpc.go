@@ -1,14 +1,8 @@
 package link_service
 
 import (
-	"bytes"
 	stderrs "errors"
-	"go/ast"
-	"go/parser"
-	"go/token"
-	"os"
 	"path"
-	"sort"
 	"strings"
 
 	"go.redsock.ru/rerrors"
@@ -24,10 +18,6 @@ import (
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/config_generators"
-)
-
-var (
-	modPkg = os.Getenv("GOPATH") + "/pkg/mod/"
 )
 
 type GrpcClient struct {
@@ -91,11 +81,8 @@ func (g GrpcClient) getPackage(packageName string) (ok bool) {
 		Tool: "go",
 		Args: []string{"get", packageName},
 	})
-	if err != nil {
-		return false
-	}
 
-	return true
+	return err == nil
 }
 
 func (g GrpcClient) applyLink(proj project.IProject, packageName string) error {
@@ -126,7 +113,7 @@ func (g GrpcClient) applyLink(proj project.IProject, packageName string) error {
 
 	resourceName := resources.GrpcResourceName + "_" + generators.NormalizeResourceName(path.Base(packageName))
 
-	grpcResource, err := proj.GetConfig().DataSources.GRPC(resourceName)
+	grpcResource, err := proj.GetConfig().GRPC(resourceName)
 	if err != nil {
 		if !rerrors.Is(err, matreshka.ErrNotFound) {
 			return rerrors.Wrap(err, "error getting grpc resource from config")
@@ -152,190 +139,4 @@ func (g GrpcClient) applyLink(proj project.IProject, packageName string) error {
 		})
 
 	return nil
-}
-
-func (g GrpcClient) getPathToModule(packageName string) (pathToModule string, err error) {
-	packageName = g.filterPackageName(packageName)
-	packagePath := path.Join(modPkg, packageName)
-
-	if !strings.Contains(path.Base(packagePath), "@") {
-		root := path.Dir(packagePath)
-		potentialDirs, err := os.ReadDir(root)
-		if err != nil {
-			return "", rerrors.Wrap(err, "error reading potential packages paths")
-		}
-
-		baseName := path.Base(packageName)
-		moveIdx := 0
-		for idx := range potentialDirs {
-			if !strings.HasPrefix(potentialDirs[idx].Name(), baseName) {
-				potentialDirs[moveIdx], potentialDirs[idx] = potentialDirs[idx], potentialDirs[moveIdx]
-				moveIdx++
-			}
-
-		}
-		potentialDirs = potentialDirs[moveIdx:]
-
-		sort.Slice(potentialDirs, func(i, j int) bool {
-			// TODO sorting by name is wrong. need to sort by version
-			return potentialDirs[i].Name() < potentialDirs[i].Name()
-		})
-
-		packagePath = path.Join(root, potentialDirs[0].Name())
-
-	}
-
-	return packagePath, nil
-}
-
-func (g GrpcClient) getCompiledGRPCContractFromPackage(packagePath string) ([]*grpcPackage, error) {
-	var errs error
-	var packages []*grpcPackage
-
-	for _, compiledClientPath := range g.Cfg.Env.PathsToCompiledClients {
-		apiPath := path.Join(packagePath, compiledClientPath)
-		files, err := os.ReadDir(apiPath)
-		if err != nil {
-			errs = stderrs.Join(errs, err)
-		}
-
-		for _, file := range files {
-			if !file.IsDir() {
-				continue
-			}
-			pkg, err := readGrpcPackage(packagePath, path.Join(compiledClientPath, file.Name()))
-			if err != nil {
-				errs = stderrs.Join(errs, err)
-			}
-			if pkg != nil {
-				packages = append(packages, pkg)
-			}
-
-		}
-
-	}
-
-	return packages, errs
-}
-
-func (g GrpcClient) filterPackageName(packageName string) string {
-	packageNameB := []rune(packageName)
-	out := make([]rune, 0, len(packageNameB))
-
-	for idx := range packageNameB {
-		if packageNameB[idx] >= 'A' && packageNameB[idx] <= 'Z' {
-			packageNameB[idx] = packageNameB[idx] + 32
-			out = append(out, '!')
-		}
-
-		out = append(out, packageNameB[idx])
-	}
-
-	return string(out)
-}
-
-type grpcPackage struct {
-	importPath  string
-	constructor string
-	clientName  string
-}
-
-func readGrpcPackage(projectPath, apiContractPath string) (*grpcPackage, error) {
-	packagePath := path.Join(projectPath, apiContractPath)
-	files, err := os.ReadDir(packagePath)
-	if err != nil {
-		return nil, rerrors.Wrap(err, "error reading contracts dir")
-	}
-
-	var clientContractPath string
-
-	for _, f := range files {
-		if f.IsDir() {
-			continue
-		}
-		fileName := f.Name()
-		if strings.HasSuffix(fileName, "_grpc.pb.go") {
-			clientContractPath = path.Join(packagePath, fileName)
-			break
-		}
-	}
-
-	if clientContractPath == "" {
-		return nil, nil
-	}
-
-	clientContractB, err := os.ReadFile(clientContractPath)
-	if err != nil {
-		return nil, rerrors.Wrap(err, "error reading client contract files")
-	}
-
-	fset := token.NewFileSet()
-	f, err := parser.ParseFile(fset, path.Base(clientContractPath), clientContractB, 0)
-	if err != nil {
-		return nil, rerrors.Wrap(err, "error parsing go contract file")
-	}
-
-	out := &grpcPackage{}
-
-	// TODO делать в горутине?
-	ast.Inspect(f, func(n ast.Node) bool {
-		switch fn := n.(type) {
-		case *ast.GenDecl:
-			if out.clientName != "" {
-				break
-			}
-			if fn.Tok != token.TYPE {
-				break
-			}
-
-			if len(fn.Specs) == 0 {
-				break
-			}
-			spec, ok := fn.Specs[0].(*ast.TypeSpec)
-			if !ok {
-				break
-			}
-
-			if strings.HasSuffix(spec.Name.Name, "Client") {
-				out.clientName = spec.Name.Name
-			}
-		case *ast.FuncDecl:
-			if out.constructor != "" {
-				break
-			}
-
-			if !strings.HasPrefix(fn.Name.Name, "New") || !strings.HasSuffix(fn.Name.Name, "Client") {
-				return true
-			}
-
-			if fn.Type == nil || fn.Type.Params == nil || len(fn.Type.Params.List) != 1 || fn.Type.Params.List[0] == nil {
-
-				return true
-			}
-
-			startIdx, endIdx := int(fn.Type.Params.List[0].Pos()), int(fn.Type.Params.List[0].End())
-			if bytes.Contains(clientContractB[startIdx:endIdx], []byte("grpc.ClientConnInterface")) {
-				out.constructor = fn.Name.Name
-			}
-		}
-
-		return out.clientName == "" || out.constructor == ""
-	})
-
-	if out.constructor == "" {
-		return nil, nil
-	}
-
-	{
-		if !f.Package.IsValid() {
-			return nil, nil
-		}
-		packageSubSet := clientContractB[f.Package:]
-		packageSubSet = packageSubSet[:bytes.IndexByte(packageSubSet, '\n')]
-		packageSubSet = packageSubSet[bytes.IndexByte(packageSubSet, ' ')+1:]
-		packageName := string(packageSubSet)
-		out.importPath = path.Join(path.Dir(apiContractPath), packageName)
-	}
-
-	return out, nil
 }

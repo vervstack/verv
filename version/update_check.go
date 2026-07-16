@@ -12,7 +12,7 @@ func CanUpdate() (string, bool) {
 	if err != nil {
 		return "", false
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		return "", false
 	}
 	var m map[string]any

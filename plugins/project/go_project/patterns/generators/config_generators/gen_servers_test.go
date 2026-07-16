@@ -50,5 +50,4 @@ type ServersConfig struct {
 			tests.CompareLongStrings(t, tc.expectedFile, folder.Content)
 		})
 	}
-
 }

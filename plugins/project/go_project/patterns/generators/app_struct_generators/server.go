@@ -21,7 +21,6 @@ func generateServerInitFileAndArgs(servers matreshka.Servers) (InitServerListene
 	serversMustHaveNames := len(servers) > 1
 
 	for _, server := range servers {
-
 		if serversMustHaveNames && server.Name == "" {
 			return InitServerListenersArgs{}, nil,
 				rerrors.Wrap(ErrServerMustHaveName,

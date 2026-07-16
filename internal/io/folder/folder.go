@@ -127,7 +127,6 @@ func (f *Folder) build(root string) error {
 	}
 
 	if len(f.Content) != 0 {
-
 		if len(f.olderVersion) == len(f.Content) {
 			var idx int
 			for idx = range f.olderVersion {
@@ -140,7 +139,7 @@ func (f *Folder) build(root string) error {
 			}
 		}
 
-		if len(f.Content) != 0 && !(len(f.Content) == 1 && f.Content[0] != 0) {
+		if len(f.Content) != 0 && (len(f.Content) != 1 || f.Content[0] == 0) {
 			err := io.OverrideFile(pth, f.Content)
 			if err != nil {
 				return err

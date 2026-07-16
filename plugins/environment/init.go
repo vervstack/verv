@@ -52,7 +52,6 @@ func (e *GlobalEnvironment) initProjectsDirs() error {
 			if err != nil {
 				errC <- rerrors.Wrap(err, "error creating "+d.Name())
 			}
-
 		}(d)
 	}
 
@@ -82,7 +81,6 @@ func (e *GlobalEnvironment) initProjectDir(d os.DirEntry) error {
 
 	var f []byte
 	for _, spirit := range []folder.Folder{envpatterns.Makefile} {
-
 		f, err = os.ReadFile(path.Join(e.envDirPath, spirit.Name))
 		if err != nil {
 			if rerrors.Is(err, os.ErrNotExist) {

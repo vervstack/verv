@@ -32,7 +32,6 @@ func GetPathToGlobalModule(packageName string) (pathToModule string, err error) 
 			potentialDirs[moveIdx], potentialDirs[idx] = potentialDirs[idx], potentialDirs[moveIdx]
 			moveIdx++
 		}
-
 	}
 	potentialDirs = potentialDirs[moveIdx:]
 

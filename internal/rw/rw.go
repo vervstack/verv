@@ -8,7 +8,6 @@ import (
 
 type RW struct {
 	b []byte
-	c int
 	l sync.Mutex
 }
 

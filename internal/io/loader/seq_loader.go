@@ -36,7 +36,6 @@ func RunSeqLoader(ctx context.Context, io io.IO, progresses <-chan Progress) (do
 				io.Print(
 					aec.Column(0).String() +
 						v + colors.TerminalColor(colors.ColorDefault))
-
 			}
 		}
 	}

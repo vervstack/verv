@@ -34,7 +34,7 @@ func newGenerateDataSourcesConfigStruct(dataSources matreshka.DataSources) inter
 			fieldKV.Value = tp.String()
 
 			kind := tp.Kind()
-			if kind == reflect.Ptr {
+			if kind == reflect.Pointer {
 				tp = tp.Elem()
 			}
 

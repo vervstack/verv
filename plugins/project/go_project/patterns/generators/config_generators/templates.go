@@ -34,5 +34,4 @@ func init() {
 	grpcConnectionTemplate = template.Must(
 		template.New("grpc_connection").
 			Parse(grpcConnectionPattern))
-
 }

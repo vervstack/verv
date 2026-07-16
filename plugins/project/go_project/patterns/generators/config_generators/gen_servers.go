@@ -33,7 +33,7 @@ func newGenerateServerConfigStruct(srv matreshka.Servers) internalConfigGenerato
 			fieldKV.Value = tp.String()
 
 			kind := tp.Kind()
-			if kind == reflect.Ptr {
+			if kind == reflect.Pointer {
 				tp = tp.Elem()
 			}
 

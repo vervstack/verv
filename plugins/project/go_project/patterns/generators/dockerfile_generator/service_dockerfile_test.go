@@ -27,7 +27,6 @@ var (
 )
 
 func Test_GenerateDockerfile(t *testing.T) {
-
 	type testCase struct {
 		genProj  func() project.IProject
 		expected string

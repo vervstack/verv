@@ -42,7 +42,8 @@ Run this to install it:
 	root.AddCommand(initCmd.NewCmd())
 	root.AddCommand(environment.NewCmd())
 
-	if err := root.Execute(); err != nil {
+	err := root.Execute()
+	if err != nil {
 		io.StdIO{}.Error(colors.TerminalColor(colors.ColorRed) + fmt.Sprintf("%+v\n", err))
 	}
 }

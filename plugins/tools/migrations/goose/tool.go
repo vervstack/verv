@@ -76,14 +76,12 @@ func (t *Tool) GetLatestVersion() (version string, err error) {
 }
 
 func (t *Tool) Migrate(pathToFolder string, resource resources.Resource) error {
-
 	switch resource.GetType() {
 	case resources.PostgresResourceName:
 		return t.MigratePostgres(pathToFolder, resource)
 	default:
 		return ErrUnknownResourceToMigrate
 	}
-
 }
 
 func (t *Tool) MigratePostgres(pathToFolder string, resource resources.Resource) error {

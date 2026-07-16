@@ -24,7 +24,6 @@ func Status(pth string) (uncommitted StatusDiff, err error) {
 
 		startIdx := strings.Index(executeOut, messageForUntrackedFiles)
 		if startIdx != -1 {
-
 			startIdx += len(messageForUntrackedFiles)
 			changeList := strings.Split(executeOut[startIdx:], "\n")
 
@@ -37,10 +36,8 @@ func Status(pth string) (uncommitted StatusDiff, err error) {
 					continue
 				}
 				if strings.HasPrefix(item, "\t") {
-
 					gitChanges.Changelist = append(gitChanges.Changelist, item[1:])
 				}
-
 			}
 
 			out = append(out, gitChanges)
@@ -51,10 +48,8 @@ func Status(pth string) (uncommitted StatusDiff, err error) {
 		var keyWords = []string{"deleted", "modified", "new file"}
 
 		for _, message := range []string{"Changes to be committed", "Changes not staged for commit"} {
-
 			startIdx := strings.Index(executeOut, message)
 			if startIdx != -1 {
-
 				startIdx += len(message)
 				changeList := strings.Split(executeOut[startIdx:], "\n")
 
@@ -64,7 +59,6 @@ func Status(pth string) (uncommitted StatusDiff, err error) {
 				}
 
 				for _, item := range changeList {
-
 					if len(item) == 0 {
 						continue
 					}
@@ -76,12 +70,10 @@ func Status(pth string) (uncommitted StatusDiff, err error) {
 							break
 						}
 					}
-
 				}
 				out = append(out, gitChanges)
 			}
 		}
-
 	}
 
 	return out, nil

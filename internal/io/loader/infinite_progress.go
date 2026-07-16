@@ -11,8 +11,6 @@ type InfiniteLoader struct {
 	Name      string
 	AnimChars []string
 
-	animSymb int
-
 	doneM  *sync.Mutex
 	ticker *time.Ticker
 	isDone bool
@@ -21,7 +19,6 @@ type InfiniteLoader struct {
 }
 
 func NewInfiniteLoader(name string, animationSymbs []string) *InfiniteLoader {
-
 	il := &InfiniteLoader{
 		Name:         name,
 		AnimChars:    animationSymbs,
@@ -31,7 +28,6 @@ func NewInfiniteLoader(name string, animationSymbs []string) *InfiniteLoader {
 	}
 
 	go func() {
-
 		idx := 0
 		for {
 			select {
@@ -49,7 +45,6 @@ func NewInfiniteLoader(name string, animationSymbs []string) *InfiniteLoader {
 					idx = 0
 				}
 			}
-
 		}
 	}()
 

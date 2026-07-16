@@ -128,7 +128,7 @@ func (e *ProjEnv) flush(projName string) (err error) {
 		pathToDockerComposeFile := path.Join(e.pathToProjInEnv, envpatterns.DockerComposeFile.Name)
 		err = io.OverrideFile(pathToDockerComposeFile, renamer.ReplaceProjectNameShort(composeFile, projName))
 		if err != nil {
-			return rerrors.Wrap(err, "error writing docker compose file file")
+			return rerrors.Wrap(err, "error writing docker compose file")
 		}
 	}
 

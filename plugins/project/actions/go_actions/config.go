@@ -115,7 +115,7 @@ func (a PrepareConfigFolder) generateConfigYamlFile(p project.IProject) (err err
 		patterns.ConfigTemplateYaml,
 		patterns.ConfigMasterYamlFile,
 	} {
-		newConfig.AppConfig.ServiceDiscovery = matreshka.ServiceDiscovery{}
+		newConfig.ServiceDiscovery = matreshka.ServiceDiscovery{}
 		err := appendToConfig(newConfig.AppConfig, configFolder, cfgName)
 		if err != nil {
 			return rerrors.Wrap(err, "error appending changes to dev config")
@@ -220,7 +220,7 @@ func marshalEnvExample(nodes []*evon.Node) []byte {
 
 func isEnvVarName(s string) bool {
 	for _, r := range s {
-		if !((r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') || r == '_') {
+		if (r < 'A' || r > 'Z') && (r < '0' || r > '9') && r != '_' {
 			return false
 		}
 	}

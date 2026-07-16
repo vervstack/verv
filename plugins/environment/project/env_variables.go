@@ -60,13 +60,13 @@ func (e *envVariables) fetch(globalEnvFile *env.Container, pathToProjEnv string)
 	}
 
 	if len(globalValidEnvs) != 0 {
-		e.Container.AppendRaw(globalUserDefinedEnvVariablesComment, "")
-		e.Container.Append(globalValidEnvs...)
+		e.AppendRaw(globalUserDefinedEnvVariablesComment, "")
+		e.Append(globalValidEnvs...)
 	}
 
 	if len(example.Content) != 0 {
-		e.Container.AppendRaw(userDefinedEnvVariablesComment, "")
-		e.Container.Append(example.GetContent()...)
+		e.AppendRaw(userDefinedEnvVariablesComment, "")
+		e.Append(example.GetContent()...)
 	}
 
 	e.envResources = newEnvManager(globalEnvFile)

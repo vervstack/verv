@@ -14,11 +14,11 @@ import (
 )
 
 func (e *ProjEnv) tidyResources(enableService bool) error {
-	sort.Slice(e.Config.AppConfig.DataSources, func(i, j int) bool {
+	sort.Slice(e.Config.DataSources, func(i, j int) bool {
 		return e.Config.AppConfig.DataSources[i].GetName() > e.Config.AppConfig.DataSources[j].GetName()
 	})
 
-	for idx := range e.Config.AppConfig.DataSources {
+	for idx := range e.Config.DataSources {
 		err := e.tidyResource(e.projName, idx, enableService)
 		if err != nil {
 			return rerrors.Wrap(err, "error tiding resource "+
@@ -29,7 +29,7 @@ func (e *ProjEnv) tidyResources(enableService bool) error {
 	for name := range e.Compose.Services {
 		foundInConfig := false
 
-		for _, cfgRes := range e.Config.AppConfig.DataSources {
+		for _, cfgRes := range e.Config.DataSources {
 			if name == cfgRes.GetName() || name == e.projName {
 				foundInConfig = true
 				break
@@ -83,7 +83,7 @@ func (e *ProjEnv) tidyResource(projName string, resourceIdx int, enableService b
 	}
 
 	hostName := strings.ToUpper(projName+"_"+resource.GetName()) + envpatterns.HostEnvSuffix
-	hostValue := ""
+	var hostValue string
 	if enableService {
 		hostValue = resource.GetName()
 	} else {
@@ -142,5 +142,5 @@ func (e *ProjEnv) getDefaultValue(resName, resType string) (basicEnvName, envVal
 	basicEnvName = strings.ReplaceAll(basicEnvName,
 		envpatterns.ProjNameCapsPattern+"_", "")
 
-	return basicEnvName, e.Environment.envResources.GetByName(basicEnvName)
+	return basicEnvName, e.Environment.GetByName(basicEnvName)
 }

@@ -41,7 +41,6 @@ func OverrideFile(pth string, content []byte) error {
 	}
 
 	return nil
-
 }
 func CreateFolderIfNotExists(pth string) error {
 	fi, err := os.Stat(pth)

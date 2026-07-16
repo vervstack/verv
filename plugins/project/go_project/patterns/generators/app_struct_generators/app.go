@@ -49,7 +49,6 @@ func GenerateAppFiles(p project.IProject) (map[string][]byte, error) {
 		if initDataSourcesArgs != nil {
 			initAppArgs.AppContent = append(initAppArgs.AppContent, *initDataSourcesArgs)
 		}
-
 	}
 	// init server
 	if len(cfg.Servers) != 0 {
