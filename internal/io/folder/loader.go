@@ -69,6 +69,10 @@ func load(root, parent string, o opts) (*Folder, error) {
 	if !st.IsDir() {
 		var innerFile []byte
 		innerFile, err = os.ReadFile(root)
+		if err != nil {
+			return nil, err
+		}
+
 		folder := &Folder{
 			Name:    path.Base(root),
 			Content: innerFile,

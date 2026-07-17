@@ -11,6 +11,7 @@ var (
 	basicApiProtoTemplate *template.Template
 )
 
+//nolint:gochecknoinits // one-time compile of embedded template into a package-level *template.Template value
 func init() {
 	basicApiProtoTemplate = template.Must(
 		template.New("basic_proto").

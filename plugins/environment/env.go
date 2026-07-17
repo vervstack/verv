@@ -83,6 +83,7 @@ func (e *GlobalEnvironment) fetchFiles() error {
 func (e *GlobalEnvironment) fetchSrcProjectDirs() (err error) {
 	filter := func(dirs []os.DirEntry, srcProjDir string) ([]os.DirEntry, error) {
 		var idx int
+		var fi os.FileInfo
 		for idx = 0; idx < len(dirs); idx++ {
 			name := dirs[idx].Name()
 			if dirs[idx].IsDir() && name != envpatterns.EnvDir {
@@ -90,7 +91,7 @@ func (e *GlobalEnvironment) fetchSrcProjectDirs() (err error) {
 				pathToMainFile := path.Join(srcProjDir, name,
 					strings.ReplaceAll(e.rsCliConfig.Env.PathToMain, envpatterns.ProjNamePattern, name))
 
-				fi, err := os.Stat(pathToMainFile)
+				fi, err = os.Stat(pathToMainFile)
 				if err != nil {
 					if !rerrors.Is(err, os.ErrNotExist) {
 						return dirs, rerrors.Wrap(err, "error reading main.go file: "+pathToMainFile)

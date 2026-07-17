@@ -26,17 +26,10 @@ func RunSeqLoader(ctx context.Context, io io.IO, progresses <-chan Progress) (do
 
 		io.Print("_" + p.GetName())
 
-		for {
-			select {
-			case v, ok := <-p.GetProgressChan():
-				if !ok {
-					return
-				}
-
-				io.Print(
-					aec.Column(0).String() +
-						v + colors.TerminalColor(colors.ColorDefault))
-			}
+		for v := range p.GetProgressChan() {
+			io.Print(
+				aec.Column(0).String() +
+					v + colors.TerminalColor(colors.ColorDefault))
 		}
 	}
 

@@ -20,6 +20,7 @@ var (
 	dockerfileTemplate *template.Template
 )
 
+//nolint:gochecknoinits // one-time compile of embedded template into a package-level *template.Template value
 func init() {
 	dockerfileTemplate = template.
 		Must(template.New("Dockerfile").

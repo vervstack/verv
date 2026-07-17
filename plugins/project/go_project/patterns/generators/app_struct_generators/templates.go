@@ -24,6 +24,7 @@ var (
 	initServerTemplate *template.Template
 )
 
+//nolint:gochecknoinits // one-time compile of embedded templates into package-level *template.Template values
 func init() {
 	appTemplate = template.Must(
 		template.New("app").

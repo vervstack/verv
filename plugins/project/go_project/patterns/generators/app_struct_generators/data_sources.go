@@ -6,7 +6,6 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
 	"go.vervstack.ru/verv/internal/rw"
-	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
 )
@@ -37,14 +36,6 @@ func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppC
 			fc = redisInitFunc(ds, appContent)
 		case resources.TelegramResourceName:
 			fc = telegramInitFunc(ds, appContent)
-		case resources.GrpcResourceName:
-			// TODO SKIPPED FOR NOW RSI-288
-			break
-			var err error
-			fc, err = grpcInitFunc(ds, appContent)
-			if err != nil {
-				return nil, nil, rerrors.Wrap(err, "error creating init func for grpc client")
-			}
 		default:
 			return nil, nil, rerrors.New("unknown resource " + ds.GetType())
 		}
@@ -119,29 +110,4 @@ func telegramInitFunc(res resources.Resource, appContent *AppContent) (fc InitFu
 	appContent.Imports["github.com/Red-Sock/go_tg"] = ""
 
 	return
-}
-
-func grpcInitFunc(res resources.Resource, appContent *AppContent) (fc InitFuncCall, err error) {
-	grpcRes, ok := res.(*resources.GRPC)
-	if !ok {
-		return fc, rerrors.New("not a grpc struct")
-	}
-
-	grpcPackage, err := grpc_discovery.DiscoverPackage(grpcRes.Module)
-	if err != nil {
-		return fc, rerrors.Wrap(err, "error discovering grpc package")
-	}
-
-	fc.ResultName = generators.NormalizeResourceName(res.GetName())
-	fc.ResultType = "grpc." + grpcPackage.ClientName
-
-	fc.FuncName = "grpc." + grpcPackage.Constructor
-	fc.Args = "a.Cfg.DataSources." + fc.ResultName
-	fc.ErrorMessage = "error during grpc client initialization"
-
-	fc.Import = map[string]string{
-		"proj_name/internal/clients/grpc": "",
-	}
-
-	return fc, nil
 }

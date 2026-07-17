@@ -33,6 +33,8 @@ func (a TidyGithubWorkflowAction) Do(p project.IProject) error {
 		if ghF.GetByPath(patterns.GithubWorkflowGoBranchPush.Name) == nil {
 			ghF.Add(patterns.GithubWorkflowGoBranchPush.Copy())
 		}
+	case project.TypeUnknown:
+		// no language-specific workflow to add
 	}
 
 	return nil

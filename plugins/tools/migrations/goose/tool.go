@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"go.redsock.ru/rerrors"
@@ -96,11 +98,10 @@ func (t *Tool) MigratePostgres(pathToFolder string, resource resources.Resource)
 		return rerrors.Wrapf(matreshka.ErrUnexpectedType, "expected postgres, got %T", resource)
 	}
 
-	command.Args[1] = fmt.Sprintf("postgresql://%s:%s@%s:%d/%s",
+	command.Args[1] = fmt.Sprintf("postgresql://%s:%s@%s/%s",
 		pg.User,
 		pg.Pwd,
-		pg.Host,
-		pg.Port,
+		net.JoinHostPort(pg.Host, strconv.FormatUint(pg.Port, 10)),
 		pg.DbName,
 	)
 

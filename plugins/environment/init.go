@@ -29,6 +29,9 @@ func (e *GlobalEnvironment) Init() error {
 
 func (e *GlobalEnvironment) initBasis() error {
 	err := io.CreateFolderIfNotExists(e.envDirPath)
+	if err != nil {
+		return rerrors.Wrap(err, "error creating env dir "+e.envDirPath)
+	}
 
 	for _, f := range e.getSpirits() {
 		err = io.CreateFileIfNotExists(path.Join(e.envDirPath, f.Name), f.Content)

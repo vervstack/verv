@@ -10,6 +10,7 @@ import (
 var versionConfig []byte
 var version string
 
+//nolint:gochecknoinits // one-time parse of embedded version.yaml into the package-level version string
 func init() {
 	m := map[string]map[string]string{}
 

@@ -22,6 +22,7 @@ var (
 	grpcConnectionTemplate *template.Template
 )
 
+//nolint:gochecknoinits // one-time compile of embedded templates into package-level *template.Template values
 func init() {
 	configAutoLoadTemplate = template.Must(
 		template.New("config_autoload").

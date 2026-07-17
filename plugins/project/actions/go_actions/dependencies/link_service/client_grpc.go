@@ -113,13 +113,13 @@ func (g GrpcClient) applyLink(proj project.IProject, packageName string) error {
 
 	resourceName := resources.GrpcResourceName + "_" + generators.NormalizeResourceName(path.Base(packageName))
 
-	grpcResource, err := proj.GetConfig().GRPC(resourceName)
+	_, err = proj.GetConfig().GRPC(resourceName)
 	if err != nil {
 		if !rerrors.Is(err, matreshka.ErrNotFound) {
 			return rerrors.Wrap(err, "error getting grpc resource from config")
 		}
 
-		grpcResource = &resources.GRPC{
+		grpcResource := &resources.GRPC{
 			Name:             resources.Name(resourceName),
 			Module:           packageName,
 			ConnectionString: "0.0.0.0:50051",

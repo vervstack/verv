@@ -6,6 +6,7 @@ import (
 
 var workingDirectory string
 
+//nolint:gochecknoinits // GetWd() has no error return; must resolve the working dir once before any command reads it, fail fast on error
 func init() {
 	var err error
 	workingDirectory, err = os.Getwd()

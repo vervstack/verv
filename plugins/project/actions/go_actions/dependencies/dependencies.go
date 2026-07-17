@@ -7,7 +7,6 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	"go.vervstack.ru/verv/internal/config"
 	rscliconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 )
@@ -63,7 +62,7 @@ func HelpWithDependencyNames(passedDeps ...string) (missingDeps []string) {
 	return missingDeps
 }
 
-func GetDependencies(c *config.RsCliConfig, args []string) []Dependency {
+func GetDependencies(c *rscliconfig.RsCliConfig, args []string) []Dependency {
 	serverOpts := make([]Dependency, 0, len(args))
 
 	for _, name := range args {

@@ -29,21 +29,17 @@ func NewInfiniteLoader(name string, animationSymbs []string) *InfiniteLoader {
 
 	go func() {
 		idx := 0
-		for {
-			select {
-			case <-il.ticker.C:
+		for range il.ticker.C {
+			il.doneM.Lock()
+			if il.isDone {
+				return
+			}
+			il.progressUpdC <- il.AnimChars[idx]
+			il.doneM.Unlock()
 
-				il.doneM.Lock()
-				if il.isDone {
-					return
-				}
-				il.progressUpdC <- il.AnimChars[idx]
-				il.doneM.Unlock()
-
-				idx++
-				if idx >= len(il.AnimChars) {
-					idx = 0
-				}
+			idx++
+			if idx >= len(il.AnimChars) {
+				idx = 0
 			}
 		}
 	}()
@@ -63,6 +59,8 @@ func (p *InfiniteLoader) Done(success progressStatus) {
 	p.ticker.Stop()
 
 	switch success {
+	case InProgress:
+		// nothing to report; Done() shouldn't be called with InProgress
 	case DoneSuccessful:
 		p.progressUpdC <- colors.TerminalColor(colors.ColorGreen) + "*"
 	case DoneFailed:

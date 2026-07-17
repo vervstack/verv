@@ -41,7 +41,6 @@ type Pattern struct {
 }
 
 func ReadComposePatternsFromFile(pth string) (out *PatternManager, err error) {
-	out = &PatternManager{}
 	// Basic compose examples: rscli built-in
 	out, err = extractComposePatternsFromFile(envpatterns.BuildInComposeExamples.Content)
 	if err != nil {
@@ -166,7 +165,10 @@ func extractComposePatternsFromFile(dockerComposeFile []byte) (out *PatternManag
 		if !ok {
 			return nil, rerrors.Wrapf(ErrInvalidComposeFileFormat, "expected to have \"%s\" object", servicesPart)
 		}
-		composeServices = examplesMap.(map[string]interface{})
+		composeServices, ok = examplesMap.(map[string]interface{})
+		if !ok {
+			return nil, rerrors.Wrapf(ErrInvalidComposeFileFormat, "expected \"%s\" to be an object", servicesPart)
+		}
 	}
 
 	out.Patterns = make(map[string]Pattern, len(composeServices))
