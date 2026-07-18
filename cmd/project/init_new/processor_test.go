@@ -15,6 +15,7 @@ import (
 	"go.vervstack.ru/verv/internal/processor"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/main_generators"
 	"go.vervstack.ru/verv/tests"
 	"go.vervstack.ru/verv/tests/mocks"
 )
@@ -163,7 +164,13 @@ environment:
 		})
 	}
 
-	mainGoFile := patterns.MainFile.Copy()
+	mainGoFileContent, err := main_generators.GenerateMain()
+	require.NoError(t, err)
+
+	mainGoFile := &folder.Folder{
+		Name:    patterns.MainFileName,
+		Content: mainGoFileContent,
+	}
 	renamer.ReplaceProjectName(projFullName, mainGoFile)
 	tests.AssertFolderInFs(t, path.Join(projectPath, patterns.CmdFolder, patterns.ServiceFolder), mainGoFile)
 }

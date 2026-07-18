@@ -18,6 +18,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/main_generators"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/server_generators/impl_gen"
 )
 
@@ -27,12 +28,19 @@ type PrepareProjectStructure struct {
 func (a PrepareProjectStructure) Do(p project.IProject) error {
 	rootF := p.GetFolder()
 
+	mainFileContent, err := main_generators.GenerateMain()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating main.go")
+	}
+
 	cmd := &folder.Folder{Name: patterns.CmdFolder}
-	cmd.Add(patterns.MainFile.CopyWithNewName(path.Join(patterns.ServiceFolder, patterns.MainFile.Name)))
+	cmd.Add(&folder.Folder{
+		Name:    path.Join(patterns.ServiceFolder, patterns.MainFileName),
+		Content: mainFileContent,
+	})
 	rootF.Add(cmd)
 
 	configFolder := &folder.Folder{Name: patterns.ConfigsFolder}
-	configFolder.Add(patterns.KeysFile.Copy())
 	rootF.Add(configFolder)
 	rootF.Add(&folder.Folder{Name: patterns.InternalFolder})
 

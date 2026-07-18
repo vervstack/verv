@@ -2,8 +2,6 @@ package patterns
 
 import (
 	_ "embed"
-
-	"go.vervstack.ru/verv/internal/io/folder"
 )
 
 // Constants naming: Purpose+Type (File)
@@ -14,6 +12,7 @@ const (
 
 	CmdFolder     = "cmd"
 	ServiceFolder = "service"
+	MainFileName  = "main.go"
 
 	InternalFolder             = "internal"
 	AppFolder                  = "app"
@@ -26,10 +25,6 @@ const (
 	ConnFileName = "conn.go"
 
 	TransportFolder = "transport"
-	WebFolder       = "web"
-	DistFolder      = "dist"
-	IndexHtmlFile   = "index.html"
-	AboutFolder     = "about"
 
 	HandlersFolderName = "handlers"
 	VersionFolderName  = "version"
@@ -44,23 +39,4 @@ const (
 	ConfigEnvExampleFile      = ".env.example"
 
 	GoMod = "go.mod"
-
-	ExampleFile = ".example"
-)
-
-// Basic files
-var (
-	//go:embed pattern_c/cmd/service/main.go.pattern
-	mainFile []byte
-	MainFile = &folder.Folder{
-		Name:    "main.go",
-		Content: mainFile,
-	}
-
-	//go:embed pattern_c/internal/config/keys.go.pattern
-	keysFile []byte
-	KeysFile = &folder.Folder{
-		Name:    "keys.go",
-		Content: keysFile,
-	}
 )

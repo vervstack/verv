@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/main_generators"
 	"go.vervstack.ru/verv/tests"
 	"go.vervstack.ru/verv/tests/project_mock"
 )
@@ -25,10 +26,11 @@ func (s *BuildProjectSuite) Test_BuildProject() {
 	t := s.T()
 	t.Parallel()
 
-	mainGoFilePath := path.Join(patterns.CmdFolder, patterns.ServiceFolder, patterns.MainFile.Name)
+	mainGoFilePath := path.Join(patterns.CmdFolder, patterns.ServiceFolder, patterns.MainFileName)
 	configPath := path.Join(patterns.ConfigsFolder, patterns.ConfigMasterYamlFile)
 
-	mainGoFile := patterns.MainFile.Copy().Content
+	mainGoFile, err := main_generators.GenerateMain()
+	require.NoError(t, err)
 	proj := project_mock.GetMockProject(t,
 		project_mock.WithFile(mainGoFilePath, mainGoFile),
 		project_mock.WithFileSystem(t),
