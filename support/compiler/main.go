@@ -101,14 +101,15 @@ func movePattern(patternPath, newPath string) {
 			if hasOneOfSuffixes(itemName, ".go", "go.mod") {
 				newItemPath += ".pattern"
 			}
+
 			b = bytes.ReplaceAll(b, []byte("financial-microservice"), []byte(""))
+
 			err = os.WriteFile(newItemPath, b, 0755)
 			if err != nil {
 				log.Fatal("error writing file: ", newItemPath, err)
 			}
 		}
 	}
-
 }
 
 func hasOneOfSuffixes(in string, sufs ...string) bool {
@@ -117,5 +118,6 @@ func hasOneOfSuffixes(in string, sufs ...string) bool {
 			return true
 		}
 	}
+
 	return false
 }

@@ -12,7 +12,7 @@ const (
 
 // Proto contract
 var (
-	//go:embed pattern_c/api/grpc/api.proto
+	//go:embed static/api/grpc/api.proto
 	protoContract []byte
 	ProtoContract = &folder.Folder{
 		Name:    "api.proto",
@@ -22,14 +22,14 @@ var (
 
 // Dependencies and generator
 var (
-	//go:embed pattern_c/easyp.yaml
+	//go:embed static/easyp.yaml
 	easyp []byte
 	EasyP = &folder.Folder{
 		Name:    "easyp.yaml",
 		Content: easyp,
 	}
 
-	//go:embed pattern_c/grpc.mk
+	//go:embed static/grpc.mk
 	GrpcServerGenMK []byte
 )
 

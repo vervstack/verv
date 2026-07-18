@@ -20,14 +20,14 @@ const (
 
 // Build and deploy
 var (
-	//go:embed pattern_c/.gitignore
+	//go:embed static/.gitignore
 	gitIgnore []byte
 	GitIgnore = &folder.Folder{
 		Name:    ".gitignore",
 		Content: gitIgnore,
 	}
 
-	//go:embed pattern_c/.golangci.yaml
+	//go:embed static/.golangci.yaml
 	linter []byte
 	Linter = &folder.Folder{
 		Name:    ".golangci.yaml",
@@ -37,7 +37,7 @@ var (
 
 // Documentation
 var (
-	//go:embed pattern_c/README.md
+	//go:embed static/README.md
 	readme []byte
 	Readme = &folder.Folder{
 		Name:    "README.md",
@@ -47,7 +47,7 @@ var (
 
 // Example files
 var (
-	//go:embed pattern_c/examples/api.http
+	//go:embed static/examples/api.http
 	apiHTTP []byte
 	ApiHTTP = &folder.Folder{
 		Name:    "api.http",
@@ -57,14 +57,14 @@ var (
 
 // Scripts
 var (
-	//go:embed pattern_c/rscli.mk
+	//go:embed static/rscli.mk
 	rscliMK []byte
 	RscliMK = &folder.Folder{
 		Name:    "rscli.mk",
 		Content: rscliMK,
 	}
 
-	//go:embed pattern_c/Makefile
+	//go:embed static/Makefile
 	makefile []byte
 	Makefile = &folder.Folder{
 		Name:    MakefileFile,
