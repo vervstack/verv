@@ -21,7 +21,7 @@ type Dependency interface {
 
 type dependencyBase struct {
 	Name string
-	Cfg  *rscliconfig.RsCliConfig
+	Cfg  *rscliconfig.VervConfig
 }
 
 const (
@@ -62,7 +62,7 @@ func HelpWithDependencyNames(passedDeps ...string) (missingDeps []string) {
 	return missingDeps
 }
 
-func GetDependencies(c *rscliconfig.RsCliConfig, args []string) []Dependency {
+func GetDependencies(c *rscliconfig.VervConfig, args []string) []Dependency {
 	serverOpts := make([]Dependency, 0, len(args))
 
 	for _, name := range args {

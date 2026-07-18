@@ -19,7 +19,7 @@ import (
 )
 
 type testCase struct {
-	cfg  *config.RsCliConfig
+	cfg  *config.VervConfig
 	args []string
 }
 

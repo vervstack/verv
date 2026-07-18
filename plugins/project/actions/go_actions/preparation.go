@@ -52,7 +52,7 @@ func (a PrepareProjectStructure) NameInAction() string {
 }
 
 type PrepareClients struct {
-	C  *rscliconfig.RsCliConfig
+	C  *rscliconfig.VervConfig
 	IO io.IO
 }
 

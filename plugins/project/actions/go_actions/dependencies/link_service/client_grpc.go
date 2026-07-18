@@ -23,7 +23,7 @@ import (
 type GrpcClient struct {
 	Modules []string
 
-	Cfg *rscliconfig.RsCliConfig
+	Cfg *rscliconfig.VervConfig
 	Io  io.IO
 }
 

@@ -1,3 +1,5 @@
+// TODO redo onto the evon parsing
+
 package config
 
 import (
@@ -12,37 +14,37 @@ import (
 )
 
 const (
-	CustomPathToConfig = "rscli-cfg"
+	CustomPathToConfig = "cfg"
 )
 const (
-	configFilename          = "rscli.yaml"
-	environmentPathToConfig = "RSCLI_CONFIG_PATH"
+	configFilename          = "verv.yaml"
+	environmentPathToConfig = "VERV_CONFIG_PATH"
 )
 
 const (
-	envPathToConfig = "RSCLI_PATH_TO_CONFIG"
-	envPathToMain   = "RSCLI_PATH_TO_MAIN"
+	envPathToConfig = "VERV_PATH_TO_CONFIG"
+	envPathToMain   = "VERV_PATH_TO_MAIN"
 
-	envPathToProtoClients    = "RSCLI_PATH_TO_PROTO_CLIENTS"
-	envPathToCompiledClients = "RSCLI_PATH_TO_COMPILED_CLIENTS"
-	envPathToClients         = "RSCLI_PATH_TO_CLIENTS"
+	envPathToProtoClients    = "VERV_PATH_TO_PROTO_CLIENTS"
+	envPathToCompiledClients = "VERV_PATH_TO_COMPILED_CLIENTS"
+	envPathToClients         = "VERV_PATH_TO_CLIENTS"
 
-	envPathToServers          = "RSCLI_PATH_TO_SERVERS"
-	envPathToServerDefinition = "RSCLI_PATH_TO_SERVER_DEFINITION"
+	envPathToServers          = "VERV_PATH_TO_SERVERS"
+	envPathToServerDefinition = "VERV_PATH_TO_SERVER_DEFINITION"
 
-	envPathToMigrations      = "RSCLI_PATH_TO_MIGRATIONS"
-	envDefaultProjectGitPath = "RSCLI_DEFAULT_PROJECT_GIT_PATH"
+	envPathToMigrations      = "VERV_PATH_TO_MIGRATIONS"
+	envDefaultProjectGitPath = "VERV_DEFAULT_PROJECT_GIT_PATH"
 )
 
-//go:embed rscli.yaml
+//go:embed verv.yaml
 var builtInConfig []byte
 
-type RsCliConfig struct {
+type VervConfig struct {
 	Env                   Project `yaml:"env"`
 	DefaultProjectGitPath string  `yaml:"default_project_git_path"`
 }
 
-var rsCliConfig *RsCliConfig
+var vervConfig *VervConfig
 
 type Project struct {
 	PathToMain   string `yaml:"path_to_main"`
@@ -58,28 +60,28 @@ type Project struct {
 	PathToMigrations string `yaml:"path_to_migrations"`
 }
 
-func GetConfig() *RsCliConfig {
-	if rsCliConfig == nil {
+func GetConfig() *VervConfig {
+	if vervConfig == nil {
 		err := InitConfig(nil, nil)
 		if err != nil {
 			panic(err)
 		}
 	}
 
-	return rsCliConfig
+	return vervConfig
 }
 
 func InitConfig(cmd *cobra.Command, _ []string) error {
-	if rsCliConfig == nil {
-		rsCliConfig = &RsCliConfig{}
+	if vervConfig == nil {
+		vervConfig = &VervConfig{}
 	}
 
-	err := yaml.Unmarshal(builtInConfig, rsCliConfig)
+	err := yaml.Unmarshal(builtInConfig, vervConfig)
 	if err != nil {
 		panic(rerrors.Wrap(err, "error parsing built in config file. This is serious issue and MUST BE fixed A$A₽\n\n\n Like Rocky\n\n\n\n in a way (: "))
 	}
 
-	*rsCliConfig = mergeConfigs(getConfigFromEnvironment(), *rsCliConfig)
+	*vervConfig = mergeConfigs(getConfigFromEnvironment(), *vervConfig)
 
 	configFromFile, err := getConfigFromFile(cmd)
 	if err != nil {
@@ -87,13 +89,13 @@ func InitConfig(cmd *cobra.Command, _ []string) error {
 	}
 
 	if configFromFile != nil {
-		*rsCliConfig = mergeConfigs(*configFromFile, *rsCliConfig)
+		*vervConfig = mergeConfigs(*configFromFile, *vervConfig)
 	}
 
 	return nil
 }
 
-func getConfigFromEnvironment() (r RsCliConfig) {
+func getConfigFromEnvironment() (r VervConfig) {
 	r.Env.PathToMain = os.Getenv(envPathToMain)
 	r.Env.PathToConfig = os.Getenv(envPathToConfig)
 	r.Env.PathToMigrations = os.Getenv(envPathToMigrations)
@@ -119,7 +121,7 @@ func getConfigFromEnvironment() (r RsCliConfig) {
 	return
 }
 
-func getConfigFromFile(cmd *cobra.Command) (*RsCliConfig, error) {
+func getConfigFromFile(cmd *cobra.Command) (*VervConfig, error) {
 	if cmd == nil {
 		return nil, nil
 	}
@@ -144,7 +146,7 @@ func getConfigFromFile(cmd *cobra.Command) (*RsCliConfig, error) {
 		return nil, nil
 	}
 
-	var externalConf RsCliConfig
+	var externalConf VervConfig
 	err = yaml.Unmarshal(file, &externalConf)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error unmarshalling config from: "+cfgFilePath)
@@ -153,7 +155,7 @@ func getConfigFromFile(cmd *cobra.Command) (*RsCliConfig, error) {
 	return &externalConf, nil
 }
 
-func mergeConfigs(master, slave RsCliConfig) RsCliConfig {
+func mergeConfigs(master, slave VervConfig) VervConfig {
 	if master.Env.PathToMain == "" {
 		master.Env.PathToMain = slave.Env.PathToMain
 	}

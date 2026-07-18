@@ -19,7 +19,7 @@ import (
 type MockProject struct {
 	*project.Project
 
-	rscliConfig *rscliconfig.RsCliConfig
+	rscliConfig *rscliconfig.VervConfig
 }
 
 type Opt func(m *MockProject)

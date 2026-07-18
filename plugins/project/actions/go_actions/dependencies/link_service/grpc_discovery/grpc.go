@@ -16,7 +16,7 @@ import (
 )
 
 type GrpcDiscovery struct {
-	Cfg *rscliconfig.RsCliConfig
+	Cfg *rscliconfig.VervConfig
 }
 
 var defaultDiscoverer GrpcDiscovery

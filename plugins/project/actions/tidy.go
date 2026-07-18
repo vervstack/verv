@@ -2,9 +2,9 @@ package actions
 
 import (
 	"go.vervstack.ru/verv/plugins/project"
+	"go.vervstack.ru/verv/plugins/project/actions/ci_cd"
 	"go.vervstack.ru/verv/plugins/project/actions/git"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions"
-	"go.vervstack.ru/verv/plugins/project/actions/pipelines"
 )
 
 func GetTidyActionsForProject(pt project.Type) []Action {
@@ -42,7 +42,7 @@ func goProjectTidyActions() []Action {
 
 func commonProjectTidyPreActions() []Action {
 	return []Action{
-		pipelines.TidyGithubWorkflowAction{},
+		ci_cd.TidyGithubWorkflowAction{},
 	}
 }
 

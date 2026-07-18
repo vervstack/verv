@@ -74,7 +74,7 @@ func Test_InitProject(t *testing.T) {
 
 	args := []string{projName}
 
-	cfg := &config.RsCliConfig{
+	cfg := &config.VervConfig{
 		DefaultProjectGitPath: defaultGitPath,
 	}
 

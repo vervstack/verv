@@ -26,7 +26,7 @@ var configOrder = map[string]int{
 	templateConfigFileName: 2,
 }
 
-func LoadProject(pth string, cfg *rscliconfig.RsCliConfig) (*Project, error) {
+func LoadProject(pth string, cfg *rscliconfig.VervConfig) (*Project, error) {
 	ignoredFiles, err := readIgnoredFiles(pth)
 	if err != nil {
 		return nil, rerrors.Wrap(err)
@@ -63,7 +63,7 @@ func LoadProject(pth string, cfg *rscliconfig.RsCliConfig) (*Project, error) {
 	return p, nil
 }
 
-func LoadProjectConfig(projectPath string, cfg *rscliconfig.RsCliConfig) (c *config.Config, err error) {
+func LoadProjectConfig(projectPath string, cfg *rscliconfig.VervConfig) (c *config.Config, err error) {
 	c = &config.Config{}
 
 	c.ConfigDir = path.Join(projectPath, path.Dir(cfg.Env.PathToConfig))

@@ -13,7 +13,7 @@ import (
 
 type projectTidy struct {
 	io     io.IO
-	config *config.RsCliConfig
+	config *config.VervConfig
 
 	proj *project.Project
 	path string

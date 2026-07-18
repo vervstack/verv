@@ -5,7 +5,6 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"go.vervstack.ru/verv/cmd/environment"
 	initCmd "go.vervstack.ru/verv/cmd/project"
 	"go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
@@ -19,14 +18,14 @@ func main() {
 		io.StdIO{}.Println(`
 ⚙️⚙️⚙️ Update is available ⚙️⚙️⚙️
 Run this to install it:
-	go install github.com/Red-Sock/rscli@` + newVersion + `
+	go install go.vervstack.ru/verv@` + newVersion + `
 `)
 	}
 
 	root := &cobra.Command{
-		Use: "rscli [command] [arguments] [flags]",
+		Use: "verv [command] [arguments] [flags]",
 
-		Short: "RsCLI is a tool for handling developers environment",
+		Short: "Verv CLI is a tool for handling verv projects",
 
 		Version: version.GetVersion(),
 		CompletionOptions: cobra.CompletionOptions{
@@ -40,7 +39,6 @@ Run this to install it:
 	root.PersistentFlags().String(config.CustomPathToConfig, "", "path flag to custom config")
 
 	root.AddCommand(initCmd.NewCmd())
-	root.AddCommand(environment.NewCmd())
 
 	err := root.Execute()
 	if err != nil {

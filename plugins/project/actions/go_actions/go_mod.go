@@ -55,7 +55,7 @@ func (a RunGoTidyAction) NameInAction() string {
 }
 
 type RunMakeGenAction struct {
-	C  *rscliconfig.RsCliConfig
+	C  *rscliconfig.VervConfig
 	IO io.IO
 }
 

@@ -36,7 +36,7 @@ func TestGenerateImpl(t *testing.T) {
 		Expect().
 		Return(folders)
 
-	cfg := &rscliconfig.RsCliConfig{
+	cfg := &rscliconfig.VervConfig{
 		Env: rscliconfig.Project{PathToServerDefinition: "api"},
 	}
 

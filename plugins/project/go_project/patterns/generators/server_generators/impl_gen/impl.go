@@ -29,7 +29,7 @@ type genArgs struct {
 	ServiceName  string
 }
 
-func GenerateImpl(cfg *rscliconfig.RsCliConfig, proj project.IProject) ([]*folder.Folder, error) {
+func GenerateImpl(cfg *rscliconfig.VervConfig, proj project.IProject) ([]*folder.Folder, error) {
 	grpcFolder := proj.GetFolder().GetByPath(cfg.Env.PathToServerDefinition, patterns.GRPCServer)
 	if grpcFolder == nil {
 		return nil, nil

@@ -6,24 +6,6 @@ import (
 	"go.vervstack.ru/verv/internal/envpatterns"
 )
 
-func ReplaceProjectNameFull(src []byte, newName string) []byte {
-	b := make([]byte, len(src))
-	copy(b, src)
-
-	b = bytes.ReplaceAll(
-		b,
-		[]byte(envpatterns.ProjNameCapsPattern),
-		[]byte(newName),
-	)
-
-	b = bytes.ReplaceAll(b,
-		[]byte(envpatterns.ProjNamePattern),
-		[]byte(newName),
-	)
-
-	return b
-}
-
 func ReplaceProjectNameShort(src []byte, newName string) []byte {
 	b := make([]byte, len(src))
 	copy(b, src)
@@ -42,8 +24,4 @@ func ReplaceProjectNameShort(src []byte, newName string) []byte {
 	)
 
 	return b
-}
-
-func ReplaceProjectNameStr(src string, newName string) string {
-	return string(ReplaceProjectNameShort([]byte(src), newName))
 }

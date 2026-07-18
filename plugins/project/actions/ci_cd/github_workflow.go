@@ -1,4 +1,4 @@
-package pipelines
+package ci_cd
 
 import (
 	"go.vervstack.ru/verv/internal/io/folder"

@@ -17,11 +17,11 @@ const (
 )
 
 // Processor - represents a single process of execution.
-// e.g. rscli project tidy - calls a cmd/project/tidy Processor and executes it
+// e.g. verv tidy - calls a cmd/project/tidy Processor and executes it
 // Contains all basic necessary information and primitives for CLI utility
 type Processor struct {
 	IO          io.IO
-	RscliConfig *config.RsCliConfig
+	RscliConfig *config.VervConfig
 	WD          string
 }
 

@@ -11,7 +11,7 @@ import (
 )
 
 type sqlConn struct {
-	Cfg *rscliconfig.RsCliConfig
+	Cfg *rscliconfig.VervConfig
 }
 
 func (sc sqlConn) GetFolderName() string {
