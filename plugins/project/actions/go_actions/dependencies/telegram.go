@@ -9,6 +9,7 @@ import (
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
 )
 
 type Telegram struct {
@@ -55,8 +56,15 @@ func (t Telegram) applyClient(proj Project) error {
 		return nil
 	}
 
-	tgConnFile := patterns.TgConnFile.CopyWithNewName(
-		path.Join(t.Cfg.Env.PathsToClients[0], t.GetFolderName(), patterns.TgConnFile.Name))
+	content, err := clients_generators.GenerateTelegramConn()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating telegram conn file")
+	}
+
+	tgConnFile := &folder.Folder{
+		Name:    path.Join(t.Cfg.Env.PathsToClients[0], t.GetFolderName(), patterns.ConnFileName),
+		Content: content,
+	}
 
 	renamer.ReplaceProjectName(proj.GetName(), tgConnFile)
 

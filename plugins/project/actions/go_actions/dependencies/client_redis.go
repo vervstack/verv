@@ -6,8 +6,10 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
+	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
 )
 
 type Redis struct {
@@ -49,8 +51,15 @@ func (p Redis) applyClientFolder(proj Project) error {
 		return nil
 	}
 
-	redisConn := patterns.RedisConnFile.CopyWithNewName(
-		path.Join(p.Cfg.Env.PathsToClients[0], p.GetFolderName(), patterns.RedisConnFile.Name))
+	content, err := clients_generators.GenerateRedisConn()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating redis conn file")
+	}
+
+	redisConn := &folder.Folder{
+		Name:    path.Join(p.Cfg.Env.PathsToClients[0], p.GetFolderName(), patterns.ConnFileName),
+		Content: content,
+	}
 
 	renamer.ReplaceProjectName(proj.GetName(), redisConn)
 

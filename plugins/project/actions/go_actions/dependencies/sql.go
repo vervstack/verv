@@ -1,13 +1,15 @@
 package dependencies
 
 import (
-	"fmt"
 	"path"
+
+	"go.redsock.ru/rerrors"
 
 	rscliconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
 )
 
 type sqlConn struct {
@@ -23,12 +25,20 @@ func (sc sqlConn) applySqlConnectionFile(proj Project) error {
 		return ErrNoFolderInConfig
 	}
 
+	content, err := clients_generators.GenerateSQLConn()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating sql conn file")
+	}
+
 	fileName := path.Join(
 		sc.Cfg.Env.PathsToClients[0],
 		sc.GetFolderName(),
-		patterns.SqlConnFile.Name)
+		patterns.ConnFileName)
 
-	sqlConnFile := patterns.SqlConnFile.CopyWithNewName(fileName)
+	sqlConnFile := &folder.Folder{
+		Name:    fileName,
+		Content: content,
+	}
 
 	renamer.ReplaceProjectName(proj.GetName(), sqlConnFile)
 	proj.GetFolder().Add(sqlConnFile)
@@ -36,19 +46,15 @@ func (sc sqlConn) applySqlConnectionFile(proj Project) error {
 	return nil
 }
 
-func (sc sqlConn) applySqlDriver(proj Project, driverName, driverImportPath string) {
+func (sc sqlConn) applySqlDriver(proj Project, driverName string, content []byte) {
 	fileName := path.Join(
 		sc.Cfg.Env.PathsToClients[0],
 		sc.GetFolderName(),
 		driverName+".go")
 
 	sqlDriverFile := &folder.Folder{
-		Name: fileName,
-		Content: []byte(
-			fmt.Sprintf(`package %s
-
-import %s
-`, sc.GetFolderName(), driverImportPath)),
+		Name:    fileName,
+		Content: content,
 	}
 
 	proj.GetFolder().Add(sqlDriverFile)

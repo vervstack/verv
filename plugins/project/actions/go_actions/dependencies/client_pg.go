@@ -4,6 +4,8 @@ import (
 	"go.redsock.ru/rerrors"
 
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
+
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
 )
 
 type Postgres struct {
@@ -42,7 +44,12 @@ func (p Postgres) AppendToProject(proj Project) error {
 		cfg.DataSources = append(cfg.DataSources, res)
 	}
 
-	sc.applySqlDriver(proj, res.SqlDialect(), `_ "github.com/lib/pq"`)
+	driverContent, err := clients_generators.GeneratePostgresDriver()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating postgres driver file")
+	}
+
+	sc.applySqlDriver(proj, res.SqlDialect(), driverContent)
 
 	return nil
 }

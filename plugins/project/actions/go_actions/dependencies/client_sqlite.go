@@ -4,6 +4,7 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
 )
 
@@ -38,7 +39,12 @@ func (s Sqlite) AppendToProject(proj Project) error {
 		cfg.DataSources = append(cfg.DataSources, res)
 	}
 
-	sc.applySqlDriver(proj, res.SqlDialect(), `_ "modernc.org/sqlite"`)
+	driverContent, err := clients_generators.GenerateSqliteDriver()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating sqlite driver file")
+	}
+
+	sc.applySqlDriver(proj, res.SqlDialect(), driverContent)
 
 	return nil
 }

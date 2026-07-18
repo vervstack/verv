@@ -17,6 +17,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/config_generators"
 )
 
@@ -54,7 +55,15 @@ func (g GrpcClient) AppendToProject(proj project.IProject) error {
 
 	grpcClientConnFilePath := path.Join(g.Cfg.Env.PathsToClients[0], patterns.GRPCServer, patterns.ConnFileName)
 	if proj.GetFolder().GetByPath(grpcClientConnFilePath) == nil {
-		proj.GetFolder().Add(patterns.GrpcClientConnFile.CopyWithNewName(grpcClientConnFilePath))
+		content, err := clients_generators.GenerateGRPCConn()
+		if err != nil {
+			return rerrors.Wrap(err, "error generating grpc conn file")
+		}
+
+		proj.GetFolder().Add(&folder.Folder{
+			Name:    grpcClientConnFilePath,
+			Content: content,
+		})
 	}
 
 	return nil
