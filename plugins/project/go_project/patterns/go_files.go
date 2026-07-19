@@ -26,6 +26,12 @@ const (
 
 	TransportFolder = "transport"
 
+	ServerManagerFileName          = "manager.go"
+	GrpcServerFileName             = "grpc.go"
+	HttpServerFileName             = "http.go"
+	TelegramListenerFileName       = "listener.go"
+	TelegramVersionHandlerFileName = "handler.go"
+
 	HandlersFolderName = "handlers"
 	VersionFolderName  = "version"
 

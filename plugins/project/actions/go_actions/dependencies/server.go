@@ -3,9 +3,12 @@ package dependencies
 import (
 	"path"
 
+	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/server"
 
+	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/transport_generators"
 )
 
 const defaultServerPort = 80
@@ -26,16 +29,24 @@ func prepareServerConfig(proj Project) *server.Server {
 	return newServer
 }
 
-func initServerManagerFiles(proj Project) {
+func initServerManagerFiles(proj Project) error {
 	serverManagerPath := []string{
 		patterns.InternalFolder,
 		patterns.TransportFolder,
-		patterns.ServerManager.Name,
+		patterns.ServerManagerFileName,
 	}
 
 	if proj.GetFolder().GetByPath(serverManagerPath...) == nil {
-		proj.GetFolder().Add(
-			patterns.ServerManager.
-				CopyWithNewName(path.Join(serverManagerPath...)))
+		content, err := transport_generators.GenerateServerManager()
+		if err != nil {
+			return rerrors.Wrap(err, "error generating server manager")
+		}
+
+		proj.GetFolder().Add(&folder.Folder{
+			Name:    path.Join(serverManagerPath...),
+			Content: content,
+		})
 	}
+
+	return nil
 }

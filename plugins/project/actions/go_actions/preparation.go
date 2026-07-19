@@ -20,6 +20,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/main_generators"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/server_generators/impl_gen"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/transport_generators"
 )
 
 type PrepareProjectStructure struct {
@@ -189,9 +190,23 @@ func (a PrepareServer) Do(p project.IProject) error {
 		transportFolder = &folder.Folder{}
 	}
 
-	transportFolder.Add(patterns.ServerManager.Copy())
-	transportFolder.Add(patterns.GrpcServerManager.Copy())
-	transportFolder.Add(patterns.HttpServerManager.Copy())
+	serverManagerContent, err := transport_generators.GenerateServerManager()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating server manager")
+	}
+	transportFolder.Add(&folder.Folder{Name: patterns.ServerManagerFileName, Content: serverManagerContent})
+
+	grpcServerContent, err := transport_generators.GenerateGrpcServer()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating grpc server")
+	}
+	transportFolder.Add(&folder.Folder{Name: patterns.GrpcServerFileName, Content: grpcServerContent})
+
+	httpServerContent, err := transport_generators.GenerateHttpServer()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating http server")
+	}
+	transportFolder.Add(&folder.Folder{Name: patterns.HttpServerFileName, Content: httpServerContent})
 
 	implFolders, err := impl_gen.GenerateImpl(rscliconfig.GetConfig(), p)
 	if err != nil {

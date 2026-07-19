@@ -10,6 +10,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/clients_generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/transport_generators"
 )
 
 type Telegram struct {
@@ -85,12 +86,18 @@ func (t Telegram) applyFolder(proj Project) error {
 		return nil
 	}
 
-	tgServer := patterns.TgServFile.Copy()
-
+	tgServerContent, err := transport_generators.GenerateTelegramListener()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating telegram listener")
+	}
+	tgServer := &folder.Folder{Name: patterns.TelegramListenerFileName, Content: tgServerContent}
 	renamer.ReplaceProjectName(proj.GetName(), tgServer)
 
-	tgHandlerExample := patterns.TgHandlerExampleFile.Copy()
-
+	tgHandlerContent, err := transport_generators.GenerateTelegramVersionHandler()
+	if err != nil {
+		return rerrors.Wrap(err, "error generating telegram version handler")
+	}
+	tgHandlerExample := &folder.Folder{Name: patterns.TelegramVersionHandlerFileName, Content: tgHandlerContent}
 	renamer.ReplaceProjectName(proj.GetName(), tgHandlerExample)
 
 	proj.GetFolder().Add(

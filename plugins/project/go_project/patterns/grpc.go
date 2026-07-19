@@ -6,10 +6,6 @@ import (
 	"go.vervstack.ru/verv/internal/io/folder"
 )
 
-const (
-	GrpcImplFolder = "grpc_impl"
-)
-
 // Proto contract
 var (
 	//go:embed static/api/grpc/api.proto
@@ -31,13 +27,4 @@ var (
 
 	//go:embed static/grpc.mk
 	GrpcServerGenMK []byte
-)
-
-var (
-	//go:embed pattern_c/internal/transport/grpc/example_api_impl/impl.go.pattern
-	grpcImpl []byte
-	GrpcImpl = &folder.Folder{
-		Name:    "impl.go",
-		Content: grpcImpl,
-	}
 )

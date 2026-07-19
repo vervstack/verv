@@ -50,7 +50,10 @@ func (r GrpcServer) AppendToProject(proj Project) error {
 
 	r.addGrpcServerToConfig(proj)
 
-	initServerManagerFiles(proj)
+	err = initServerManagerFiles(proj)
+	if err != nil {
+		return rerrors.Wrap(err, "error initializing server manager files")
+	}
 
 	return nil
 }
