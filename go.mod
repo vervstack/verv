@@ -3,7 +3,7 @@ module go.vervstack.ru/verv
 go 1.25.5
 
 require (
-	github.com/Red-Sock/go_tg v0.0.25
+	github.com/Red-Sock/go_tg v0.0.33
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/gojuno/minimock/v3 v3.4.5
 	github.com/hashicorp/go-version v1.7.0

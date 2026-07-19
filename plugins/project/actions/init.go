@@ -31,9 +31,7 @@ func initVirtualGoProject() []Action {
 
 		go_actions.BuildProjectAction{}, // builds project to file system
 
-		// take tooo long
-		//go_actions.RunGoTidyAction{}, // adds/clears project initialization(api, resources) and replaces project name template with actual project name
-		go_actions.GoFmt{}, // fetches dependencies and formats go code
+		go_actions.RunGoTidyAction{}, // resolves real dependencies and formats go code
 
 		git.InitGit{},
 	}

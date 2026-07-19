@@ -4,11 +4,10 @@ include rscli.mk
 warmup:
 	make .prepare-grpc-folders
 	make .deps-grpc
-	PROTOPACKPATH=proto_deps protopack mod download
+
 # generates code on warm project
 codegen:
-	PROTOPACKPATH=proto_deps protopack generate
-	#cd {{ .NPM_PACKAGE_PATH }} && npm run build
+	moti generate
 
 lint:
 	golangci-lint run ./...

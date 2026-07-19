@@ -181,8 +181,8 @@ func (a PrepareServer) Do(p project.IProject) error {
 
 	rootF := p.GetFolder()
 
-	if rootF.GetByPath(patterns.EasyP.Name) == nil {
-		rootF.Add(patterns.EasyP.Copy())
+	if rootF.GetByPath(patterns.Moti.Name) == nil {
+		rootF.Add(patterns.Moti.Copy())
 	}
 
 	transportFolder := rootF.GetByPath(patterns.InternalFolder, patterns.TransportFolder)

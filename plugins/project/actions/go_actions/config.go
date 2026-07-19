@@ -181,7 +181,17 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 	}
 
 	if len(cfg.Servers) > 0 {
-		nodes, err := cfg.Servers.MarshalEnv("SERVERS")
+		// Servers.MarshalEnv mutates each *server.Server.Name as a side
+		// effect (assigns it a canonical, upper-cased name). Marshal a copy
+		// so later generators (app struct, config struct) still see the
+		// original name and derive a consistent Go identifier from it.
+		serversCopy := make(matreshka.Servers, len(cfg.Servers))
+		for port, srv := range cfg.Servers {
+			srvCopy := *srv
+			serversCopy[port] = &srvCopy
+		}
+
+		nodes, err := serversCopy.MarshalEnv("SERVERS")
 		if err != nil {
 			return rerrors.Wrap(err, "error marshalling servers to env")
 		}

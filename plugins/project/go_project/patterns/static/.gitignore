@@ -16,5 +16,5 @@ config/dev.yaml
 # Dependency directories (remove the comment below to include it)
 # vendor/
 .idea
-proto_deps
+proto_modules
 

@@ -18,11 +18,11 @@ var (
 
 // Dependencies and generator
 var (
-	//go:embed static/easyp.yaml
-	easyp []byte
-	EasyP = &folder.Folder{
-		Name:    "easyp.yaml",
-		Content: easyp,
+	//go:embed static/moti.yaml
+	moti []byte
+	Moti = &folder.Folder{
+		Name:    "moti.yaml",
+		Content: moti,
 	}
 
 	//go:embed static/grpc.mk
