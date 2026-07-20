@@ -50,7 +50,7 @@ func (p *Proc) run(cmd *cobra.Command, args []string) error {
 
 	p.IO.Println(preparingMsg)
 
-	deps := dependencies.GetDependencies(p.RscliConfig, args)
+	deps := dependencies.GetDependencies(p.VervConfig, args)
 	if len(deps) == 0 {
 		missingDeps := dependencies.HelpWithDependencyNames()
 		p.IO.Println("Unknown dependencies. Try use these: [" + strings.Join(missingDeps, ",") + "]")

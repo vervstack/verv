@@ -1,4 +1,4 @@
-package init_new
+package init
 
 import (
 	"go.redsock.ru/rerrors"

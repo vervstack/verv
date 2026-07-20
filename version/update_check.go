@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	v "github.com/hashicorp/go-version"
+	"github.com/rs/zerolog/log"
 )
 
 func CanUpdate() (string, bool) {
@@ -12,6 +13,14 @@ func CanUpdate() (string, bool) {
 	if err != nil {
 		return "", false
 	}
+
+	defer func() {
+		err = resp.Body.Close()
+		if err != nil {
+			log.Error().Err(err).Msg("failed to close response body after getting latest release")
+		}
+	}()
+
 	if resp.StatusCode != http.StatusOK {
 		return "", false
 	}

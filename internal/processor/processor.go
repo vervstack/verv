@@ -20,9 +20,9 @@ const (
 // e.g. verv tidy - calls a cmd/project/tidy Processor and executes it
 // Contains all basic necessary information and primitives for CLI utility
 type Processor struct {
-	IO          io.IO
-	RscliConfig *config.VervConfig
-	WD          string
+	IO         io.IO
+	VervConfig *config.VervConfig
+	WD         string
 }
 
 type opt func(p *Processor)
@@ -46,8 +46,8 @@ func New(opts ...opt) Processor {
 		p.WD = wd
 	}
 
-	if p.RscliConfig == nil {
-		p.RscliConfig = config.GetConfig()
+	if p.VervConfig == nil {
+		p.VervConfig = config.GetConfig()
 	}
 
 	return p
@@ -62,7 +62,7 @@ func (p *Processor) LoadProject(cmd *cobra.Command) (proj *project.Project, err 
 
 	pathToProject = toolbox.Coalesce(pathToProject, p.WD)
 
-	proj, err = project.LoadProject(pathToProject, p.RscliConfig)
+	proj, err = project.LoadProject(pathToProject, p.VervConfig)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error loading project")
 	}

@@ -1,4 +1,4 @@
-package init_new
+package init
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ type Proc struct {
 func NewCommand(basicProc processor.Processor) *cobra.Command {
 	proc := &Proc{
 		Processor:     basicProc,
-		nameCollector: newNameCollector(basicProc.IO, basicProc.RscliConfig.DefaultProjectGitPath),
+		nameCollector: newNameCollector(basicProc.IO, basicProc.VervConfig.DefaultProjectGitPath),
 	}
 
 	c := &cobra.Command{
@@ -40,7 +40,7 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 
 func (p *Proc) run(_ *cobra.Command, cmdArgs []string) (err error) {
 	cArgs := project.CreateArgs{
-		CfgPath: p.RscliConfig.Env.PathToConfig,
+		CfgPath: p.VervConfig.Env.PathToConfig,
 	}
 
 	// step 1: obtain name

@@ -93,10 +93,10 @@ func Test_PrepareConfig(t *testing.T) {
 	action := PrepareConfigFolder{}
 
 	for name, tc := range tests {
-		name, tc := name, tc
-		t.Run(name, func(t *testing.T) {
+		testName, tcCopy := name, tc
+		t.Run(testName, func(t *testing.T) {
 			t.Parallel()
-			tc := tc.new()
+			tc := tcCopy.new()
 			projectMock := project_mock.GetMockProject(t, tc.opts...)
 
 			require.NoError(t, action.Do(projectMock.Project))

@@ -34,13 +34,18 @@ linters:
         - shadow
   enable:
     - govet
-
     - asasalint
     - asciicheck
     - bidichk
+    - bodyclose
+    - canonicalheader
+    - containedctx
     - contextcheck
+    - copyloopvar
+    - cyclop
     - decorder
     - dupword
+    - dogsled
     - durationcheck
     - errcheck
     - exhaustive

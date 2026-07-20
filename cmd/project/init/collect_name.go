@@ -1,4 +1,4 @@
-package init_new
+package init
 
 import (
 	"fmt"
@@ -19,7 +19,6 @@ hint: You can specify name with custom git url like "github.com/RedSock/rscli"
       or just print name without spec symbols and spaces like "rscli"
       in this case default git-url will be "%[1]s" and final result is "%[1]s/rscli"
 >`
-	ackProjectNameMessagePattern = `Wonderful!!! "%s" it is!`
 )
 
 var (
@@ -55,6 +54,7 @@ func (p *nameCollector) collect(args []string) (name string, err error) {
 
 	name = p.removeHttpProtoc(name)
 	name = p.preAppendHost(name)
+
 	err = validators.ValidateProjectNameStr(name)
 	if err != nil {
 		return "", rerrors.Wrap(err, "error validating project name")

@@ -1,4 +1,4 @@
-package project
+package tidy
 
 import (
 	"github.com/spf13/cobra"
@@ -15,17 +15,21 @@ type projectTidy struct {
 	io     io.IO
 	config *config.VervConfig
 
-	proj *project.Project
 	path string
 }
 
-func newTidyCmd(pl projectTidy) *cobra.Command {
+func NewCommand(basicProc processor.Processor) *cobra.Command {
+	proc := projectTidy{
+		io:     basicProc.IO,
+		config: basicProc.VervConfig,
+		path:   basicProc.WD,
+	}
 	c := &cobra.Command{
 		Use:   "tidy",
 		Short: "Cleans project",
 		Long:  "Can be used clean project",
 
-		RunE: pl.run,
+		RunE: proc.run,
 
 		SilenceErrors: true,
 		SilenceUsage:  true,
@@ -38,17 +42,15 @@ func newTidyCmd(pl projectTidy) *cobra.Command {
 	return c
 }
 
-func (p *projectTidy) run(_ *cobra.Command, _ []string) (err error) {
-	if p.proj == nil {
-		p.proj, err = project.LoadProject(p.path, p.config)
-		if err != nil {
-			return rerrors.Wrap(err, "error fetching project for tidy")
-		}
+func (p *projectTidy) run(_ *cobra.Command, _ []string) error {
+	proj, err := project.LoadProject(p.path, p.config)
+	if err != nil {
+		return rerrors.Wrap(err, "error fetching project for tidy")
 	}
 
 	ap := actions.NewActionPerformer(p.io)
 
-	err = ap.Tidy(p.proj)
+	err = ap.Tidy(proj)
 	if err != nil {
 		return rerrors.Wrap(err, "error performing tidy")
 	}
