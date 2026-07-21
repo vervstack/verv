@@ -7,10 +7,12 @@ import (
 	"github.com/spf13/cobra"
 	"go.redsock.ru/toolbox/closer"
 
-	initCmd "go.vervstack.ru/verv/cmd/project"
+	projectCmd "go.vervstack.ru/verv/cmd/project"
+	"go.vervstack.ru/verv/cmd/project/tidy"
 	"go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/internal/processor"
 	"go.vervstack.ru/verv/version"
 )
 
@@ -47,7 +49,10 @@ Run this to install it:
 
 	root.PersistentFlags().String(config.CustomPathToConfig, "", "path flag to custom config")
 
-	root.AddCommand(initCmd.NewCmd())
+	basicProc := processor.New()
+
+	root.AddCommand(projectCmd.NewCmd())
+	root.AddCommand(tidy.NewCommand(basicProc))
 
 	err := root.Execute()
 	if err != nil {

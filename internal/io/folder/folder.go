@@ -172,7 +172,7 @@ func (f *Folder) build(root string) error {
 		return f.buildDelete(pth)
 	}
 
-	if len(f.Content) != 0 {
+	if len(f.Content) != 0 || path.Ext(pth) != "" {
 		err := f.buildFile(pth)
 		if err != nil {
 			return rerrors.Wrap(err, "failed to building file")
