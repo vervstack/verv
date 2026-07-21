@@ -61,7 +61,7 @@ func installMacOS() error {
 		WorkDir: "",
 	})
 	if err != nil {
-		return err
+		return rerrors.Wrap(err)
 	}
 
 	return nil

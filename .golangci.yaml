@@ -46,9 +46,16 @@ linters:
     - decorder
     - dupword
     - dogsled
+    - dupl
+    - dupword
     - durationcheck
+    - embeddedstructfieldcheck
+    - err113
     - errcheck
+    - errchkjson
+    - errname
     - exhaustive
+    - exptostd
     - forbidigo
     - forcetypeassert
     - gochecknoinits
@@ -80,6 +87,7 @@ linters:
     - usetesting
     - wastedassign
     - whitespace
+    - wrapcheck
   exclusions:
     rules:
       - linters:

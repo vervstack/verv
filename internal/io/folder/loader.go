@@ -4,12 +4,14 @@ import (
 	"os"
 	"path"
 	"strings"
+
+	"go.redsock.ru/rerrors"
 )
 
 func Load(root string, ops ...opt) (*Folder, error) {
 	dir, err := os.ReadDir(root)
 	if err != nil {
-		return nil, err
+		return nil, rerrors.Wrap(err)
 	}
 
 	o := opts{}
@@ -63,14 +65,14 @@ func load(root, parent string, o opts) (*Folder, error) {
 
 	st, err := os.Stat(root)
 	if err != nil {
-		return nil, err
+		return nil, rerrors.Wrap(err)
 	}
 
 	if !st.IsDir() {
 		var innerFile []byte
 		innerFile, err = os.ReadFile(root)
 		if err != nil {
-			return nil, err
+			return nil, rerrors.Wrap(err)
 		}
 
 		folder := &Folder{
@@ -86,7 +88,7 @@ func load(root, parent string, o opts) (*Folder, error) {
 
 	dir, err := os.ReadDir(root)
 	if err != nil {
-		return nil, err
+		return nil, rerrors.Wrap(err)
 	}
 
 	f := &Folder{

@@ -22,7 +22,7 @@ func (a GoFmt) Do(p project.IProject) error {
 		WorkDir: p.GetProjectPath(),
 	})
 	if err != nil {
-		return err
+		return rerrors.Wrap(err)
 	}
 
 	return nil
@@ -88,7 +88,7 @@ func (a UpdateAllPackages) Do(p project.IProject) error {
 		WorkDir: p.GetProjectPath(),
 	})
 	if err != nil {
-		return err
+		return rerrors.Wrap(err)
 	}
 
 	return nil

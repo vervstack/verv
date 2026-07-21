@@ -22,7 +22,7 @@ hint: You can specify name with custom git url like "github.com/RedSock/rscli"
 )
 
 var (
-	emptyNameErr = rerrors.New("no name entered")
+	errEmptyName = rerrors.New("no name entered")
 )
 
 type nameCollector struct {
@@ -49,7 +49,7 @@ func (p *nameCollector) collect(args []string) (name string, err error) {
 	}
 
 	if name == "" {
-		return "", rerrors.Wrap(emptyNameErr)
+		return "", rerrors.Wrap(errEmptyName)
 	}
 
 	name = p.removeHttpProtoc(name)

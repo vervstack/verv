@@ -4,7 +4,7 @@ import (
 	"go.redsock.ru/rerrors"
 )
 
-var ErrInvalidNameErr = rerrors.New("name contains invalid symbol(s)")
+var ErrInvalidName = rerrors.New("name contains invalid symbol(s)")
 
 func ValidateProjectNameStr(name string) error {
 	// starting and ending ascii symbols ranges that are applicable to project name
@@ -24,7 +24,7 @@ func ValidateProjectNameStr(name string) error {
 			}
 		}
 		if !hasHitRange {
-			return rerrors.Wrap(ErrInvalidNameErr, string(s))
+			return rerrors.Wrap(ErrInvalidName, string(s))
 		}
 	}
 

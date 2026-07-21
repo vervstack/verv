@@ -34,7 +34,7 @@ func LoadProject(pth string, cfg *rscliconfig.VervConfig) (*Project, error) {
 
 	root, err := folder.Load(pth, folder.WithIgnore(ignoredFiles...))
 	if err != nil {
-		return nil, err
+		return nil, rerrors.Wrap(err)
 	}
 
 	conf, err := LoadProjectConfig(pth, cfg)

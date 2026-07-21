@@ -1,6 +1,8 @@
 package go_actions
 
 import (
+	"go.redsock.ru/rerrors"
+
 	"go.vervstack.ru/verv/plugins/project"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 )
@@ -12,8 +14,9 @@ func (a BuildProjectAction) Do(p project.IProject) error {
 
 	err := p.GetFolder().Build()
 	if err != nil {
-		return err
+		return rerrors.Wrap(err)
 	}
+
 	return nil
 }
 func (a BuildProjectAction) NameInAction() string {

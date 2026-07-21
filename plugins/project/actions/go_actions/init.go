@@ -28,8 +28,9 @@ func (a InitGoMod) Do(p project.IProject) error {
 
 	goMod, err := os.OpenFile(path.Join(p.GetProjectPath(), "go.mod"), os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
-		return err
+		return rerrors.Wrap(err)
 	}
+
 	defer func() {
 		err2 := goMod.Close()
 		if err2 != nil {

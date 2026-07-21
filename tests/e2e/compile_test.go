@@ -20,7 +20,7 @@ import (
 var (
 	buildOnce sync.Once
 	binPath   string
-	buildErr  error
+	errBuild  error
 )
 
 // buildCLI compiles the verv CLI once and shares the binary across subtests.
@@ -30,7 +30,7 @@ func buildCLI(t *testing.T) string {
 	buildOnce.Do(func() {
 		repoRoot, err := filepath.Abs("../..")
 		if err != nil {
-			buildErr = fmt.Errorf("resolving repo root: %w", err)
+			errBuild = fmt.Errorf("resolving repo root: %w", err)
 			return
 		}
 
@@ -43,17 +43,17 @@ func buildCLI(t *testing.T) string {
 		cmd.Dir = repoRoot
 
 		var output []byte
-		output, buildErr = cmd.CombinedOutput()
-		if buildErr != nil {
-			buildErr = fmt.Errorf("building verv CLI: %w\n%s", buildErr, output)
+		output, errBuild = cmd.CombinedOutput()
+		if errBuild != nil {
+			errBuild = fmt.Errorf("building verv CLI: %w\n%s", errBuild, output)
 			return
 		}
 
 		binPath = out
 	})
 
-	if buildErr != nil {
-		t.Fatal(buildErr)
+	if errBuild != nil {
+		t.Fatal(errBuild)
 	}
 
 	return binPath

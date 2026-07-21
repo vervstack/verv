@@ -14,6 +14,7 @@ import (
 
 type Proc struct {
 	processor.Processor
+
 	ActionPerformer actions.ActionPerformer
 }
 

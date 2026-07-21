@@ -1,7 +1,5 @@
 package colors
 
-import "github.com/nsf/termbox-go"
-
 type Color uint64
 
 const (
@@ -16,31 +14,21 @@ const (
 	ColorWhite
 )
 
-func UIColor(c Color) termbox.Attribute {
-	return termbox.Attribute(c)
+var terminalColorCodes = map[Color]string{
+	ColorDefault: "\033[0m",
+	ColorBlack:   "\033[30m",
+	ColorRed:     "\033[31m",
+	ColorGreen:   "\033[32m",
+	ColorYellow:  "\033[33m",
+	ColorBlue:    "\033[34m",
+	ColorMagenta: "\033[35m",
+	ColorCyan:    "\033[36m",
+	ColorWhite:   "\033[39m",
 }
 
 func TerminalColor(c Color) string {
-	switch c {
-	case ColorDefault:
-		return "\033[0m"
-	case ColorBlack:
-		return "\033[30m"
-	case ColorRed:
-		return "\033[31m"
-	case ColorGreen:
-		return "\033[32m"
-	case ColorYellow:
-		return "\033[33m"
-	case ColorBlue:
-		return "\033[34m"
-	case ColorMagenta:
-		return "\033[35m"
-	case ColorCyan:
-		return "\033[36m"
-	case ColorWhite:
-		return "\033[39m"
-	default:
-		return "\033[0m"
+	if code, ok := terminalColorCodes[c]; ok {
+		return code
 	}
+	return "\033[0m"
 }
