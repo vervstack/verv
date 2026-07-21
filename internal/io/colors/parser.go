@@ -30,5 +30,6 @@ func TerminalColor(c Color) string {
 	if code, ok := terminalColorCodes[c]; ok {
 		return code
 	}
+
 	return "\033[0m"
 }

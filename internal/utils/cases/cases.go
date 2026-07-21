@@ -47,6 +47,7 @@ func ToPascal(newName string) string {
 	for _, n := range nameRuned[1:] {
 		if n == '-' || n == '_' {
 			nextUpper = true
+
 			continue
 		}
 

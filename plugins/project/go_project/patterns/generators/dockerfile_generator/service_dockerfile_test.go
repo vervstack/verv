@@ -27,6 +27,8 @@ var (
 )
 
 func Test_GenerateDockerfile(t *testing.T) {
+	t.Parallel()
+
 	type testCase struct {
 		genProj  func() project.IProject
 		expected string
@@ -88,6 +90,8 @@ func Test_GenerateDockerfile(t *testing.T) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
 			proj := tc.genProj()
 
 			file, err := GenerateDockerfile(proj)

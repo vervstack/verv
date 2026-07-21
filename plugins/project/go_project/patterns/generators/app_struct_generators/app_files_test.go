@@ -29,6 +29,8 @@ var (
 )
 
 func Test_GenerateAppFiles(t *testing.T) {
+	t.Parallel()
+
 	type testCase struct {
 		genProj      func() project.IProject
 		expectedApp  string
@@ -86,6 +88,7 @@ func Test_GenerateAppFiles(t *testing.T) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			proj := tc.genProj()
 
 			out, err := GenerateAppFiles(proj)
@@ -105,6 +108,8 @@ func Test_GenerateAppFiles(t *testing.T) {
 }
 
 func Test_GenerateAppFiles_CustomFileAlreadyExists(t *testing.T) {
+	t.Parallel()
+
 	proj := project_mock.GetMockProject(t)
 
 	proj.GetFolder().Add(&folder.Folder{

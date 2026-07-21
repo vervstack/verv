@@ -9,6 +9,8 @@ import (
 )
 
 func Test_GenerateServiceApiProto(t *testing.T) {
+	t.Parallel()
+
 	testCases := map[string]struct {
 		shortName string
 		expected  string
@@ -79,6 +81,8 @@ message Version {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
 			proj := project_mock.GetMockProject(t)
 			proj.Name = tc.shortName
 

@@ -10,7 +10,11 @@ import (
 )
 
 func Test_GenerateEnvConfig(t *testing.T) {
+	t.Parallel()
+
 	t.Run("environment", func(t *testing.T) {
+		t.Parallel()
+
 		env := matreshka.Environment{
 			environment.MustNewVariable("one", 1),
 			environment.MustNewVariable("two", time.Second),

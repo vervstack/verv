@@ -37,6 +37,7 @@ func (r *RW) GetReader() io.Reader {
 	out := bytes.NewReader(r.b)
 	r.b = make([]byte, 0, len(r.b))
 	r.l.Unlock()
+
 	return out
 }
 

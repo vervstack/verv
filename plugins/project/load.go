@@ -115,6 +115,7 @@ func goProjectLoader(p *Project) (name *string) {
 
 func unknownProjectLoader(p *Project) *string {
 	name := p.Cfg.Name
+
 	return &name
 }
 
@@ -124,6 +125,7 @@ func readIgnoredFiles(projectPath string) ([]string, error) {
 		if os.IsNotExist(err) {
 			return nil, nil
 		}
+
 		return nil, rerrors.Wrap(err, "error reading gitignore file")
 	}
 

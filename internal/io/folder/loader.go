@@ -55,6 +55,7 @@ func matchesAnyPattern(patterns []string, name, parent string) bool {
 			}
 		}
 	}
+
 	return false
 }
 

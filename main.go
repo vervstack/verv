@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
+	"go.redsock.ru/toolbox/closer"
 
 	initCmd "go.vervstack.ru/verv/cmd/project"
 	"go.vervstack.ru/verv/internal/config"
@@ -13,6 +15,13 @@ import (
 )
 
 func main() {
+	defer func() {
+		err := closer.Close()
+		if err != nil {
+			log.Err(err).Msg("errors on closing background closers")
+		}
+	}()
+
 	newVersion, canUpdate := version.CanUpdate()
 	if canUpdate {
 		io.StdIO{}.Println(`

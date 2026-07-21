@@ -1,5 +1,5 @@
 lint:
-	golangci-lint run
+	golangci-lint run --fix
 
 gen-test-project-with-deps: .compile-pattern .gen-test-project-with-deps
 

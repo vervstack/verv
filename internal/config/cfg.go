@@ -3,6 +3,7 @@
 package config
 
 import (
+	"database/sql"
 	_ "embed"
 	"os"
 	"path"
@@ -88,8 +89,8 @@ func InitConfig(cmd *cobra.Command, _ []string) error {
 		return rerrors.Wrap(err, "error obtaining config from custom file")
 	}
 
-	if configFromFile != nil {
-		*vervConfig = mergeConfigs(*configFromFile, *vervConfig)
+	if configFromFile.Valid {
+		*vervConfig = mergeConfigs(configFromFile.V, *vervConfig)
 	}
 
 	return nil
@@ -118,12 +119,13 @@ func getConfigFromEnvironment() (r VervConfig) {
 	if pathToCompiledClients := strings.Split(os.Getenv(envPathToCompiledClients), ","); pathToCompiledClients[0] != "" {
 		r.Env.PathsToCompiledClients = pathToCompiledClients
 	}
+
 	return
 }
 
-func getConfigFromFile(cmd *cobra.Command) (*VervConfig, error) {
+func getConfigFromFile(cmd *cobra.Command) (sql.Null[VervConfig], error) {
 	if cmd == nil {
-		return nil, nil
+		return sql.Null[VervConfig]{}, nil
 	}
 
 	cfgFilePath := cmd.Flag(CustomPathToConfig).Value.String()
@@ -139,20 +141,23 @@ func getConfigFromFile(cmd *cobra.Command) (*VervConfig, error) {
 
 	file, err := os.ReadFile(cfgFilePath)
 	if err != nil && !rerrors.Is(err, os.ErrNotExist) {
-		return nil, rerrors.Wrap(err, "error reading file from FS")
+		return sql.Null[VervConfig]{}, rerrors.Wrap(err, "error reading file from FS")
 	}
 
 	if len(file) == 0 {
-		return nil, nil
+		return sql.Null[VervConfig]{}, nil
 	}
 
 	var externalConf VervConfig
 	err = yaml.Unmarshal(file, &externalConf)
 	if err != nil {
-		return nil, rerrors.Wrap(err, "error unmarshalling config from: "+cfgFilePath)
+		return sql.Null[VervConfig]{}, rerrors.Wrap(err, "error unmarshalling config from: "+cfgFilePath)
 	}
 
-	return &externalConf, nil
+	return sql.Null[VervConfig]{
+		V:     externalConf,
+		Valid: true,
+	}, nil
 }
 
 func mergeConfigs(master, slave VervConfig) VervConfig {

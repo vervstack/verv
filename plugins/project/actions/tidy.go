@@ -18,6 +18,7 @@ func GetTidyActionsForProject(pt project.Type) []Action {
 	}
 
 	out = append(out, commonProjectTidyPostActions()...)
+
 	return out
 }
 

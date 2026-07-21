@@ -12,6 +12,8 @@ import (
 )
 
 func TestGenerateImpl(t *testing.T) {
+	t.Parallel()
+
 	projMock := mocks.NewIProjectMock(t)
 	projMock.GetNameMock.Expect().Return("test_Proj")
 

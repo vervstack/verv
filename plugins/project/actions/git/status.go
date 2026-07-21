@@ -87,6 +87,7 @@ func parseCommitChanges(executeOut string) []Changes {
 			for _, keyWord := range keyWords {
 				if strings.HasPrefix(item, keyWord) {
 					gitChanges.Changelist = append(gitChanges.Changelist, item)
+
 					break
 				}
 			}

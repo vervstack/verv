@@ -20,6 +20,7 @@ func ValidateProjectNameStr(name string) error {
 		for _, r := range availableRanges {
 			if s >= r[0] && s <= r[1] {
 				hasHitRange = true
+
 				break
 			}
 		}

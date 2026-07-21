@@ -58,6 +58,7 @@ func (p StdIO) GetInput() (string, error) {
 
 	out, _ = strings.CutSuffix(out, "\n")
 	out, _ = strings.CutSuffix(out, "\r")
+
 	return out, nil
 }
 func (p StdIO) GetInputOneOf(options []string) string {

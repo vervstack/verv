@@ -77,6 +77,7 @@ func (g GrpcDiscovery) getGrpcPackageFromMod(packagePath string) (*GrpcPackage, 
 				}
 
 				pkg.ImportPath = path.Join(packagePath, pkg.ImportPath)
+
 				return pkg, nil
 			}
 		}

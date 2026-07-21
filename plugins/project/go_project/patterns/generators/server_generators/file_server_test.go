@@ -10,6 +10,8 @@ import (
 )
 
 func Test_GenerateFileServer(t *testing.T) {
+	t.Parallel()
+
 	testCases := map[string]struct {
 		fs       server.FS
 		expected string
@@ -78,6 +80,8 @@ func NewServer() (http.Handler, error) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
 			f, err := GenerateFileServer(tc.fs)
 			require.NoError(t, err)
 

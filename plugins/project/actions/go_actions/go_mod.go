@@ -75,6 +75,7 @@ func (a RunMakeGenAction) Do(p project.IProject) error {
 	if err != nil {
 		return rerrors.Wrap(err, "error running rscli generate command")
 	}
+
 	return nil
 }
 func (a RunMakeGenAction) NameInAction() string {

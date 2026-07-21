@@ -58,5 +58,6 @@ func GenerateConfigFolder(cfg *config.Config) (*folder.Folder, error) {
 		Name:    patterns.ConfigLoadFileName,
 		Content: autoLoadFile.Bytes(),
 	})
+
 	return configFolder, nil
 }

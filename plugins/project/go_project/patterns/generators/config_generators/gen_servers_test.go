@@ -10,6 +10,8 @@ import (
 )
 
 func TestGenServer(t *testing.T) {
+	t.Parallel()
+
 	type testCase struct {
 		servers      matreshka.Servers
 		expectedFile []byte
@@ -42,6 +44,8 @@ type ServersConfig struct {
 	}
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
 			tc := tc
 			ic, folder, err := newGenerateServerConfigStruct(tc.servers)()
 			require.NoError(t, err)

@@ -55,6 +55,7 @@ func (p *Proc) run(cmd *cobra.Command, args []string) error {
 	if len(deps) == 0 {
 		missingDeps := dependencies.HelpWithDependencyNames()
 		p.IO.Println("Unknown dependencies. Try use these: [" + strings.Join(missingDeps, ",") + "]")
+
 		return nil
 	}
 

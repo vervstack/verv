@@ -92,6 +92,7 @@ func generateImpl(proj project.IProject, protoContract []byte) (*folder.Folder, 
 			},
 		},
 	}
+
 	return outF, nil
 }
 
@@ -114,6 +115,7 @@ func extractGoGrpcPackage(contract []byte) (string, error) {
 	if aliasStartIdx != -1 {
 		goPackage = goPackage[aliasStartIdx+1:]
 	}
+
 	return goPackage, nil
 }
 
@@ -127,5 +129,6 @@ func extractServiceName(contract []byte) string {
 	endIdx := startIdx + bytes.Index(contract[startIdx:], []byte("{"))
 	serviceName := contract[startIdx+len(patternToFind) : endIdx]
 	serviceName = bytes.TrimSpace(serviceName)
+
 	return string(serviceName)
 }

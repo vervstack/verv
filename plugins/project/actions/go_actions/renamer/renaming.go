@@ -11,6 +11,7 @@ func ReplaceProjectName(name string, f *folder.Folder) {
 	if f.Content != nil {
 		if idx := bytes.Index(f.Content, []byte(envpatterns.ProjNamePattern)); idx != -1 {
 			f.Content = bytes.ReplaceAll(f.Content, []byte(envpatterns.ProjNamePattern), []byte(name))
+
 			return
 		}
 	}

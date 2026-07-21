@@ -5,6 +5,8 @@ import (
 	"os/exec"
 
 	"go.redsock.ru/rerrors"
+
+	"go.vervstack.ru/verv/internal/utils/global_context"
 )
 
 type Request struct {
@@ -14,7 +16,9 @@ type Request struct {
 }
 
 func Execute(r Request) (message string, err error) {
-	cmd := exec.Command(r.Tool, r.Args...)
+	ctx := global_context.Background()
+
+	cmd := exec.CommandContext(ctx, r.Tool, r.Args...)
 	if r.WorkDir != "" {
 		cmd.Dir = r.WorkDir
 	}
@@ -38,6 +42,7 @@ type RW struct {
 
 func (r *RW) Write(p []byte) (n int, err error) {
 	r.b = append(r.b, p...)
+
 	return len(p), nil
 }
 
@@ -54,6 +59,7 @@ func (r *RW) Read(b []byte) (n int, err error) {
 	}
 
 	r.b = r.b[n:]
+
 	return n, nil
 }
 
@@ -62,5 +68,6 @@ func (r *RW) String() string {
 	if err != nil {
 		return rerrors.Wrap(err, "error parsing message from execution error").Error()
 	}
+
 	return string(bts)
 }

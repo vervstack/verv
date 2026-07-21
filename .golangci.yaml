@@ -100,12 +100,19 @@ linters:
     - misspell
     - mnd
     - modernize
-
+    - musttag
     - nakedret
+    - nestif
     - nilerr
+    - nilnesserr
+# Too much to handle now
+#    - nilnil
+    - nlreturn
+    - noctx
     - nolintlint
     - noinlineerr
     - nosprintfhostport
+    - paralleltest
     - predeclared
     - promlinter
     - reassign

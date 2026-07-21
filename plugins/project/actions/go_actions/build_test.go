@@ -66,6 +66,7 @@ func (s *BuildProjectSuite) walkDirAndValidate(root string, dir []os.DirEntry) {
 			innerDirs, err := os.ReadDir(newRoot)
 			s.Require().NoError(err)
 			s.walkDirAndValidate(newRoot, innerDirs)
+
 			continue
 		}
 
@@ -73,6 +74,7 @@ func (s *BuildProjectSuite) walkDirAndValidate(root string, dir []os.DirEntry) {
 		expectedContent, ok := s.expected[filePath[len(s.projectPath)+1:]]
 		if !ok {
 			s.Assert().Fail("unexpected file name", name)
+
 			continue
 		}
 		actualContent, err := os.ReadFile(filePath)
@@ -83,5 +85,6 @@ func (s *BuildProjectSuite) walkDirAndValidate(root string, dir []os.DirEntry) {
 }
 
 func Test_BuildProject(t *testing.T) {
+	t.Parallel()
 	suite.Run(t, new(BuildProjectSuite))
 }

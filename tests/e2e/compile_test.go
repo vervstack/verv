@@ -33,6 +33,7 @@ func buildCLI(t *testing.T) string {
 		repoRoot, err := filepath.Abs("../..")
 		if err != nil {
 			errBuild = fmt.Errorf("resolving repo root: %w", err)
+
 			return
 		}
 
@@ -41,13 +42,14 @@ func buildCLI(t *testing.T) string {
 			out += ".exe"
 		}
 
-		cmd := exec.Command("go", "build", "-o", out, ".")
+		cmd := exec.CommandContext(t.Context(), "go", "build", "-o", out, ".")
 		cmd.Dir = repoRoot
 
 		var output []byte
 		output, errBuild = cmd.CombinedOutput()
 		if errBuild != nil {
 			errBuild = fmt.Errorf("building verv CLI: %w\n%s", errBuild, output)
+
 			return
 		}
 
@@ -66,7 +68,7 @@ func buildCLI(t *testing.T) string {
 func run(t *testing.T, dir, name string, args ...string) {
 	t.Helper()
 
-	cmd := exec.Command(name, args...)
+	cmd := exec.CommandContext(t.Context(), name, args...)
 	cmd.Dir = dir
 	cmd.Env = append(os.Environ(),
 		"GIT_AUTHOR_NAME=verv-e2e",

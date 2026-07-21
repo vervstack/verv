@@ -225,6 +225,7 @@ func marshalEnvExample(nodes []*evon.Node) []byte {
 			b.Write(marshalEnvExample(node.InnerNodes))
 		}
 	}
+
 	return b.Bytes()
 }
 
@@ -234,5 +235,6 @@ func isEnvVarName(s string) bool {
 			return false
 		}
 	}
+
 	return true
 }

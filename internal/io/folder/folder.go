@@ -30,6 +30,7 @@ func (f *Folder) Add(folders ...*Folder) {
 				if f.Inner[idx].Name == fl.Name {
 					f.Inner[idx] = fl
 					found = true
+
 					break
 				}
 			}
@@ -56,6 +57,7 @@ func (f *Folder) GetByPath(pth ...string) *Folder {
 		for _, cf := range currentFolder.Inner {
 			if cf.Name == p {
 				foundFolder = cf
+
 				break
 			}
 		}

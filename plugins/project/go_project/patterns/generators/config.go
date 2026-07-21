@@ -17,5 +17,6 @@ var nameReplacer = strings.NewReplacer(
 
 func NormalizeResourceName(in string) string {
 	in = nameReplacer.Replace(in)
+
 	return cases.SnakeToPascal(in)
 }

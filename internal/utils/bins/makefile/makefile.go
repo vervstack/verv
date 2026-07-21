@@ -21,6 +21,7 @@ func Exists() bool {
 		Tool: bin,
 		Args: []string{"--help"},
 	})
+
 	return err == nil
 }
 

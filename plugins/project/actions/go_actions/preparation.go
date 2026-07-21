@@ -176,6 +176,7 @@ func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder
 		for _, tF := range transportFolder.Inner {
 			if tF.Name == implF.Name {
 				exists = true
+
 				break
 			}
 		}
