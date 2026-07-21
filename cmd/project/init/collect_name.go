@@ -13,12 +13,13 @@ import (
 )
 
 const (
-	askUserForNameMessagePattern = `
-What would it be called?
-hint: You can specify name with custom git url like "github.com/vervstack/verv" 
-      or just print name without spec symbols and spaces like "verv"
-      in this case default git-url will be "%[1]s" and final result is "%[1]s/verv"
->`
+	askUserForNameGreeting = "👋 Let's spin up something new!"
+	askUserForNameQuestion = "   What should we call it?"
+	askUserForNameHint     = `   💡 give it a full git path, like "github.com/vervstack/verv",
+      or just a short name, like "verv" — we'll default to "%[1]s/verv"`
+	askUserForNamePrompt = "➜  "
+
+	nameAcceptedMessagePattern = `✨ Perfect — %q it is!`
 )
 
 var (
@@ -62,13 +63,18 @@ func (p *nameCollector) collect(args []string) (name string, err error) {
 
 	name = path.Join(path.Dir(name), strings.ToLower(path.Base(name)))
 
-	p.io.PrintlnColored(colors.ColorCyan, fmt.Sprintf(`Wonderful!!! "%s" it is!`, name))
+	p.io.PrintlnColored(colors.ColorCyan, fmt.Sprintf(nameAcceptedMessagePattern, name))
 
 	return name, nil
 }
 
 func (p *nameCollector) askUserForName() (name string, err error) {
-	p.io.Print(fmt.Sprintf(askUserForNameMessagePattern, p.defaultProjectGitPath))
+	p.io.PrintlnColored(colors.ColorMagenta, askUserForNameGreeting)
+	p.io.Println()
+	p.io.PrintlnColored(colors.ColorWhite, askUserForNameQuestion)
+	p.io.PrintlnColored(colors.ColorYellow, fmt.Sprintf(askUserForNameHint, p.defaultProjectGitPath))
+	p.io.Println()
+	p.io.PrintColored(colors.ColorGreen, askUserForNamePrompt)
 
 	name, err = p.io.GetInput()
 	if err != nil {

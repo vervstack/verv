@@ -35,16 +35,37 @@ func NewActionPerformer(printer io.IO) *ActionPerformer {
 
 func (a *ActionPerformer) Tidy(proj project.IProject) error {
 	acts := GetTidyActionsForProject(proj.GetType())
+
+	return RunPipeline(a.printer, proj, acts, PipelineLabels{
+		StartEmoji: "🚀",
+		StartVerb:  "Tidying up",
+		EndEmoji:   "✨",
+		EndVerb:    "is tidy",
+	})
+}
+
+// PipelineLabels customizes the banner and completion messages printed by RunPipeline.
+type PipelineLabels struct {
+	StartEmoji string
+	StartVerb  string
+	EndEmoji   string
+	EndVerb    string
+}
+
+// RunPipeline executes acts against proj, printing a colored banner, an animated
+// spinner per step (à la `docker pull`), and a colored completion summary.
+func RunPipeline(printer io.IO, proj project.IProject, acts []Action, labels PipelineLabels) error {
 	total := len(acts)
 
-	a.printer.PrintlnColored(colors.ColorCyan, fmt.Sprintf("🚀 Tidying up %q — %d steps ahead", proj.GetName(), total))
+	banner := fmt.Sprintf("%s %s %q — %d steps ahead", labels.StartEmoji, labels.StartVerb, proj.GetName(), total)
+	printer.PrintlnColored(colors.ColorCyan, banner)
 
 	start := time.Now()
 
 	for idx, ac := range acts {
 		label := fmt.Sprintf("[%d/%d] %s %s", idx+1, total, stepEmoji(ac.NameInAction()), ac.NameInAction())
 
-		spinner := io.NewSpinner(a.printer)
+		spinner := io.NewSpinner(printer)
 		spinner.Start(label)
 
 		stepStart := time.Now()
@@ -61,8 +82,9 @@ func (a *ActionPerformer) Tidy(proj project.IProject) error {
 	}
 
 	totalElapsed := time.Since(start).Round(time.Millisecond)
-	tidySummary := fmt.Sprintf("✨ Project is tidy! Wrapped up %d steps in %s", total, totalElapsed)
-	a.printer.PrintlnColored(colors.ColorGreen, tidySummary)
+	summary := fmt.Sprintf("%s Project %s! Wrapped up %d steps in %s",
+		labels.EndEmoji, labels.EndVerb, total, totalElapsed)
+	printer.PrintlnColored(colors.ColorGreen, summary)
 
 	return nil
 }
@@ -83,6 +105,8 @@ var stepEmojis = []struct {
 	{"client", "🔌"},
 	{"server", "🖥️"},
 	{"dockerfile", "🐳"},
+	{"structure", "🧱"},
+	{"init", "🌱"},
 }
 
 func stepEmoji(name string) string {
