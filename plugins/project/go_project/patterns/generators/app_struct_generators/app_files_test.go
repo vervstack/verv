@@ -89,6 +89,7 @@ func Test_GenerateAppFiles(t *testing.T) {
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
+
 			proj := tc.genProj()
 
 			out, err := GenerateAppFiles(proj)
@@ -97,6 +98,7 @@ func Test_GenerateAppFiles(t *testing.T) {
 			require.Equal(t, tc.expectedApp, string(out[patterns.AppFileName]))
 
 			expectedKeys := tc.expectedKeys
+
 			expectedKeys[patterns.AppFileName] = out[patterns.AppFileName]
 			require.Len(t, out, len(expectedKeys))
 

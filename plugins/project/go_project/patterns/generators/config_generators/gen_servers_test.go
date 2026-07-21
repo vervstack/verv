@@ -49,6 +49,7 @@ type ServersConfig struct {
 			tc := tc
 			ic, folder, err := newGenerateServerConfigStruct(tc.servers)()
 			require.NoError(t, err)
+
 			_ = ic
 
 			tests.CompareLongStrings(t, tc.expectedFile, folder.Content)

@@ -25,7 +25,7 @@ type Opt func(m *MockProject)
 func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 	t.Helper()
 
-	p := &MockProject{
+	projectMock := &MockProject{
 		Project: &project.Project{
 			Name: "github.com/" + t.Name(),
 			Cfg: &config.Config{
@@ -35,22 +35,22 @@ func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 		},
 	}
 
-	require.NoError(t, p.Cfg.Unmarshal(basicConfigFile))
+	require.NoError(t, projectMock.Cfg.Unmarshal(basicConfigFile))
 
 	for _, o := range opts {
-		o(p)
+		o(projectMock)
 	}
 
-	cfgMarshalled, err := p.Cfg.Marshal()
+	cfgMarshalled, err := projectMock.Cfg.Marshal()
 	require.NoError(t, err)
 
-	p.Cfg.AppConfig = matreshka.NewEmptyConfig()
+	projectMock.Cfg.AppConfig = matreshka.NewEmptyConfig()
 	// to be sure in types of env variables
-	require.NoError(t, p.Cfg.Unmarshal(cfgMarshalled))
+	require.NoError(t, projectMock.Cfg.Unmarshal(cfgMarshalled))
 
 	masterConfigPath := path.Join(patterns.ConfigsFolder, patterns.ConfigMasterYamlFile)
-	if p.Root.GetByPath(masterConfigPath) == nil {
-		p.Root.Add(
+	if projectMock.Root.GetByPath(masterConfigPath) == nil {
+		projectMock.Root.Add(
 			&folder.Folder{
 				Name:    masterConfigPath,
 				Content: cfgMarshalled,
@@ -58,12 +58,12 @@ func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 		)
 	}
 
-	if p.Path != "" {
-		require.NoError(t, os.RemoveAll(p.Path))
-		require.NoError(t, os.MkdirAll(p.Path, io.DefaultDirPerm))
+	if projectMock.Path != "" {
+		require.NoError(t, os.RemoveAll(projectMock.Path))
+		require.NoError(t, os.MkdirAll(projectMock.Path, io.DefaultDirPerm))
 	}
 
-	return p
+	return projectMock
 }
 
 func (m *MockProject) WriteFile(t *testing.T, relativePath string, data []byte) {

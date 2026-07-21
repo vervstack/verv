@@ -25,6 +25,7 @@ func newGenerateServerConfigStruct(srv matreshka.Servers) internalConfigGenerato
 
 		for _, s := range srv {
 			var fieldKV generators.KeyValue
+
 			fieldKV.Key = matreshka.ServerName(s.Name)
 
 			refVal := reflect.ValueOf(s)
@@ -45,6 +46,7 @@ func newGenerateServerConfigStruct(srv matreshka.Servers) internalConfigGenerato
 		}
 
 		buf := &rw.RW{}
+
 		err := configStructTemplate.Execute(buf, ecg)
 		if err != nil {
 			return generators.InternalConfig{}, nil, rerrors.Wrap(err, "error executing server config struct template")

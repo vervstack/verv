@@ -116,6 +116,7 @@ func (a PrepareConfigFolder) generateConfigYamlFile(p project.IProject) (err err
 		patterns.ConfigMasterYamlFile,
 	} {
 		newConfig.ServiceDiscovery = matreshka.ServiceDiscovery{}
+
 		err := appendToConfig(newConfig.AppConfig, configFolder, cfgName)
 		if err != nil {
 			return rerrors.Wrap(err, "error appending changes to dev config")
@@ -145,6 +146,7 @@ func appendToConfig(newConfig matreshka.AppConfig, configFolder *folder.Folder, 
 
 	currentConfig = matreshka.MergeConfigs(currentConfig, newConfig)
 	sortEnv(currentConfig)
+
 	configFile.Content, err = currentConfig.Marshal()
 	if err != nil {
 		return rerrors.Wrap(err, "error marshalling dev config to yaml")
@@ -169,6 +171,7 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 		if err != nil {
 			return rerrors.Wrap(err, "error marshalling environment to env")
 		}
+
 		allNodes = append(allNodes, nodes...)
 	}
 
@@ -177,6 +180,7 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 		if err != nil {
 			return rerrors.Wrap(err, "error marshalling data sources to env")
 		}
+
 		allNodes = append(allNodes, nodes...)
 	}
 
@@ -188,6 +192,7 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 		serversCopy := make(matreshka.Servers, len(cfg.Servers))
 		for port, srv := range cfg.Servers {
 			srvCopy := *srv
+
 			serversCopy[port] = &srvCopy
 		}
 
@@ -195,6 +200,7 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 		if err != nil {
 			return rerrors.Wrap(err, "error marshalling servers to env")
 		}
+
 		allNodes = append(allNodes, nodes...)
 	}
 
@@ -215,6 +221,7 @@ func (a PrepareConfigFolder) generateEnvExampleFile(p project.IProject) error {
 // entries like "/{GRPC}") are skipped — they cannot be valid env var names.
 func marshalEnvExample(nodes []*evon.Node) []byte {
 	b := &bytes.Buffer{}
+
 	for _, node := range nodes {
 		if node.Value != nil {
 			name := strings.ReplaceAll(node.Name, "-", "_")

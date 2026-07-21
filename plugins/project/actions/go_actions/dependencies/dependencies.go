@@ -71,10 +71,12 @@ func GetDependencies(c *rscliconfig.VervConfig, args []string) []Dependency {
 		if !ok {
 			continue
 		}
+
 		base := dependencyBase{
 			Name: name,
 			Cfg:  c,
 		}
+
 		serverOpts = append(serverOpts, depConstr(base))
 	}
 

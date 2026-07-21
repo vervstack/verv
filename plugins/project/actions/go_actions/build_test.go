@@ -30,6 +30,7 @@ func (s *BuildProjectSuite) Test_BuildProject() {
 
 	mainGoFile, err := main_generators.GenerateMain()
 	require.NoError(t, err)
+
 	proj := project_mock.GetMockProject(t,
 		project_mock.WithFile(mainGoFilePath, mainGoFile),
 		project_mock.WithFileSystem(t),
@@ -70,12 +71,14 @@ func (s *BuildProjectSuite) walkDirAndValidate(root string, dir []os.DirEntry) {
 		}
 
 		filePath := path.Join(root, name)
+
 		expectedContent, ok := s.expected[filePath[len(s.projectPath)+1:]]
 		if !ok {
 			s.Fail("unexpected file name", name)
 
 			continue
 		}
+
 		actualContent, err := os.ReadFile(filePath)
 		s.Require().NoError(err)
 

@@ -15,8 +15,10 @@ func ReplaceProjectName(name string, f *folder.Folder) {
 			return
 		}
 	}
+
 	for _, innerFolder := range f.Inner {
 		ReplaceProjectName(name, innerFolder)
+
 		if f.Name == envpatterns.ProjNamePattern && len(f.Inner) == 0 {
 			f.Name = name
 		}

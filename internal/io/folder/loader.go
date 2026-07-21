@@ -28,6 +28,7 @@ func Load(root string, ops ...opt) (*Folder, error) {
 		if err != nil {
 			return nil, err
 		}
+
 		if innerFolder != nil {
 			f.Inner = append(f.Inner, innerFolder)
 		}
@@ -71,6 +72,7 @@ func load(root, parent string, o opts) (*Folder, error) {
 
 	if !st.IsDir() {
 		var innerFile []byte
+
 		innerFile, err = os.ReadFile(root)
 		if err != nil {
 			return nil, rerrors.Wrap(err)
@@ -99,6 +101,7 @@ func load(root, parent string, o opts) (*Folder, error) {
 
 	for _, d := range dir {
 		var innerDir *Folder
+
 		innerDir, err = load(path.Join(root, d.Name()), path.Join(parent, f.Name), o)
 		if err != nil {
 			return nil, err

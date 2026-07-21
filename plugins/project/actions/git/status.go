@@ -41,6 +41,7 @@ func parseUntrackedFiles(executeOut string) (Changes, bool) {
 	}
 
 	startIdx += len(messageForUntrackedFiles)
+
 	changeList := strings.Split(executeOut[startIdx:], "\n")
 
 	gitChanges := Changes{
@@ -51,6 +52,7 @@ func parseUntrackedFiles(executeOut string) (Changes, bool) {
 		if len(item) == 0 {
 			continue
 		}
+
 		if strings.HasPrefix(item, "\t") {
 			gitChanges.Changelist = append(gitChanges.Changelist, item[1:])
 		}
@@ -71,6 +73,7 @@ func parseCommitChanges(executeOut string) []Changes {
 		}
 
 		startIdx += len(message)
+
 		changeList := strings.Split(executeOut[startIdx:], "\n")
 
 		gitChanges := Changes{
@@ -110,19 +113,23 @@ func (s StatusDiff) GetFilesListed() string {
 	const splittedParamsCount = 2
 
 	sb := strings.Builder{}
+
 	for _, item := range s {
 		if len(item.Changelist) == 0 {
 			continue
 		}
+
 		sb.WriteString(item.Type.Msg())
 		sb.WriteString("\n")
 
 		changeTypeToFile := map[string][]string{}
+
 		for _, line := range item.Changelist {
 			splited := strings.Split(line, ":")
 			if len(splited) != splittedParamsCount {
 				continue
 			}
+
 			changeTypeToFile[splited[0]] = append(changeTypeToFile[splited[0]], splited[1])
 		}
 
@@ -137,10 +144,12 @@ func (s StatusDiff) GetFilesListed() string {
 }
 func (s StatusDiff) String() string {
 	sb := strings.Builder{}
+
 	for _, item := range s {
 		if len(item.Changelist) == 0 {
 			continue
 		}
+
 		sb.WriteString(item.Type.Msg())
 		sb.WriteString("\n\t")
 		sb.WriteString(strings.Join(item.Changelist, "\n\t"))

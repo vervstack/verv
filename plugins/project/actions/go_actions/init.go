@@ -52,6 +52,7 @@ type InitGoProjectApp struct{}
 
 func (a InitGoProjectApp) Do(p project.IProject) error {
 	appFolderPath := path.Join(patterns.InternalFolder, patterns.AppFolder)
+
 	appFolder := p.GetFolder().GetByPath(appFolderPath)
 	if appFolder == nil {
 		appFolder = &folder.Folder{
@@ -78,6 +79,7 @@ func (a InitGoProjectApp) Do(p project.IProject) error {
 		if err != nil {
 			return rerrors.Wrap(err)
 		}
+
 		p.GetFolder().Add(
 			&folder.Folder{
 				Name:    patterns.DockerfileFile,

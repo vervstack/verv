@@ -22,10 +22,13 @@ func Execute(r Request) (message string, err error) {
 	if r.WorkDir != "" {
 		cmd.Dir = r.WorkDir
 	}
+
 	errRW := &RW{}
+
 	cmd.Stderr = errRW
 
 	msgRW := &RW{}
+
 	cmd.Stdout = msgRW
 
 	err = cmd.Run()
@@ -51,9 +54,11 @@ func (r *RW) Read(b []byte) (n int, err error) {
 		if idx >= len(r.b) {
 			break
 		}
+
 		b[idx] = r.b[idx]
 		n++
 	}
+
 	if n == 0 {
 		return 0, io.EOF
 	}

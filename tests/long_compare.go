@@ -36,6 +36,7 @@ func CompareLongStrings(t *testing.T, expected, actual []byte) (eq bool) {
 		if !eq {
 			return false
 		}
+
 		require.NoError(t, actErr)
 		require.NoError(t, expErr)
 	}

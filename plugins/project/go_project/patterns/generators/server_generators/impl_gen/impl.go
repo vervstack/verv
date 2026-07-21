@@ -36,6 +36,7 @@ func GenerateImpl(cfg *rscliconfig.VervConfig, proj project.IProject) ([]*folder
 	}
 
 	out := make([]*folder.Folder, 0, 1)
+
 	for _, f := range grpcFolder.Inner {
 		if !strings.HasSuffix(f.Name, ".proto") {
 			continue
@@ -98,6 +99,7 @@ func generateImpl(proj project.IProject, protoContract []byte) (*folder.Folder, 
 
 func extractGoGrpcPackage(contract []byte) (string, error) {
 	const patternToFind = "option go_package ="
+
 	idxStart := bytes.Index(contract, []byte(patternToFind))
 	if idxStart == -1 {
 		return "", rerrors.Wrap(ErrNoGoPackageOption)
@@ -111,6 +113,7 @@ func extractGoGrpcPackage(contract []byte) (string, error) {
 	if goPackage[0] == '/' {
 		goPackage = goPackage[1:]
 	}
+
 	aliasStartIdx := strings.LastIndex(goPackage, ";")
 	if aliasStartIdx != -1 {
 		goPackage = goPackage[aliasStartIdx+1:]
@@ -121,6 +124,7 @@ func extractGoGrpcPackage(contract []byte) (string, error) {
 
 func extractServiceName(contract []byte) string {
 	const patternToFind = "\nservice "
+
 	startIdx := bytes.Index(contract, []byte(patternToFind))
 	if startIdx == -1 {
 		return ""
@@ -128,6 +132,7 @@ func extractServiceName(contract []byte) string {
 
 	endIdx := startIdx + bytes.Index(contract[startIdx:], []byte("{"))
 	serviceName := contract[startIdx+len(patternToFind) : endIdx]
+
 	serviceName = bytes.TrimSpace(serviceName)
 
 	return string(serviceName)

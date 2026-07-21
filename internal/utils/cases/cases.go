@@ -16,6 +16,7 @@ func SnakeToPascal(v string) string {
 			if parts[i] == "" {
 				continue
 			}
+
 			parts[i] = strings.ToUpper(parts[i][:1]) + strings.ToLower(parts[i][1:])
 		}
 	}
@@ -44,6 +45,7 @@ func ToPascal(newName string) string {
 	pascalNameSB.WriteRune(unicode.ToUpper(nameRuned[0]))
 
 	nextUpper := false
+
 	for _, n := range nameRuned[1:] {
 		if n == '-' || n == '_' {
 			nextUpper = true

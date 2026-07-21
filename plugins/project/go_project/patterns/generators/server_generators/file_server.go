@@ -28,6 +28,7 @@ func GenerateFileServer(fs server.FS) (*folder.Folder, error) {
 	}
 
 	file := &rw.RW{}
+
 	err := fileServerTemplate.Execute(file, args)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error executing file server template")

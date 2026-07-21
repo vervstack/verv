@@ -58,6 +58,7 @@ func GenerateAppFiles(p project.IProject) (map[string][]byte, error) {
 	}
 
 	mainAppFile := &rw.RW{}
+
 	err = appTemplate.Execute(mainAppFile, initAppArgs)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error generating app file")
@@ -84,6 +85,7 @@ func (a *AppFileGenArgs) addDataSources(dataSources matreshka.DataSources, out m
 	}
 
 	out[patterns.AppInitDataSourcesFileName] = initDataSourcesFile
+
 	if initDataSourcesArgs != nil {
 		a.AppContent = append(a.AppContent, *initDataSourcesArgs)
 	}
@@ -135,6 +137,7 @@ func (a *AppFileGenArgs) mergeContentImports() error {
 					". But dependency requires this package to be imported as " +
 					dependencyAlias)
 			}
+
 			a.Imports[importPath] = dependencyAlias
 		}
 	}

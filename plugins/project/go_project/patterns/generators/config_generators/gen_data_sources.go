@@ -26,6 +26,7 @@ func newGenerateDataSourcesConfigStruct(dataSources matreshka.DataSources) inter
 
 		for _, ds := range dataSources {
 			var fieldKV generators.KeyValue
+
 			fieldKV.Key = generators.NormalizeResourceName(ds.GetName())
 
 			refVal := reflect.ValueOf(ds)
@@ -46,6 +47,7 @@ func newGenerateDataSourcesConfigStruct(dataSources matreshka.DataSources) inter
 		}
 
 		buf := &rw.RW{}
+
 		err := configStructTemplate.Execute(buf, ecg)
 		if err != nil {
 			return generators.InternalConfig{}, nil, rerrors.Wrap(err, "error executing data source config struct template")
@@ -62,6 +64,7 @@ func newGenerateDataSourcesConfigStruct(dataSources matreshka.DataSources) inter
 
 func GenerateGRPCClient(args grpc_discovery.GrpcPackage) ([]byte, error) {
 	buf := &rw.RW{}
+
 	err := grpcConnectionTemplate.Execute(buf, args)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error executing template on grpc connection")

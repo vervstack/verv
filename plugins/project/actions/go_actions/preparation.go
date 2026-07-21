@@ -71,8 +71,11 @@ func (a PrepareClients) Do(p project.IProject) error {
 		a.IO = io.StdIO{}
 	}
 
-	var simpleClients []string
-	var grpcClients []string
+	var (
+		simpleClients []string
+		grpcClients   []string
+	)
+
 	cfg := p.GetConfig()
 
 	for _, r := range cfg.DataSources {
@@ -83,6 +86,7 @@ func (a PrepareClients) Do(p project.IProject) error {
 			simpleClients = append(simpleClients, r.GetName())
 		}
 	}
+
 	var errs []error
 
 	deps := dependencies.GetDependencies(a.C, simpleClients)
@@ -100,6 +104,7 @@ func (a PrepareClients) Do(p project.IProject) error {
 		Cfg:     a.C,
 		Io:      a.IO,
 	}
+
 	err := grpcClient.AppendToProject(p)
 	if err != nil {
 		errs = append(errs, err)
@@ -143,6 +148,7 @@ func (a PrepareServer) Do(p project.IProject) error {
 	if err != nil {
 		return rerrors.Wrap(err, "error during stub generation")
 	}
+
 	addMissingImplFolders(transportFolder, implFolders)
 
 	return nil
@@ -153,18 +159,21 @@ func generateTransportFiles(transportFolder *folder.Folder) error {
 	if err != nil {
 		return rerrors.Wrap(err, "error generating server manager")
 	}
+
 	transportFolder.Add(&folder.Folder{Name: patterns.ServerManagerFileName, Content: serverManagerContent})
 
 	grpcServerContent, err := transport_generators.GenerateGrpcServer()
 	if err != nil {
 		return rerrors.Wrap(err, "error generating grpc server")
 	}
+
 	transportFolder.Add(&folder.Folder{Name: patterns.GrpcServerFileName, Content: grpcServerContent})
 
 	httpServerContent, err := transport_generators.GenerateHttpServer()
 	if err != nil {
 		return rerrors.Wrap(err, "error generating http server")
 	}
+
 	transportFolder.Add(&folder.Folder{Name: patterns.HttpServerFileName, Content: httpServerContent})
 
 	return nil
@@ -173,6 +182,7 @@ func generateTransportFiles(transportFolder *folder.Folder) error {
 func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder.Folder) {
 	for _, implF := range implFolders {
 		exists := false
+
 		for _, tF := range transportFolder.Inner {
 			if tF.Name == implF.Name {
 				exists = true

@@ -26,6 +26,7 @@ func (f *Folder) Add(folders ...*Folder) {
 
 		if dir == "." {
 			found := false
+
 			for idx := range f.Inner {
 				if f.Inner[idx].Name == fl.Name {
 					f.Inner[idx] = fl
@@ -34,6 +35,7 @@ func (f *Folder) Add(folders ...*Folder) {
 					break
 				}
 			}
+
 			if !found {
 				f.Inner = append(f.Inner, fl)
 			}
@@ -46,14 +48,17 @@ func (f *Folder) Add(folders ...*Folder) {
 
 func (f *Folder) GetByPath(pth ...string) *Folder {
 	currentFolder := f
+
 	splitPath := make([]string, 0, len(pth))
 	for _, p := range pth {
 		sp := strings.Split(p, string(os.PathSeparator))
+
 		splitPath = append(splitPath, sp...)
 	}
 
 	for _, p := range splitPath {
 		var foundFolder *Folder
+
 		for _, cf := range currentFolder.Inner {
 			if cf.Name == p {
 				foundFolder = cf
@@ -65,6 +70,7 @@ func (f *Folder) GetByPath(pth ...string) *Folder {
 		if foundFolder == nil {
 			return nil
 		}
+
 		currentFolder = foundFolder
 	}
 
@@ -118,6 +124,7 @@ func (f *Folder) findOrCreateChild(name string) *Folder {
 	}
 
 	child := &Folder{Name: name}
+
 	f.Inner = append(f.Inner, child)
 
 	return child
@@ -212,6 +219,7 @@ func (f *Folder) isUnchangedFromOlderVersion() bool {
 	}
 
 	var idx int
+
 	for idx = range f.olderVersion {
 		if f.olderVersion[idx] != f.Content[idx] {
 			break

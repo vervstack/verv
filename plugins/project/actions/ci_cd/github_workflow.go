@@ -21,6 +21,7 @@ func (a TidyGithubWorkflowAction) Do(p project.IProject) error {
 			},
 		}
 		p.GetFolder().Add(ghF)
+
 		ghF = ghF.Inner[0]
 	}
 

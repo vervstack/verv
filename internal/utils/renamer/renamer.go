@@ -11,6 +11,7 @@ func ReplaceProjectNameShort(src []byte, newName string) []byte {
 	copy(b, src)
 
 	bigName := bytes.ReplaceAll(bytes.ToUpper([]byte(newName)), []byte{'-'}, []byte{'_'})
+
 	b = bytes.ReplaceAll(
 		b,
 		[]byte(envpatterns.ProjNameCapsPattern),
@@ -18,6 +19,7 @@ func ReplaceProjectNameShort(src []byte, newName string) []byte {
 	)
 
 	smallName := bytes.ReplaceAll(bytes.ToLower([]byte(newName)), []byte{'-'}, []byte{'_'})
+
 	b = bytes.ReplaceAll(b,
 		[]byte(envpatterns.ProjNamePattern),
 		smallName,

@@ -44,5 +44,6 @@ func TestGenerateImpl(t *testing.T) {
 
 	out, err := GenerateImpl(cfg, projMock)
 	require.NoError(t, err)
+
 	_ = out
 }

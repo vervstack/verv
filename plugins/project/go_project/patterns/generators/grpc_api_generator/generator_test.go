@@ -84,6 +84,7 @@ message Version {
 			t.Parallel()
 
 			proj := project_mock.GetMockProject(t)
+
 			proj.Name = tc.shortName
 
 			f, err := GenerateServiceApiProto(proj)

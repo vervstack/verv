@@ -66,6 +66,7 @@ func WithSqlite(name string) Opt {
 	return func(m *MockProject) {
 		s := resources.NewSqlite(resources.Name(resources.SqliteResourceName + "_" + name))
 		sq := s.(*resources.Sqlite) //nolint:forcetypeassert // NewSqlite always returns a *resources.Sqlite
+
 		sq.Path = path.Join(sq.Path, name+".db")
 
 		m.Cfg.DataSources = append(m.Cfg.DataSources, sq)

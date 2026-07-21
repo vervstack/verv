@@ -90,6 +90,7 @@ func (t Telegram) applyFolder(proj Project) error {
 	if err != nil {
 		return rerrors.Wrap(err, "error generating telegram listener")
 	}
+
 	tgServer := &folder.Folder{Name: patterns.TelegramListenerFileName, Content: tgServerContent}
 	renamer.ReplaceProjectName(proj.GetName(), tgServer)
 
@@ -97,6 +98,7 @@ func (t Telegram) applyFolder(proj Project) error {
 	if err != nil {
 		return rerrors.Wrap(err, "error generating telegram version handler")
 	}
+
 	tgHandlerExample := &folder.Folder{Name: patterns.TelegramVersionHandlerFileName, Content: tgHandlerContent}
 	renamer.ReplaceProjectName(proj.GetName(), tgHandlerExample)
 

@@ -40,6 +40,7 @@ func generateServerInitFileAndArgs(servers matreshka.Servers) (InitServerListene
 	genArgs.Imports["net"] = ""
 
 	initServer := &rw.RW{}
+
 	err := initServerTemplate.Execute(initServer, genArgs)
 	if err != nil {
 		return genArgs, nil, rerrors.Wrap(err, "error generating server init file")

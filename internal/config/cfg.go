@@ -136,6 +136,7 @@ func getConfigFromFile(cmd *cobra.Command) (sql.Null[VervConfig], error) {
 
 	if cfgFilePath == "" {
 		exePath, _ := os.Executable()
+
 		cfgFilePath = path.Join(path.Dir(exePath), configFilename)
 	}
 
@@ -149,6 +150,7 @@ func getConfigFromFile(cmd *cobra.Command) (sql.Null[VervConfig], error) {
 	}
 
 	var externalConf VervConfig
+
 	err = yaml.Unmarshal(file, &externalConf)
 	if err != nil {
 		return sql.Null[VervConfig]{}, rerrors.Wrap(err, "error unmarshalling config from: "+cfgFilePath)

@@ -50,6 +50,7 @@ func CommitWithUntracked(workDir, msg string) error {
 	if err != nil {
 		return rerrors.Wrap(err, "error getting git status")
 	}
+
 	if len(status) == 0 {
 		return nil
 	}

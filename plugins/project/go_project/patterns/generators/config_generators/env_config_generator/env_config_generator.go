@@ -55,6 +55,7 @@ func NewGenerateEnvironmentConfigStruct(env matreshka.Environment,
 		}
 
 		buf := &rw.RW{}
+
 		err := structTemplate.Execute(buf, genArgs)
 		if err != nil {
 			return generators.InternalConfig{}, nil, rerrors.Wrap(err, "error executing config struct template")
@@ -71,6 +72,7 @@ func NewGenerateEnvironmentConfigStruct(env matreshka.Environment,
 
 func appendEnvField(env *environment.Variable, genArgs *structGenArgs) error {
 	var fieldKV generators.KeyValue
+
 	fieldKV.Key = generators.NormalizeResourceName(env.Name)
 
 	v := env.Value.Value()
@@ -78,6 +80,7 @@ func appendEnvField(env *environment.Variable, genArgs *structGenArgs) error {
 	if v != nil {
 		refVal := reflect.ValueOf(v)
 		tp := refVal.Type()
+
 		fieldKV.Value = tp.String()
 
 		if tp.PkgPath() != "" {
@@ -103,6 +106,7 @@ func appendEnvField(env *environment.Variable, genArgs *structGenArgs) error {
 						Value: "\"" + old + "\"",
 					})
 			}
+
 			genArgs.Enums = append(genArgs.Enums, enumToGen)
 		case []int:
 		default:

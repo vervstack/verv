@@ -43,6 +43,7 @@ func New(opts ...opt) Processor {
 		if err != nil {
 			panic(err)
 		}
+
 		p.WD = wd
 	}
 

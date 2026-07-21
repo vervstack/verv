@@ -14,6 +14,7 @@ import (
 
 func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppContent, []byte, error) {
 	const initDataSourcesFunctionName = "InitDataSources"
+
 	initDsFileArgs := InitDepFuncGenArgs{
 		InitFunctionName: initDataSourcesFunctionName,
 		Imports:          make(map[string]string),
@@ -41,6 +42,7 @@ func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppC
 		default:
 			return nil, nil, rerrors.New("unknown resource " + ds.GetType())
 		}
+
 		maps.Copy(initDsFileArgs.Imports, fc.Import)
 
 		initDsFileArgs.Functions = append(initDsFileArgs.Functions, fc)
@@ -55,6 +57,7 @@ func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppC
 	initDsFileArgs.Imports[patterns.ImportNameErrorsPackage] = ""
 
 	file := &rw.RW{}
+
 	err := initAppStructFuncTemplate.Execute(file, initDsFileArgs)
 	if err != nil {
 		return nil, nil, rerrors.Wrap(err, "error generating server init file")

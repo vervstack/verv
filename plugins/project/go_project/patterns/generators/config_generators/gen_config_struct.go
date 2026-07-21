@@ -45,10 +45,12 @@ func GenerateConfigFolder(cfg *config.Config) (*folder.Folder, error) {
 		}
 
 		configFolder.Add(f)
+
 		args.Configs = append(args.Configs, ic)
 	}
 
 	autoLoadFile := &rw.RW{}
+
 	err := configAutoLoadTemplate.Execute(autoLoadFile, args)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error generating load-config file ")

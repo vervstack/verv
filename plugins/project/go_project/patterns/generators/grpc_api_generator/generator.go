@@ -20,6 +20,7 @@ func GenerateServiceApiProto(project project.IProject) (*folder.Folder, error) {
 	}
 
 	protoFile := &rw.RW{}
+
 	err := basicApiProtoTemplate.Execute(protoFile, args)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error generating service api proto")

@@ -19,8 +19,7 @@ func CanUpdate() (string, bool) {
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, githubLatestReleaseUrl, nil)
 	if err != nil {
-		log.Error().
-			Err(err).
+		log.Err(err).
 			Msg("error building request to check if update is available")
 
 		return "", false
@@ -28,8 +27,7 @@ func CanUpdate() (string, bool) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Error().
-			Err(err).
+		log.Err(err).
 			Msg("error checking if update is available")
 
 		return "", false
@@ -47,7 +45,9 @@ func CanUpdate() (string, bool) {
 	if resp.StatusCode != http.StatusOK {
 		return "", false
 	}
+
 	var m map[string]any
+
 	err = json.NewDecoder(resp.Body).Decode(&m)
 	if err != nil {
 		return "", false
@@ -57,6 +57,7 @@ func CanUpdate() (string, bool) {
 	if tag == "" {
 		return "", false
 	}
+
 	tagStr, _ := tag.(string)
 	if tagStr == "" {
 		return "", false

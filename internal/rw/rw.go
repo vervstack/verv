@@ -13,6 +13,7 @@ type RW struct {
 
 func (r *RW) Write(b []byte) (int, error) {
 	r.l.Lock()
+
 	r.b = append(r.b, b...)
 	r.l.Unlock()
 
@@ -21,6 +22,7 @@ func (r *RW) Write(b []byte) (int, error) {
 
 func (r *RW) WriteByte(b byte) error {
 	r.l.Lock()
+
 	r.b = append(r.b, b)
 	r.l.Unlock()
 
@@ -35,6 +37,7 @@ func (r *RW) GetReader() io.Reader {
 	r.l.Lock()
 
 	out := bytes.NewReader(r.b)
+
 	r.b = make([]byte, 0, len(r.b))
 	r.l.Unlock()
 

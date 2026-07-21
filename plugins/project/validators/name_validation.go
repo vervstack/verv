@@ -15,8 +15,10 @@ func ValidateProjectNameStr(name string) error {
 		{97, 122},
 		{95, 95},
 	}
+
 	for _, s := range name {
 		var hasHitRange = false
+
 		for _, r := range availableRanges {
 			if s >= r[0] && s <= r[1] {
 				hasHitRange = true
@@ -24,6 +26,7 @@ func ValidateProjectNameStr(name string) error {
 				break
 			}
 		}
+
 		if !hasHitRange {
 			return rerrors.Wrap(ErrInvalidName, string(s))
 		}

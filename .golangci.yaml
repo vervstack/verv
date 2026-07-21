@@ -60,6 +60,8 @@ linters:
 #      parameters-are-used: false
       local-variables-are-used: false
       generated-is-used: false
+    wsl_v5:
+      default: all
   enable:
     - govet
     - asasalint
@@ -152,9 +154,13 @@ linters:
     - unused
     - usestdlibvars
     - usetesting
+# TODO
+#    - varnamelen
     - wastedassign
     - whitespace
     - wrapcheck
+    - wsl_v5
+    - zerologlint
   exclusions:
     rules:
       - linters:

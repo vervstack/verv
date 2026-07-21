@@ -54,6 +54,7 @@ func (g GrpcDiscovery) getGrpcPackageFromMod(packagePath string) (*GrpcPackage, 
 
 	for _, compiledClientPath := range g.Cfg.Env.PathsToCompiledClients {
 		apiPath := path.Join(packagePath, compiledClientPath)
+
 		files, err := os.ReadDir(apiPath)
 		if err != nil {
 			errs = stderrs.Join(errs, err)
@@ -63,7 +64,9 @@ func (g GrpcDiscovery) getGrpcPackageFromMod(packagePath string) (*GrpcPackage, 
 			if !file.IsDir() {
 				continue
 			}
+
 			var pkg *GrpcPackage
+
 			pkg, err = readGrpcPackageFromPackageClientPath(packagePath, path.Join(compiledClientPath, file.Name()))
 			if err != nil {
 				return nil, rerrors.Wrap(err, "error reading package from path")
@@ -71,6 +74,7 @@ func (g GrpcDiscovery) getGrpcPackageFromMod(packagePath string) (*GrpcPackage, 
 
 			if pkg != nil {
 				packagePath = packagePath[len(modFolderPath):]
+
 				atIdx := strings.Index(packagePath, "@")
 				if atIdx != -1 {
 					packagePath = packagePath[:atIdx]
@@ -93,6 +97,7 @@ func readGrpcPackageFromPackageClientPath(projectPath, apiContractPath string) (
 	if err != nil {
 		return nil, err
 	}
+
 	if clientContractPath == "" {
 		return nil, nil
 	}
@@ -103,6 +108,7 @@ func readGrpcPackageFromPackageClientPath(projectPath, apiContractPath string) (
 	}
 
 	fset := token.NewFileSet()
+
 	f, err := parser.ParseFile(fset, path.Base(clientContractPath), clientContractB, 0)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error parsing go contract file")
@@ -202,6 +208,7 @@ func extractPackageName(f *ast.File, src []byte) (string, bool) {
 	}
 
 	packageSubSet := src[f.Package:]
+
 	packageSubSet = packageSubSet[:bytes.IndexByte(packageSubSet, '\n')]
 	packageSubSet = packageSubSet[bytes.IndexByte(packageSubSet, ' ')+1:]
 

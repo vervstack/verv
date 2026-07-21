@@ -35,6 +35,7 @@ func CreateProject(args CreateArgs) (*Project, error) {
 
 	if args.ProjectPath == "" {
 		var wd string
+
 		wd, err := os.Getwd()
 		if err != nil {
 			return proj, rerrors.Wrapf(err, "error obtaining working dir")

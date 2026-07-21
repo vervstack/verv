@@ -13,6 +13,7 @@ var modFolderPath = os.Getenv("GOPATH") + "/pkg/mod/"
 
 func GetPathToGlobalModule(packageName string) (pathToModule string, err error) {
 	packageName = FilterPackageName(packageName)
+
 	packagePath := path.Join(modFolderPath, FilterPackageName(packageName))
 
 	if strings.Contains(path.Base(packagePath), "@") {
@@ -20,6 +21,7 @@ func GetPathToGlobalModule(packageName string) (pathToModule string, err error) 
 	}
 
 	root := path.Dir(packagePath)
+
 	potentialDirs, err := os.ReadDir(root)
 	if err != nil {
 		return "", rerrors.Wrap(err, "error reading potential packages paths")
@@ -27,12 +29,14 @@ func GetPathToGlobalModule(packageName string) (pathToModule string, err error) 
 
 	baseName := path.Base(packageName)
 	moveIdx := 0
+
 	for idx := range potentialDirs {
 		if !strings.HasPrefix(potentialDirs[idx].Name(), baseName) {
 			potentialDirs[moveIdx], potentialDirs[idx] = potentialDirs[idx], potentialDirs[moveIdx]
 			moveIdx++
 		}
 	}
+
 	potentialDirs = potentialDirs[moveIdx:]
 
 	sort.Slice(potentialDirs, func(i, j int) bool {

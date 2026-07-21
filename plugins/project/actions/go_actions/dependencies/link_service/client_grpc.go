@@ -43,12 +43,14 @@ func (g GrpcClient) AppendToProject(proj project.IProject) error {
 	}
 
 	var errs error
+
 	for _, item := range succeeded {
 		err := g.applyLink(proj, item)
 		if err != nil {
 			errs = stderrs.Join(errs, err)
 		}
 	}
+
 	if errs != nil {
 		return errs
 	}
@@ -109,6 +111,7 @@ func (g GrpcClient) applyLink(proj project.IProject, packageName string) error {
 	if idx := strings.Index(packageName, "@"); idx > -1 {
 		packageName = packageName[:idx]
 	}
+
 	grpcPkgPath := path.Join(g.Cfg.Env.PathsToClients[0], patterns.GRPCServer)
 
 	grpcClientsFolder := proj.GetFolder().GetByPath(grpcPkgPath)
@@ -133,6 +136,7 @@ func (g GrpcClient) applyLink(proj project.IProject, packageName string) error {
 			Module:           packageName,
 			ConnectionString: "0.0.0.0:50051",
 		}
+
 		proj.GetConfig().DataSources = append(proj.GetConfig().DataSources, grpcResource)
 	}
 

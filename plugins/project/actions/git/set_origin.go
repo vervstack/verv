@@ -12,6 +12,7 @@ func SetOrigin(wordDir, originURL string) error {
 	if !strings.HasPrefix(originURL, "http") {
 		originURL = "https://" + originURL
 	}
+
 	res, err := cmd.Execute(cmd.Request{
 		Tool:    bin,
 		Args:    []string{"remote", "-v"},

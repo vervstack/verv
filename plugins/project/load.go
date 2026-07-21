@@ -104,6 +104,7 @@ func goProjectLoader(p *Project) (name *string) {
 	}
 
 	moduleBts := goModFile.Content[:bytes.IndexByte(goModFile.Content, '\n')]
+
 	moduleBts = moduleBts[1+bytes.IndexByte(moduleBts, ' '):]
 
 	modName := string(moduleBts)

@@ -43,9 +43,11 @@ func buildCLI(t *testing.T) string {
 		}
 
 		cmd := exec.CommandContext(t.Context(), "go", "build", "-o", out, ".")
+
 		cmd.Dir = repoRoot
 
 		var output []byte
+
 		output, errBuild = cmd.CombinedOutput()
 		if errBuild != nil {
 			errBuild = fmt.Errorf("building verv CLI: %w\n%s", errBuild, output)
@@ -69,7 +71,9 @@ func run(t *testing.T, dir, name string, args ...string) {
 	t.Helper()
 
 	cmd := exec.CommandContext(t.Context(), name, args...)
+
 	cmd.Dir = dir
+
 	cmd.Env = append(os.Environ(),
 		"GIT_AUTHOR_NAME=verv-e2e",
 		"GIT_AUTHOR_EMAIL=verv-e2e@localhost",
