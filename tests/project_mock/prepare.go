@@ -9,7 +9,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project"
@@ -19,8 +18,6 @@ import (
 
 type MockProject struct {
 	*project.Project
-
-	rscliConfig *rscliconfig.VervConfig
 }
 
 type Opt func(m *MockProject)
@@ -29,7 +26,6 @@ func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 	t.Helper()
 
 	p := &MockProject{
-		rscliConfig: rscliconfig.GetConfig(),
 		Project: &project.Project{
 			Name: "github.com/" + t.Name(),
 			Cfg: &config.Config{

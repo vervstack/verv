@@ -5,13 +5,10 @@ import (
 )
 
 type EnvVariable struct {
-	dep dependencyBase
 }
 
-func envVariable(dep dependencyBase) Dependency {
-	return &EnvVariable{
-		dep: dep,
-	}
+func envVariable(_ dependencyBase) Dependency {
+	return &EnvVariable{}
 }
 
 func (e *EnvVariable) AppendToProject(proj Project) error {

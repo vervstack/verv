@@ -67,7 +67,7 @@ func (args *serviceDockerfileArgs) extractDataVolumes(cfg *config.Config) {
 }
 
 func (args *serviceDockerfileArgs) extractPorts(cfg *config.Config) {
-	ports := []string{}
+	ports := make([]string, 0, len(cfg.Servers))
 
 	for _, srv := range cfg.Servers {
 		ports = append(ports, srv.Port)

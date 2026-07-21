@@ -24,7 +24,6 @@ type BuildProjectSuite struct {
 
 func (s *BuildProjectSuite) Test_BuildProject() {
 	t := s.T()
-	t.Parallel()
 
 	mainGoFilePath := path.Join(patterns.CmdFolder, patterns.ServiceFolder, patterns.MainFileName)
 	configPath := path.Join(patterns.ConfigsFolder, patterns.ConfigMasterYamlFile)
@@ -73,7 +72,7 @@ func (s *BuildProjectSuite) walkDirAndValidate(root string, dir []os.DirEntry) {
 		filePath := path.Join(root, name)
 		expectedContent, ok := s.expected[filePath[len(s.projectPath)+1:]]
 		if !ok {
-			s.Assert().Fail("unexpected file name", name)
+			s.Fail("unexpected file name", name)
 
 			continue
 		}

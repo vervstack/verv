@@ -96,7 +96,7 @@ func Test_GenerateDockerfile(t *testing.T) {
 
 			file, err := GenerateDockerfile(proj)
 			require.NoError(t, err)
-			require.Equal(t, string(file), tc.expected)
+			require.Equal(t, tc.expected, string(file))
 		})
 	}
 }
