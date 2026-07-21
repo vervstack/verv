@@ -28,6 +28,7 @@ func goProjectTidyActions() []Action {
 		go_actions.PrepareClients{},
 		go_actions.PrepareServer{},
 		go_actions.PrepareDockerfile{},
+		go_actions.PrepareGitHooks{},
 		go_actions.BuildProjectAction{},
 		go_actions.InitGoProjectApp{},
 
@@ -44,6 +45,7 @@ func commonProjectTidyPreActions() []Action {
 
 func commonProjectTidyPostActions() []Action {
 	return []Action{
+		git.InstallHooksAction{},
 		git.CommitWithUntrackedAction{},
 	}
 }

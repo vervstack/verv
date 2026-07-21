@@ -3,6 +3,7 @@ package cmd
 import (
 	"io"
 	"os/exec"
+	"time"
 
 	"go.redsock.ru/rerrors"
 
@@ -13,10 +14,15 @@ type Request struct {
 	Tool    string
 	Args    []string
 	WorkDir string
+	// Timeout overrides the default command timeout. Zero uses the default.
+	Timeout time.Duration
 }
 
 func Execute(r Request) (message string, err error) {
 	ctx := global_context.Background()
+	if r.Timeout > 0 {
+		ctx = global_context.WithTimeout(r.Timeout)
+	}
 
 	cmd := exec.CommandContext(ctx, r.Tool, r.Args...)
 	if r.WorkDir != "" {

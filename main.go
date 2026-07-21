@@ -7,8 +7,9 @@ import (
 	"github.com/spf13/cobra"
 	"go.redsock.ru/toolbox/closer"
 
-	projectCmd "go.vervstack.ru/verv/cmd/project"
-	"go.vervstack.ru/verv/cmd/project/tidy"
+	addProject "go.vervstack.ru/verv/cmd/project/add"
+	initProject "go.vervstack.ru/verv/cmd/project/init"
+	tidyProject "go.vervstack.ru/verv/cmd/project/tidy"
 	"go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/colors"
@@ -51,8 +52,9 @@ Run this to install it:
 
 	basicProc := processor.New()
 
-	root.AddCommand(projectCmd.NewCmd())
-	root.AddCommand(tidy.NewCommand(basicProc))
+	root.AddCommand(initProject.NewCommand(basicProc))
+	root.AddCommand(tidyProject.NewCommand(basicProc))
+	root.AddCommand(addProject.NewCommand(basicProc))
 
 	err := root.Execute()
 	if err != nil {

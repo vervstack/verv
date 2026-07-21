@@ -12,8 +12,12 @@ const (
 )
 
 func Background() context.Context {
+	return WithTimeout(defaultContextTimeout)
+}
+
+func WithTimeout(timeout time.Duration) context.Context {
 	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, defaultContextTimeout)
+	ctx, cancel := context.WithTimeout(ctx, timeout)
 
 	closer.Add(func() error {
 		cancel()

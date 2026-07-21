@@ -22,6 +22,11 @@ func (a InitGit) Do(p project.IProject) error {
 		return rerrors.Wrap(err, "error initializing project")
 	}
 
+	err = InstallHooks(projectPath)
+	if err != nil {
+		return rerrors.Wrap(err, "error installing git hooks")
+	}
+
 	err = CommitWithUntracked(projectPath, "project init via RedSock CLI")
 	if err != nil {
 		return rerrors.Wrap(err, "error committing changes")

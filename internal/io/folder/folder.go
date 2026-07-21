@@ -172,7 +172,10 @@ func (f *Folder) build(root string) error {
 		return f.buildDelete(pth)
 	}
 
-	if len(f.Content) != 0 || path.Ext(pth) != "" {
+	// path.Ext treats a dot-prefixed name with no other dot (".githooks", ".github")
+	// as having that whole name as its extension, so folders with children must be
+	// checked first or they get misclassified as (empty) files and never get built.
+	if len(f.Inner) == 0 && (len(f.Content) != 0 || path.Ext(pth) != "") {
 		err := f.buildFile(pth)
 		if err != nil {
 			return rerrors.Wrap(err, "failed to building file")

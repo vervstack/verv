@@ -1,11 +1,17 @@
 package git
 
 import (
+	"time"
+
 	"go.redsock.ru/rerrors"
 
 	"go.vervstack.ru/verv/internal/cmd"
 	"go.vervstack.ru/verv/plugins/project"
 )
+
+// commitTimeout is longer than the default command timeout because `git commit`
+// runs the project's pre-commit hook, which lints and tests the whole project.
+const commitTimeout = 5 * time.Minute
 
 type CommitWithUntrackedAction struct {
 }
@@ -28,6 +34,7 @@ func Commit(workingDir, msg string) error {
 		Tool:    bin,
 		Args:    []string{"commit", "-m", "\"" + msg + "\""},
 		WorkDir: workingDir,
+		Timeout: commitTimeout,
 	})
 	if err != nil {
 		return rerrors.Wrap(err, "error committing files to git repository")

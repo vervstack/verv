@@ -23,6 +23,7 @@ func initVirtualGoProject() []Action {
 		go_actions.PrepareConfigFolder{}, // generates config keys
 		go_actions.PrepareClients{},
 		go_actions.PrepareServer{},
+		go_actions.PrepareGitHooks{},
 
 		go_actions.BuildProjectAction{}, // build project in file system
 

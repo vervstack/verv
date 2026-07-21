@@ -1,9 +1,8 @@
-version: 2
+version: "2"
 
 run:
   timeout: 5m
   issues-exit-code: 42
-
 
 linters:
   enable:
@@ -15,9 +14,9 @@ linters:
     - bodyclose
     - containedctx
     - contextcheck
+    - copyloopvar
     - cyclop
     - decorder
-    - depguard
     - dogsled
     - dupl
     - dupword
@@ -26,13 +25,10 @@ linters:
     - errchkjson
     - errname
     - errorlint
-    - execinquery
     - exhaustive
-    - exportloopref
     - forbidigo
     - forcetypeassert
     - funlen
-    - gci
     - gochecknoglobals
     - gochecknoinits
     - gocognit
@@ -41,31 +37,23 @@ linters:
     - gocyclo
     - godot
     - godox
-    - goerr113
-    - gofmt
-    - gofumpt
     - goheader
-    - goimports
-    - golint
-    - gomnd
     - gomoddirectives
     - gomodguard
     - goprintffuncname
     - gosec
-    - gosimple
     - govet
     - grouper
     - importas
     - ineffassign
     - interfacebloat
-    - interfacer
     - ireturn
     - lll
     - loggercheck
     - maintidx
     - makezero
-    - maligned
     - misspell
+    - mnd
     - nakedret
     - nestif
     - nilerr
@@ -83,20 +71,28 @@ linters:
     - rowserrcheck
     - sqlclosecheck
     - staticcheck
-    - structcheck
-    - stylecheck
     - tagliatelle
-    - tenv
     - testableexamples
     - testpackage
     - thelper
     - tparallel
-    - typecheck
     - unconvert
     - unparam
     - unused
     - usestdlibvars
+    - usetesting
     - wastedassign
     - whitespace
     - wrapcheck
     - wsl
+  exclusions:
+    paths:
+      # generated client/transport wiring, not hand-authored application code
+      - internal/clients
+      - internal/transport
+
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
