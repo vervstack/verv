@@ -7,12 +7,12 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 )
 
 var (
-	ErrNoFolderInConfig = rerrors.New("no folder path in rscli config")
+	ErrNoFolderInConfig = rerrors.New("no folder path in verv config")
 
 	nameToDependencyConstructor = map[string]func(dep dependencyBase) Dependency{
 		DependencyNamePostgres: postgresClient,
@@ -30,7 +30,7 @@ type Dependency interface {
 
 type dependencyBase struct {
 	Name string
-	Cfg  *rscliconfig.VervConfig
+	Cfg  *vervconfig.VervConfig
 }
 
 const (
@@ -61,7 +61,7 @@ func HelpWithDependencyNames(passedDeps ...string) (missingDeps []string) {
 	return missingDeps
 }
 
-func GetDependencies(c *rscliconfig.VervConfig, args []string) []Dependency {
+func GetDependencies(c *vervconfig.VervConfig, args []string) []Dependency {
 	serverOpts := make([]Dependency, 0, len(args))
 
 	for _, name := range args {
@@ -85,7 +85,7 @@ func GetDependencies(c *rscliconfig.VervConfig, args []string) []Dependency {
 
 // TODO method checks if the root folder of dependecy is presented. In case it's empty - nothing is generated
 
-// containsDependencyFolder - searches through RSCLI_PATH_TO_CLIENTS
+// containsDependencyFolder - searches through VERV_PATH_TO_CLIENTS
 // folders in order to find depName
 // IF Dependency already placed - returns path to it
 func containsDependencyFolder(paths []string, rootF *folder.Folder, depName string) (ok bool, err error) {

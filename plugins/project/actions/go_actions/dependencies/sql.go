@@ -5,7 +5,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/renamer"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
@@ -13,7 +13,7 @@ import (
 )
 
 type sqlConn struct {
-	Cfg *rscliconfig.VervConfig
+	Cfg *vervconfig.VervConfig
 }
 
 func (sc sqlConn) GetFolderName() string {

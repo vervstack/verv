@@ -11,7 +11,7 @@ type CommitWithUntrackedAction struct {
 }
 
 func (a CommitWithUntrackedAction) Do(p project.IProject) error {
-	err := CommitWithUntracked(p.GetProjectPath(), "rscli auto-commit")
+	err := CommitWithUntracked(p.GetProjectPath(), "verv auto-commit")
 	if err != nil {
 		return rerrors.Wrap(err)
 	}

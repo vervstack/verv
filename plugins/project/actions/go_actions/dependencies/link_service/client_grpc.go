@@ -10,7 +10,7 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
 	"go.vervstack.ru/verv/internal/cmd"
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project"
@@ -24,7 +24,7 @@ import (
 type GrpcClient struct {
 	Modules []string
 
-	Cfg *rscliconfig.VervConfig
+	Cfg *vervconfig.VervConfig
 	Io  io.IO
 }
 

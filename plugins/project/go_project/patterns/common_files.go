@@ -11,7 +11,6 @@ const (
 	ConfigDevYamlFile    = "dev.yaml"
 	ConfigMasterYamlFile = "config.yaml"
 	MakefileFile         = "Makefile"
-	RscliMakefileFile    = "rscli.mk"
 	DockerfileFile       = "Dockerfile"
 
 	GenCommand           = "gen"
@@ -40,20 +39,5 @@ var (
 	Readme = &folder.Folder{
 		Name:    "README.md",
 		Content: readme,
-	}
-
-	// Scripts
-	//go:embed static/rscli.mk
-	rscliMK []byte
-	RscliMK = &folder.Folder{
-		Name:    "rscli.mk",
-		Content: rscliMK,
-	}
-
-	//go:embed static/Makefile
-	makefile []byte
-	Makefile = &folder.Folder{
-		Name:    MakefileFile,
-		Content: makefile,
 	}
 )

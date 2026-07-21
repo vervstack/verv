@@ -12,18 +12,18 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 )
 
 type GrpcDiscovery struct {
-	Cfg *rscliconfig.VervConfig
+	Cfg *vervconfig.VervConfig
 }
 
 var defaultDiscoverer GrpcDiscovery
 
 func DiscoverPackage(packageName string) (*GrpcPackage, error) {
 	if defaultDiscoverer.Cfg == nil {
-		defaultDiscoverer.Cfg = rscliconfig.GetConfig()
+		defaultDiscoverer.Cfg = vervconfig.GetConfig()
 	}
 
 	return defaultDiscoverer.DiscoverPackage(packageName)

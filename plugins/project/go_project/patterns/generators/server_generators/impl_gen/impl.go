@@ -8,7 +8,7 @@ import (
 
 	"go.redsock.ru/rerrors"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/internal/utils/cases"
 	"go.vervstack.ru/verv/plugins/project"
@@ -29,7 +29,7 @@ type genArgs struct {
 	ServiceName  string
 }
 
-func GenerateImpl(cfg *rscliconfig.VervConfig, proj project.IProject) ([]*folder.Folder, error) {
+func GenerateImpl(cfg *vervconfig.VervConfig, proj project.IProject) ([]*folder.Folder, error) {
 	grpcFolder := proj.GetFolder().GetByPath(cfg.Env.PathToServerDefinition, patterns.GRPCServer)
 	if grpcFolder == nil {
 		return nil, nil

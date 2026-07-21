@@ -7,7 +7,7 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project"
@@ -58,13 +58,13 @@ func (a PrepareProjectStructure) NameInAction() string {
 }
 
 type PrepareClients struct {
-	C  *rscliconfig.VervConfig
+	C  *vervconfig.VervConfig
 	IO io.IO
 }
 
 func (a PrepareClients) Do(p project.IProject) error {
 	if a.C == nil {
-		a.C = rscliconfig.GetConfig()
+		a.C = vervconfig.GetConfig()
 	}
 
 	if a.IO == nil {
@@ -144,7 +144,7 @@ func (a PrepareServer) Do(p project.IProject) error {
 		return err
 	}
 
-	implFolders, err := impl_gen.GenerateImpl(rscliconfig.GetConfig(), p)
+	implFolders, err := impl_gen.GenerateImpl(vervconfig.GetConfig(), p)
 	if err != nil {
 		return rerrors.Wrap(err, "error during stub generation")
 	}

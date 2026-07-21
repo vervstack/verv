@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/tests/mocks"
@@ -38,8 +38,8 @@ func TestGenerateImpl(t *testing.T) {
 		Expect().
 		Return(folders)
 
-	cfg := &rscliconfig.VervConfig{
-		Env: rscliconfig.Project{PathToServerDefinition: "api"},
+	cfg := &vervconfig.VervConfig{
+		Env: vervconfig.Project{PathToServerDefinition: "api"},
 	}
 
 	out, err := GenerateImpl(cfg, projMock)

@@ -4,11 +4,10 @@ import (
 	"go.redsock.ru/rerrors"
 
 	"go.vervstack.ru/verv/internal/cmd"
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/utils/bins/makefile"
 	"go.vervstack.ru/verv/plugins/project"
-	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
 const (
@@ -57,7 +56,7 @@ func (a RunGoTidyAction) NameInAction() string {
 }
 
 type RunMakeGenAction struct {
-	C  *rscliconfig.VervConfig
+	C  *vervconfig.VervConfig
 	IO io.IO
 }
 
@@ -69,11 +68,6 @@ func (a RunMakeGenAction) Do(p project.IProject) error {
 	err := makefile.Install()
 	if err != nil {
 		return rerrors.Wrap(err, "error installing makefile")
-	}
-
-	_, err = makefile.Run(p.GetProjectPath(), patterns.RscliMakefileFile, patterns.GenCommand)
-	if err != nil {
-		return rerrors.Wrap(err, "error running rscli generate command")
 	}
 
 	return nil

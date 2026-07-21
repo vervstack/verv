@@ -10,7 +10,7 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/config"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
@@ -27,7 +27,7 @@ var configOrder = map[string]int{
 	templateConfigFileName: 2,
 }
 
-func LoadProject(pth string, cfg *rscliconfig.VervConfig) (*Project, error) {
+func LoadProject(pth string, cfg *vervconfig.VervConfig) (*Project, error) {
 	ignoredFiles, err := readIgnoredFiles(pth)
 	if err != nil {
 		return nil, rerrors.Wrap(err)
@@ -64,7 +64,7 @@ func LoadProject(pth string, cfg *rscliconfig.VervConfig) (*Project, error) {
 	return p, nil
 }
 
-func LoadProjectConfig(projectPath string, cfg *rscliconfig.VervConfig) (c *config.Config, err error) {
+func LoadProjectConfig(projectPath string, cfg *vervconfig.VervConfig) (c *config.Config, err error) {
 	c = &config.Config{}
 
 	c.ConfigDir = path.Join(projectPath, path.Dir(cfg.Env.PathToConfig))

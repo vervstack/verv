@@ -8,7 +8,7 @@ import (
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 
-	rscliconfig "go.vervstack.ru/verv/internal/config"
+	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/config"
 )
@@ -47,7 +47,7 @@ func CreateProject(args CreateArgs) (*Project, error) {
 	proj.Path = args.ProjectPath
 
 	if args.CfgPath == "" {
-		args.CfgPath = rscliconfig.GetConfig().Env.PathToConfig
+		args.CfgPath = vervconfig.GetConfig().Env.PathToConfig
 	}
 
 	proj.Cfg = &config.Config{

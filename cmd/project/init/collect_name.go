@@ -15,9 +15,9 @@ import (
 const (
 	askUserForNameMessagePattern = `
 What would it be called?
-hint: You can specify name with custom git url like "github.com/RedSock/rscli" 
-      or just print name without spec symbols and spaces like "rscli"
-      in this case default git-url will be "%[1]s" and final result is "%[1]s/rscli"
+hint: You can specify name with custom git url like "github.com/vervstack/verv" 
+      or just print name without spec symbols and spaces like "verv"
+      in this case default git-url will be "%[1]s" and final result is "%[1]s/verv"
 >`
 )
 
