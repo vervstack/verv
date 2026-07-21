@@ -33,7 +33,7 @@ func (p Postgres) AppendToProject(proj Project) error {
 	res := &resources.Postgres{
 		Name:             resources.PostgresResourceName,
 		Host:             "localhost",
-		Port:             5432,
+		Port:             defaultPgPort,
 		DbName:           appNameInfo,
 		User:             appNameInfo,
 		MigrationsFolder: "./migrations",

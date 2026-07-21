@@ -12,8 +12,6 @@ const (
 	ChangesTypeNotCommitted
 )
 
-const bin = "git"
-
 type InitGit struct{}
 
 func (a InitGit) Do(p project.IProject) error {

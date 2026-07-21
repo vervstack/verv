@@ -6,7 +6,7 @@ func FilterPackageName(packageName string) string {
 
 	for idx := range packageNameB {
 		if packageNameB[idx] >= 'A' && packageNameB[idx] <= 'Z' {
-			packageNameB[idx] = packageNameB[idx] + 32
+			packageNameB[idx] += 32
 			out = append(out, '!')
 		}
 

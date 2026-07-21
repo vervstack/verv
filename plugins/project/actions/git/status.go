@@ -9,18 +9,21 @@ import (
 )
 
 func Status(pth string) (uncommitted StatusDiff, err error) {
-	executeOut, err := cmd.Execute(cmd.Request{
+	req := cmd.Request{
 		Tool:    bin,
 		Args:    []string{"status"},
 		WorkDir: pth,
-	})
+	}
+
+	executeOut, err := cmd.Execute(req)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error getting git status")
 	}
 
-	out := make([]Changes, 0, 2)
+	out := make([]Changes, 0)
 
-	if untracked, ok := parseUntrackedFiles(executeOut); ok {
+	untracked, ok := parseUntrackedFiles(executeOut)
+	if ok {
 		out = append(out, untracked)
 	}
 
@@ -59,7 +62,8 @@ func parseUntrackedFiles(executeOut string) (Changes, bool) {
 func parseCommitChanges(executeOut string) []Changes {
 	var keyWords = []string{"deleted", "modified", "new file"}
 
-	out := make([]Changes, 0, 2)
+	out := make([]Changes, 0)
+
 	for _, message := range []string{"Changes to be committed", "Changes not staged for commit"} {
 		startIdx := strings.Index(executeOut, message)
 		if startIdx == -1 {
@@ -102,6 +106,8 @@ type Changes struct {
 type StatusDiff []Changes
 
 func (s StatusDiff) GetFilesListed() string {
+	const splittedParamsCount = 2
+
 	sb := strings.Builder{}
 	for _, item := range s {
 		if len(item.Changelist) == 0 {
@@ -113,7 +119,7 @@ func (s StatusDiff) GetFilesListed() string {
 		changeTypeToFile := map[string][]string{}
 		for _, line := range item.Changelist {
 			splited := strings.Split(line, ":")
-			if len(splited) != 2 {
+			if len(splited) != splittedParamsCount {
 				continue
 			}
 			changeTypeToFile[splited[0]] = append(changeTypeToFile[splited[0]], splited[1])

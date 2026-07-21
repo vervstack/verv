@@ -14,10 +14,8 @@ var (
 		Name:    "api.proto",
 		Content: protoContract,
 	}
-)
 
-// Dependencies and generator
-var (
+	// Dependencies and generator
 	//go:embed static/moti.yaml
 	moti []byte
 	Moti = &folder.Folder{

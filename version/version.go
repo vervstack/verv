@@ -6,9 +6,11 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-//go:embed version.yaml
-var versionConfig []byte
-var version string
+var (
+	//go:embed version.yaml
+	versionConfig []byte
+	version       string
+)
 
 //nolint:gochecknoinits // one-time parse of embedded version.yaml into the package-level version string
 func init() {

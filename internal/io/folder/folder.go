@@ -70,7 +70,12 @@ func (f *Folder) GetByPath(pth ...string) *Folder {
 }
 
 func (f *Folder) Build() error {
-	return f.build(path.Dir(f.Name))
+	err := f.build(path.Dir(f.Name))
+	if err != nil {
+		return rerrors.Wrap(err, "folder build failed")
+	}
+
+	return nil
 }
 
 func (f *Folder) CopyWithNewName(name string) *Folder {
@@ -159,10 +164,20 @@ func (f *Folder) build(root string) error {
 	}
 
 	if len(f.Content) != 0 {
-		return f.buildFile(pth)
+		err := f.buildFile(pth)
+		if err != nil {
+			return rerrors.Wrap(err, "failed to building file")
+		}
+
+		return nil
 	}
 
-	return f.buildDir(pth)
+	err := f.buildDir(pth)
+	if err != nil {
+		return rerrors.Wrap(err, "error building directory")
+	}
+
+	return nil
 }
 
 func (f *Folder) buildDelete(pth string) error {
@@ -205,15 +220,15 @@ func (f *Folder) isUnchangedFromOlderVersion() bool {
 }
 
 func (f *Folder) buildDir(pth string) error {
-	err := os.MkdirAll(pth, 0755)
+	err := os.MkdirAll(pth, io.DefaultDirPerm)
 	if err != nil {
-		return rerrors.Wrap(err)
+		return rerrors.Wrap(err, "failed to create directory:", pth)
 	}
 
 	for _, d := range f.Inner {
 		err = d.build(pth)
 		if err != nil {
-			return rerrors.Wrap(err)
+			return rerrors.Wrap(err, "failed to build")
 		}
 	}
 

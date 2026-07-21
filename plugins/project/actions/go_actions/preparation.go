@@ -1,10 +1,8 @@
 package go_actions
 
 import (
-	"bytes"
 	stderrs "errors"
 	"path"
-	"strings"
 
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
@@ -12,7 +10,6 @@ import (
 	rscliconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/folder"
-	"go.vervstack.ru/verv/internal/utils/renamer"
 	"go.vervstack.ru/verv/plugins/project"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies"
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies/link_service"
@@ -117,59 +114,6 @@ func (a PrepareClients) Do(p project.IProject) error {
 
 func (a PrepareClients) NameInAction() string {
 	return "Generating clients"
-}
-
-type PrepareMakefile struct{}
-
-func (a PrepareMakefile) Do(p project.IProject) error {
-	genScriptSummary := make([]string, 0)
-
-	// first part for summary scripts
-	makefileContent := make([][]byte, 1, 4)
-	{
-		// basic info
-		rscliBasicScript := make([]byte, len(patterns.RscliMK.Content))
-		copy(rscliBasicScript, patterns.RscliMK.Content)
-
-		rscliBasicScript = renamer.ReplaceProjectNameShort(rscliBasicScript, p.GetShortName())
-
-		makefileContent = append(makefileContent, rscliBasicScript)
-	}
-
-	if len(p.GetConfig().Servers) != 0 {
-		// basic info
-		serverGenCopy := make([]byte, len(patterns.GrpcServerGenMK))
-		copy(serverGenCopy, patterns.GrpcServerGenMK)
-
-		makefileContent = append(makefileContent, append([]byte(`### Grpc server generation`+"\n"), serverGenCopy...))
-		genScriptSummary = append(genScriptSummary, patterns.GenGrpcServerCommand)
-	}
-
-	rscliMk := p.GetFolder().GetByPath(patterns.RscliMakefileFile)
-	if rscliMk == nil {
-		p.GetFolder().Add(&folder.Folder{
-			Name: patterns.RscliMakefileFile,
-		})
-		rscliMk = p.GetFolder().GetByPath(patterns.RscliMakefileFile)
-	}
-
-	if len(genScriptSummary) != 0 {
-		makefileContent[0] = []byte(patterns.GenCommand + ": " + strings.Join(genScriptSummary, " "))
-	} else {
-		makefileContent = makefileContent[1:]
-	}
-
-	rscliMk.Content = bytes.Join(makefileContent, []byte{'\n'})
-
-	makefile := p.GetFolder().GetByPath(patterns.MakefileFile)
-	if makefile == nil {
-		p.GetFolder().Add(patterns.Makefile.Copy())
-	}
-
-	return nil
-}
-func (a PrepareMakefile) NameInAction() string {
-	return "Generating Makefile"
 }
 
 type PrepareServer struct{}

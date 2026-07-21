@@ -15,13 +15,10 @@ import (
 
 const (
 	CustomPathToConfig = "cfg"
-)
-const (
+
 	configFilename          = "verv.yaml"
 	environmentPathToConfig = "VERV_CONFIG_PATH"
-)
 
-const (
 	envPathToConfig = "VERV_PATH_TO_CONFIG"
 	envPathToMain   = "VERV_PATH_TO_MAIN"
 
@@ -36,15 +33,17 @@ const (
 	envDefaultProjectGitPath = "VERV_DEFAULT_PROJECT_GIT_PATH"
 )
 
-//go:embed verv.yaml
-var builtInConfig []byte
+var (
+	//go:embed verv.yaml
+	builtInConfig []byte
+
+	vervConfig *VervConfig
+)
 
 type VervConfig struct {
 	Env                   Project `yaml:"env"`
 	DefaultProjectGitPath string  `yaml:"default_project_git_path"`
 }
-
-var vervConfig *VervConfig
 
 type Project struct {
 	PathToMain   string `yaml:"path_to_main"`
@@ -78,7 +77,8 @@ func InitConfig(cmd *cobra.Command, _ []string) error {
 
 	err := yaml.Unmarshal(builtInConfig, vervConfig)
 	if err != nil {
-		panic(rerrors.Wrap(err, "error parsing built in config file. This is serious issue and MUST BE fixed A$A₽\n\n\n Like Rocky\n\n\n\n in a way (: "))
+		panic(
+			rerrors.Wrap(err, "error parsing built in config file"))
 	}
 
 	*vervConfig = mergeConfigs(getConfigFromEnvironment(), *vervConfig)

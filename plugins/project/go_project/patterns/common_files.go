@@ -33,30 +33,16 @@ var (
 		Name:    ".golangci.yaml",
 		Content: linter,
 	}
-)
 
-// Documentation
-var (
+	// Documentation
 	//go:embed static/README.md
 	readme []byte
 	Readme = &folder.Folder{
 		Name:    "README.md",
 		Content: readme,
 	}
-)
 
-// Example files
-var (
-	//go:embed static/examples/api.http
-	apiHTTP []byte
-	ApiHTTP = &folder.Folder{
-		Name:    "api.http",
-		Content: apiHTTP,
-	}
-)
-
-// Scripts
-var (
+	// Scripts
 	//go:embed static/rscli.mk
 	rscliMK []byte
 	RscliMK = &folder.Folder{

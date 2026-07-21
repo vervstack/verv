@@ -13,6 +13,15 @@ import (
 
 var (
 	ErrNoFolderInConfig = rerrors.New("no folder path in rscli config")
+
+	nameToDependencyConstructor = map[string]func(dep dependencyBase) Dependency{
+		DependencyNamePostgres: postgresClient,
+		DependencyNameRedis:    redisClient,
+		DependencyNameTelegram: telegram,
+		DependencyNameSqlite:   sqlite,
+
+		DependencyEnvVariable: envVariable,
+	}
 )
 
 type Dependency interface {
@@ -31,16 +40,10 @@ const (
 	DependencyNameSqlite   = "sqlite"
 
 	DependencyEnvVariable = "env"
+
+	defaultPgPort    = 5432
+	defaultRedisPort = 6379
 )
-
-var nameToDependencyConstructor = map[string]func(dep dependencyBase) Dependency{
-	DependencyNamePostgres: postgresClient,
-	DependencyNameRedis:    redisClient,
-	DependencyNameTelegram: telegram,
-	DependencyNameSqlite:   sqlite,
-
-	DependencyEnvVariable: envVariable,
-}
 
 func HelpWithDependencyNames(passedDeps ...string) (missingDeps []string) {
 	passedDepsMap := map[string]struct{}{}

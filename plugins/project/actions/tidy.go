@@ -24,7 +24,6 @@ func GetTidyActionsForProject(pt project.Type) []Action {
 func goProjectTidyActions() []Action {
 	return []Action{
 		go_actions.PrepareConfigFolder{},
-		go_actions.PrepareMakefile{},
 		go_actions.PrepareClients{},
 		go_actions.PrepareServer{},
 		go_actions.PrepareDockerfile{},

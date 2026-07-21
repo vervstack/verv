@@ -12,7 +12,9 @@ var (
 	ErrUnsupportedOS = rerrors.New("unsuported OS")
 )
 
-const bin = "make"
+const (
+	bin = "make"
+)
 
 func Exists() bool {
 	_, err := cmd.Execute(cmd.Request{

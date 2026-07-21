@@ -11,7 +11,9 @@ import (
 	"go.vervstack.ru/verv/plugins/project"
 )
 
-const newProjectInitMessage = `New project with name %s initialized at %s`
+const (
+	newProjectInitMessage = `New project with name %s initialized at %s`
+)
 
 type Proc struct {
 	processor.Processor

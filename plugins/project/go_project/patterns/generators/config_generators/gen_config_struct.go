@@ -22,7 +22,7 @@ func GenerateConfigFolder(cfg *config.Config) (*folder.Folder, error) {
 
 	configFolder := &folder.Folder{}
 
-	configGenerators := make([]internalConfigGenerator, 0, 3)
+	configGenerators := make([]internalConfigGenerator, 0)
 
 	if len(cfg.Servers) != 0 {
 		configGenerators = append(configGenerators, newGenerateServerConfigStruct(cfg.Servers))

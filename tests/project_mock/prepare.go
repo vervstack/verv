@@ -10,6 +10,7 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 
 	rscliconfig "go.vervstack.ru/verv/internal/config"
+	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project"
 	"go.vervstack.ru/verv/plugins/project/config"
@@ -63,7 +64,7 @@ func GetMockProject(t *testing.T, opts ...Opt) *MockProject {
 
 	if p.Path != "" {
 		require.NoError(t, os.RemoveAll(p.Path))
-		require.NoError(t, os.MkdirAll(p.Path, 0777))
+		require.NoError(t, os.MkdirAll(p.Path, io.DefaultDirPerm))
 	}
 
 	return p
@@ -74,7 +75,7 @@ func (m *MockProject) WriteFile(t *testing.T, relativePath string, data []byte) 
 
 	relativePath = path.Join(m.Path, relativePath)
 
-	require.NoError(t, os.MkdirAll(path.Dir(relativePath), 0777))
+	require.NoError(t, os.MkdirAll(path.Dir(relativePath), io.DefaultDirPerm))
 
 	cfgFile, err := os.Create(relativePath)
 	require.NoError(t, err)

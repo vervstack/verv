@@ -79,6 +79,6 @@ func (p Redis) applyConfig(proj Project) {
 		&resources.Redis{
 			Name: resources.Name(p.GetFolderName()),
 			Host: "localhost",
-			Port: 6379,
+			Port: defaultRedisPort,
 		})
 }

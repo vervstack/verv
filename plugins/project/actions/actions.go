@@ -14,21 +14,21 @@ type Action interface {
 	NameInAction() string
 }
 
-type ActionPerformer interface {
+type IActionPerformer interface {
 	Tidy(proj project.IProject) error
 }
 
-type actionPerformer struct {
+type ActionPerformer struct {
 	printer io.IO
 }
 
-func NewActionPerformer(printer io.IO) ActionPerformer {
-	return &actionPerformer{
+func NewActionPerformer(printer io.IO) *ActionPerformer {
+	return &ActionPerformer{
 		printer: printer,
 	}
 }
 
-func (a *actionPerformer) Tidy(proj project.IProject) error {
+func (a *ActionPerformer) Tidy(proj project.IProject) error {
 	acts := GetTidyActionsForProject(proj.GetType())
 
 	for _, ac := range acts {

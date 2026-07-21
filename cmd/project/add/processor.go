@@ -15,7 +15,7 @@ import (
 type Proc struct {
 	processor.Processor
 
-	ActionPerformer actions.ActionPerformer
+	ActionPerformer actions.IActionPerformer
 }
 
 func NewCommand(basicProc processor.Processor) *cobra.Command {

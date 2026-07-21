@@ -21,8 +21,8 @@ const (
 // Contains all basic necessary information and primitives for CLI utility
 type Processor struct {
 	IO         io.IO
-	VervConfig *config.VervConfig
 	WD         string
+	VervConfig *config.VervConfig
 }
 
 type opt func(p *Processor)

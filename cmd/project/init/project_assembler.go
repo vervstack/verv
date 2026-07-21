@@ -7,7 +7,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/actions"
 )
 
-func (p *Proc) createProject(args project.CreateArgs) (project.IProject, error) {
+func (p *Proc) createProject(args project.CreateArgs) (*project.Project, error) {
 	proj, err := project.CreateProject(args)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error during project creation")

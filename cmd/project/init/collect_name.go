@@ -87,11 +87,13 @@ func (p *nameCollector) removeHttpProtoc(name string) string {
 }
 
 func (p *nameCollector) preAppendHost(name string) string {
-	firstDot := strings.Index(name, ".")
-	firstSlash := strings.Index(name, "/")
+	firstDotIndex := strings.Index(name, ".")
+	firstSlashIndex := strings.Index(name, "/")
 
 	// if firstSlash comes after first dot - consider name already has host
-	if firstSlash-firstDot > 2 {
+	// TODO
+	//nolint:mnd
+	if firstSlashIndex-firstDotIndex > 2 {
 		return name
 	}
 

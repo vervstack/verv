@@ -14,7 +14,7 @@ func (a BuildProjectAction) Do(p project.IProject) error {
 
 	err := p.GetFolder().Build()
 	if err != nil {
-		return rerrors.Wrap(err)
+		return rerrors.Wrap(err, "error building project folder")
 	}
 
 	return nil

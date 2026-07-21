@@ -21,6 +21,7 @@ const (
 	templateConfigFileName = "config_template.yaml"
 )
 
+//nolint:mnd
 var configOrder = map[string]int{
 	prodConfigFileName:     1,
 	templateConfigFileName: 2,
@@ -73,7 +74,7 @@ func LoadProjectConfig(projectPath string, cfg *rscliconfig.VervConfig) (c *conf
 		return nil, rerrors.Wrap(err, "error reading config folder")
 	}
 
-	configsPaths := make([]string, 0, 3)
+	configsPaths := make([]string, 0)
 
 	for _, d := range dir {
 		if strings.HasSuffix(d.Name(), ".yaml") {

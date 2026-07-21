@@ -11,7 +11,9 @@ import (
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
-const goBin = "go"
+const (
+	goBin = "go"
+)
 
 type GoFmt struct{}
 

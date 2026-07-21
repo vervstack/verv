@@ -30,8 +30,23 @@ linters:
     exhaustive:
       default-signifies-exhaustive: true
     govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+    grouper:
+      const-require-single-const: true
+      const-require-grouping: true
+      import-require-single-import: true
+      import-require-grouping: true
+      var-require-single-var: true
+    iface:
       enable:
-        - shadow
+        - identical
+        - unexported
+    importas:
+      # Do not allow unaliased imports of aliased packages.
+      # Default: false
+      no-unaliased: true
   enable:
     - govet
     - asasalint
@@ -65,20 +80,30 @@ linters:
     - gocognit
     - goconst
     - gocritic
-
-    - noinlineerr
-    - goheader
-    - gomoddirectives
-    - gomodguard_v2
     - goprintffuncname
+#    - gosec # Whole repo works with exec | folders | files on disk
+    - gosmopolitan
+    - govet
     - grouper
+    - iface
     - importas
+    - iotamixing
+    - inamedparam
     - ineffassign
+    - interfacebloat
+    - intrange
+    - lll
     - loggercheck
+    - maintidx
+    - makezero
+    - mirror
     - misspell
+    - mnd
+
     - nakedret
     - nilerr
     - nolintlint
+    - noinlineerr
     - nosprintfhostport
     - predeclared
     - promlinter

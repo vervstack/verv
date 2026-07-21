@@ -35,7 +35,8 @@ func newStructGenArgs(structName string) structGenArgs {
 	}
 }
 
-func NewGenerateEnvironmentConfigStruct(env matreshka.Environment) func() (generators.InternalConfig, *folder.Folder, error) {
+func NewGenerateEnvironmentConfigStruct(env matreshka.Environment,
+) func() (generators.InternalConfig, *folder.Folder, error) {
 	return func() (generators.InternalConfig, *folder.Folder, error) {
 		ic := generators.InternalConfig{
 			FieldName:    "Environment",

@@ -11,11 +11,14 @@ import (
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
 	"go.vervstack.ru/matreshka/pkg/matreshka/server"
 
+	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/folder"
 	"go.vervstack.ru/verv/plugins/project/actions/git"
 )
 
-const testFolder = "test"
+const (
+	testFolder = "test"
+)
 
 func WithFile(filePath string, file []byte) Opt {
 	return func(m *MockProject) {
@@ -38,7 +41,7 @@ func WithFileSystem(t *testing.T) Opt {
 	return func(m *MockProject) {
 		m.Path = path.Join(testFolder, t.Name()[5:])
 		m.Root.Name = m.Path
-		require.NoError(t, os.MkdirAll(m.Path, 0777))
+		require.NoError(t, os.MkdirAll(m.Path, io.DefaultDirPerm))
 	}
 }
 
