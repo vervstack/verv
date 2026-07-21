@@ -37,3 +37,4 @@ graphify-out/*.svg
 graphify-out/*.graphml
 graphify-out/cypher.txt
 
+/tests/test_proj/
