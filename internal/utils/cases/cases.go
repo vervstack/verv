@@ -2,10 +2,9 @@ package cases
 
 import (
 	"bytes"
+	"slices"
 	"strings"
 	"unicode"
-
-	"go.vervstack.ru/verv/internal/utils/slices"
 )
 
 func SnakeToPascal(v string) string {

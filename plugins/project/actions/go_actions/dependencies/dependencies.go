@@ -65,11 +65,8 @@ func GetDependencies(c *rscliconfig.VervConfig, args []string) []Dependency {
 	serverOpts := make([]Dependency, 0, len(args))
 
 	for _, name := range args {
-		idx := strings.Index(name, "_")
-		resourceName := name
-		if idx != -1 {
-			resourceName = name[:idx]
-		}
+		resourceName, _, _ := strings.Cut(name, "_")
+
 		depConstr, ok := nameToDependencyConstructor[resourceName]
 		if !ok {
 			continue

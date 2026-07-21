@@ -1,6 +1,8 @@
 package app_struct_generators
 
 import (
+	"maps"
+
 	"go.redsock.ru/rerrors"
 	"go.vervstack.ru/matreshka/pkg/matreshka"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
@@ -39,9 +41,7 @@ func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppC
 		default:
 			return nil, nil, rerrors.New("unknown resource " + ds.GetType())
 		}
-		for importPath, alias := range fc.Import {
-			initDsFileArgs.Imports[importPath] = alias
-		}
+		maps.Copy(initDsFileArgs.Imports, fc.Import)
 
 		initDsFileArgs.Functions = append(initDsFileArgs.Functions, fc)
 

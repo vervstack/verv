@@ -41,7 +41,7 @@ func NewGenerateEnvironmentConfigStruct(env matreshka.Environment,
 		ic := generators.InternalConfig{
 			FieldName:    "Environment",
 			StructName:   "EnvironmentConfig",
-			From:         reflect.TypeOf(matreshka.Environment{}).Name(),
+			From:         reflect.TypeFor[matreshka.Environment]().Name(),
 			ErrorMessage: "error parsing environment config",
 		}
 

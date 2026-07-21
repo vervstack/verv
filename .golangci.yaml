@@ -99,6 +99,7 @@ linters:
     - mirror
     - misspell
     - mnd
+    - modernize
 
     - nakedret
     - nilerr

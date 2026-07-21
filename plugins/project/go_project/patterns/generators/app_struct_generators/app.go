@@ -1,6 +1,8 @@
 package app_struct_generators
 
 import (
+	"maps"
+
 	"go.redsock.ru/rerrors"
 
 	"go.vervstack.ru/matreshka/pkg/matreshka"
@@ -155,8 +157,7 @@ func (a *AppFileGenArgs) addAppContent(comment, errMsg string, args InitDepFuncG
 			})
 	}
 
-	for importPath, importAlias := range args.Imports {
-		a.Imports[importPath] = importAlias
-	}
+	maps.Copy(a.Imports, args.Imports)
+
 	a.AppContent = append(a.AppContent, serverAppContent)
 }
