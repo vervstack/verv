@@ -25,8 +25,6 @@ type dependencyBase struct {
 }
 
 const (
-	DependencyNameGrpc = "grpc"
-
 	DependencyNameRedis    = "redis"
 	DependencyNamePostgres = "postgres"
 	DependencyNameTelegram = "telegram"
@@ -36,8 +34,6 @@ const (
 )
 
 var nameToDependencyConstructor = map[string]func(dep dependencyBase) Dependency{
-	DependencyNameGrpc: grpcServer,
-
 	DependencyNamePostgres: postgresClient,
 	DependencyNameRedis:    redisClient,
 	DependencyNameTelegram: telegram,

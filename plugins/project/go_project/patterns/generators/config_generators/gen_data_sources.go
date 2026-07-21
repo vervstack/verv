@@ -14,8 +14,8 @@ import (
 )
 
 func newGenerateDataSourcesConfigStruct(dataSources matreshka.DataSources) internalConfigGenerator {
-	return func() (InternalConfig, *folder.Folder, error) {
-		ic := InternalConfig{
+	return func() (generators.InternalConfig, *folder.Folder, error) {
+		ic := generators.InternalConfig{
 			FieldName:    "DataSources",
 			StructName:   "DataSourcesConfig",
 			From:         getTypeName(matreshka.DataSources{}),
@@ -48,7 +48,7 @@ func newGenerateDataSourcesConfigStruct(dataSources matreshka.DataSources) inter
 		buf := &rw.RW{}
 		err := configStructTemplate.Execute(buf, ecg)
 		if err != nil {
-			return InternalConfig{}, nil, rerrors.Wrap(err, "error executing data source config struct template")
+			return generators.InternalConfig{}, nil, rerrors.Wrap(err, "error executing data source config struct template")
 		}
 
 		f := &folder.Folder{

@@ -58,7 +58,14 @@ linters:
     - exptostd
     - forbidigo
     - forcetypeassert
+    - funcorder
+    - funlen
+    - gocheckcompilerdirectives
     - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+
     - noinlineerr
     - goheader
     - gomoddirectives
@@ -99,6 +106,9 @@ linters:
       - linters:
           - forbidigo
         path: internal/io/std_printer.go
+      - linters:
+          - funlen
+        text: "Test_"
     paths:
       - configs
       - node_modules

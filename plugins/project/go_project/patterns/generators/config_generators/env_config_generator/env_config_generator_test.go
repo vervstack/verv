@@ -1,4 +1,4 @@
-package config_generators
+package env_config_generator
 
 import (
 	"testing"
@@ -16,7 +16,7 @@ func Test_GenerateEnvConfig(t *testing.T) {
 			environment.MustNewVariable("two", time.Second),
 		}
 
-		_, generatedFolder, err := newGenerateEnvironmentConfigStruct(env)()
+		_, generatedFolder, err := NewGenerateEnvironmentConfigStruct(env)()
 		require.NoError(t, err)
 
 		expected := `

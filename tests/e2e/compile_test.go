@@ -15,6 +15,8 @@ import (
 	"strings"
 	"sync"
 	"testing"
+
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions/dependencies"
 )
 
 var (
@@ -80,11 +82,11 @@ func run(t *testing.T, dir, name string, args ...string) {
 	}
 }
 
-// TestGeneratedProjectsCompile scaffolds a fresh project for each dependency
+// Test_GeneratedProjectsCompile scaffolds a fresh project for each dependency
 // set below via the real CLI, then runs `go mod tidy` and `go build ./...`
 // against the result. A case failing here means `verv project init`/`add`
 // produced code that doesn't compile.
-func TestGeneratedProjectsCompile(t *testing.T) {
+func Test_GeneratedProjectsCompile(t *testing.T) {
 	t.Parallel()
 
 	if testing.Short() {
@@ -98,13 +100,35 @@ func TestGeneratedProjectsCompile(t *testing.T) {
 		deps []string
 	}{
 		{name: "base"},
-		{name: "redis", deps: []string{"redis"}},
-		{name: "postgres", deps: []string{"postgres"}},
-		{name: "sqlite", deps: []string{"sqlite"}},
-		{name: "env", deps: []string{"env"}},
-		{name: "telegram", deps: []string{"telegram"}},
-		{name: "grpc", deps: []string{"grpc"}},
-		{name: "combo", deps: []string{"redis", "postgres", "sqlite", "env", "telegram", "grpc"}},
+		{
+			name: dependencies.DependencyNameRedis,
+			deps: []string{dependencies.DependencyNameRedis},
+		},
+		{
+			name: dependencies.DependencyNamePostgres,
+			deps: []string{dependencies.DependencyNamePostgres},
+		},
+		{
+			name: dependencies.DependencyNameSqlite,
+			deps: []string{dependencies.DependencyNameSqlite},
+		},
+		{
+			name: dependencies.DependencyEnvVariable,
+			deps: []string{dependencies.DependencyEnvVariable},
+		},
+		{
+			name: dependencies.DependencyNameTelegram,
+			deps: []string{dependencies.DependencyNameTelegram},
+		},
+		{
+			name: "combo",
+			deps: []string{
+				dependencies.DependencyNameRedis,
+				dependencies.DependencyNamePostgres,
+				dependencies.DependencyNameSqlite,
+				dependencies.DependencyEnvVariable,
+				dependencies.DependencyNameTelegram,
+			}},
 	}
 
 	for _, tc := range cases {

@@ -13,8 +13,8 @@ import (
 )
 
 func newGenerateServerConfigStruct(srv matreshka.Servers) internalConfigGenerator {
-	return func() (InternalConfig, *folder.Folder, error) {
-		ic := InternalConfig{
+	return func() (generators.InternalConfig, *folder.Folder, error) {
+		ic := generators.InternalConfig{
 			FieldName:    "Servers",
 			StructName:   "ServersConfig",
 			From:         getTypeName(matreshka.Servers{}),
@@ -47,7 +47,7 @@ func newGenerateServerConfigStruct(srv matreshka.Servers) internalConfigGenerato
 		buf := &rw.RW{}
 		err := configStructTemplate.Execute(buf, ecg)
 		if err != nil {
-			return InternalConfig{}, nil, rerrors.Wrap(err, "error executing server config struct template")
+			return generators.InternalConfig{}, nil, rerrors.Wrap(err, "error executing server config struct template")
 		}
 
 		f := &folder.Folder{

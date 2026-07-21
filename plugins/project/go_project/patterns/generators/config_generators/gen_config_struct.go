@@ -7,43 +7,38 @@ import (
 	"go.vervstack.ru/verv/internal/rw"
 	"go.vervstack.ru/verv/plugins/project/config"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/config_generators/env_config_generator"
 )
 
 type loadConfigFileGenArgs struct {
-	Configs []InternalConfig
+	Configs []generators.InternalConfig
 }
 
-type InternalConfig struct {
-	FieldName    string
-	StructName   string
-	From         string
-	ErrorMessage string
-}
-
-type internalConfigGenerator func() (InternalConfig, *folder.Folder, error)
+type internalConfigGenerator func() (generators.InternalConfig, *folder.Folder, error)
 
 func GenerateConfigFolder(cfg *config.Config) (*folder.Folder, error) {
 	args := loadConfigFileGenArgs{}
 
 	configFolder := &folder.Folder{}
 
-	generators := make([]internalConfigGenerator, 0, 3)
+	configGenerators := make([]internalConfigGenerator, 0, 3)
 
 	if len(cfg.Servers) != 0 {
-		generators = append(generators, newGenerateServerConfigStruct(cfg.Servers))
+		configGenerators = append(configGenerators, newGenerateServerConfigStruct(cfg.Servers))
 	}
 
 	// Data sources
 	if len(cfg.DataSources) != 0 {
-		generators = append(generators, newGenerateDataSourcesConfigStruct(cfg.DataSources))
+		configGenerators = append(configGenerators, newGenerateDataSourcesConfigStruct(cfg.DataSources))
 	}
 
 	// Environment
 	if len(cfg.Environment) != 0 {
-		generators = append(generators, newGenerateEnvironmentConfigStruct(cfg.Environment))
+		configGenerators = append(configGenerators, env_config_generator.NewGenerateEnvironmentConfigStruct(cfg.Environment))
 	}
 
-	for _, g := range generators {
+	for _, g := range configGenerators {
 		ic, f, err := g()
 		if err != nil {
 			return nil, rerrors.Wrap(err)

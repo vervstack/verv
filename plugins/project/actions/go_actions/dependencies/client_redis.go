@@ -27,7 +27,7 @@ func (p Redis) GetFolderName() string {
 		return p.Name
 	}
 
-	return "redis"
+	return DependencyNameRedis
 }
 
 func (p Redis) AppendToProject(proj Project) error {

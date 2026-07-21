@@ -43,21 +43,64 @@ func (f *Folder) Add(folders ...*Folder) {
 	}
 }
 
-func (f *Folder) addWithPath(pth string, folders ...*Folder) {
-	if len(folders) == 0 {
+func (f *Folder) GetByPath(pth ...string) *Folder {
+	currentFolder := f
+	splitPath := make([]string, 0, len(pth))
+	for _, p := range pth {
+		sp := strings.Split(p, string(os.PathSeparator))
+		splitPath = append(splitPath, sp...)
+	}
+
+	for _, p := range splitPath {
+		var foundFolder *Folder
+		for _, cf := range currentFolder.Inner {
+			if cf.Name == p {
+				foundFolder = cf
+				break
+			}
+		}
+
+		if foundFolder == nil {
+			return nil
+		}
+		currentFolder = foundFolder
+	}
+
+	return currentFolder
+}
+
+func (f *Folder) Build() error {
+	return f.build(path.Dir(f.Name))
+}
+
+func (f *Folder) CopyWithNewName(name string) *Folder {
+	newF := Folder{
+		Name:    name,
+		Content: make([]byte, len(f.Content)),
+	}
+
+	copy(newF.Content, f.Content)
+
+	return &newF
+}
+
+func (f *Folder) Copy() *Folder {
+	newF := Folder{
+		Name:    f.Name,
+		Content: make([]byte, len(f.Content)),
+	}
+
+	copy(newF.Content, f.Content)
+
+	return &newF
+}
+
+func (f *Folder) Delete() {
+	if f == nil {
 		return
 	}
 
-	pths := strings.Split(pth, string(os.PathSeparator))
-
-	currentFolder := f
-	for _, pathPart := range pths {
-		currentFolder = currentFolder.findOrCreateChild(pathPart)
-	}
-
-	for _, folderToAdd := range folders {
-		currentFolder.mergeChild(folderToAdd)
-	}
+	f.isToBeDeleted = true
 }
 
 func (f *Folder) findOrCreateChild(name string) *Folder {
@@ -91,33 +134,21 @@ func (f *Folder) mergeChild(folderToAdd *Folder) {
 	f.Inner = append(f.Inner, folderToAdd)
 }
 
-func (f *Folder) GetByPath(pth ...string) *Folder {
+func (f *Folder) addWithPath(pth string, folders ...*Folder) {
+	if len(folders) == 0 {
+		return
+	}
+
+	pths := strings.Split(pth, string(os.PathSeparator))
+
 	currentFolder := f
-	splitPath := make([]string, 0, len(pth))
-	for _, p := range pth {
-		sp := strings.Split(p, string(os.PathSeparator))
-		splitPath = append(splitPath, sp...)
+	for _, pathPart := range pths {
+		currentFolder = currentFolder.findOrCreateChild(pathPart)
 	}
 
-	for _, p := range splitPath {
-		var foundFolder *Folder
-		for _, cf := range currentFolder.Inner {
-			if cf.Name == p {
-				foundFolder = cf
-				break
-			}
-		}
-
-		if foundFolder == nil {
-			return nil
-		}
-		currentFolder = foundFolder
+	for _, folderToAdd := range folders {
+		currentFolder.mergeChild(folderToAdd)
 	}
-
-	return currentFolder
-}
-func (f *Folder) Build() error {
-	return f.build(path.Dir(f.Name))
 }
 
 func (f *Folder) build(root string) error {
@@ -187,34 +218,4 @@ func (f *Folder) buildDir(pth string) error {
 	}
 
 	return nil
-}
-
-func (f *Folder) Delete() {
-	if f == nil {
-		return
-	}
-
-	f.isToBeDeleted = true
-}
-
-func (f *Folder) Copy() *Folder {
-	newF := Folder{
-		Name:    f.Name,
-		Content: make([]byte, len(f.Content)),
-	}
-
-	copy(newF.Content, f.Content)
-
-	return &newF
-}
-
-func (f *Folder) CopyWithNewName(name string) *Folder {
-	newF := Folder{
-		Name:    name,
-		Content: make([]byte, len(f.Content)),
-	}
-
-	copy(newF.Content, f.Content)
-
-	return &newF
 }
