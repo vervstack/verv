@@ -190,6 +190,21 @@ func (a PrepareServer) Do(p project.IProject) error {
 		transportFolder = &folder.Folder{}
 	}
 
+	err := generateTransportFiles(transportFolder)
+	if err != nil {
+		return err
+	}
+
+	implFolders, err := impl_gen.GenerateImpl(rscliconfig.GetConfig(), p)
+	if err != nil {
+		return rerrors.Wrap(err, "error during stub generation")
+	}
+	addMissingImplFolders(transportFolder, implFolders)
+
+	return nil
+}
+
+func generateTransportFiles(transportFolder *folder.Folder) error {
 	serverManagerContent, err := transport_generators.GenerateServerManager()
 	if err != nil {
 		return rerrors.Wrap(err, "error generating server manager")
@@ -208,10 +223,10 @@ func (a PrepareServer) Do(p project.IProject) error {
 	}
 	transportFolder.Add(&folder.Folder{Name: patterns.HttpServerFileName, Content: httpServerContent})
 
-	implFolders, err := impl_gen.GenerateImpl(rscliconfig.GetConfig(), p)
-	if err != nil {
-		return rerrors.Wrap(err, "error during stub generation")
-	}
+	return nil
+}
+
+func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder.Folder) {
 	for _, implF := range implFolders {
 		exists := false
 		for _, tF := range transportFolder.Inner {
@@ -225,9 +240,8 @@ func (a PrepareServer) Do(p project.IProject) error {
 			transportFolder.Add(implFolders...)
 		}
 	}
-
-	return nil
 }
+
 func (a PrepareServer) NameInAction() string {
 	return "Preparing server files"
 }

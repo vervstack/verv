@@ -5,6 +5,8 @@ import (
 	"path"
 	"strings"
 
+	"go.redsock.ru/rerrors"
+
 	"go.vervstack.ru/verv/internal/io"
 )
 
@@ -42,48 +44,51 @@ func (f *Folder) Add(folders ...*Folder) {
 }
 
 func (f *Folder) addWithPath(pth string, folders ...*Folder) {
-	pths := strings.Split(pth, string(os.PathSeparator))
 	if len(folders) == 0 {
 		return
 	}
 
+	pths := strings.Split(pth, string(os.PathSeparator))
+
 	currentFolder := f
 	for _, pathPart := range pths {
-		var pathFolder *Folder
-
-		for currentFolderIdx := range currentFolder.Inner {
-			if currentFolder.Inner[currentFolderIdx].Name == pathPart {
-				pathFolder = currentFolder.Inner[currentFolderIdx]
-				break
-			}
-		}
-		if pathFolder == nil {
-			pathFolder = &Folder{
-				Name: pathPart,
-			}
-			currentFolder.Inner = append(currentFolder.Inner, pathFolder)
-		}
-		currentFolder = pathFolder
+		currentFolder = currentFolder.findOrCreateChild(pathPart)
 	}
+
 	for _, folderToAdd := range folders {
-		var isAdded bool
+		currentFolder.mergeChild(folderToAdd)
+	}
+}
 
-		for idx, itemInCurrentFolder := range currentFolder.Inner {
-			if itemInCurrentFolder.Name == folderToAdd.Name {
-				if len(currentFolder.Inner[idx].Content) != 0 && len(folderToAdd.Content) != 0 {
-					currentFolder.Inner[idx].Content = folderToAdd.Content
-				} else {
-					currentFolder.Inner[idx] = folderToAdd
-				}
-				isAdded = true
-				break
-			}
-		}
-
-		if !isAdded {
-			currentFolder.Inner = append(currentFolder.Inner, folderToAdd)
+func (f *Folder) findOrCreateChild(name string) *Folder {
+	for idx := range f.Inner {
+		if f.Inner[idx].Name == name {
+			return f.Inner[idx]
 		}
 	}
+
+	child := &Folder{Name: name}
+	f.Inner = append(f.Inner, child)
+
+	return child
+}
+
+func (f *Folder) mergeChild(folderToAdd *Folder) {
+	for idx, itemInCurrentFolder := range f.Inner {
+		if itemInCurrentFolder.Name != folderToAdd.Name {
+			continue
+		}
+
+		if len(f.Inner[idx].Content) != 0 && len(folderToAdd.Content) != 0 {
+			f.Inner[idx].Content = folderToAdd.Content
+		} else {
+			f.Inner[idx] = folderToAdd
+		}
+
+		return
+	}
+
+	f.Inner = append(f.Inner, folderToAdd)
 }
 
 func (f *Folder) GetByPath(pth ...string) *Folder {
@@ -119,45 +124,65 @@ func (f *Folder) build(root string) error {
 	pth := path.Join(root, path.Base(f.Name))
 
 	if f.isToBeDeleted {
-		err := os.RemoveAll(pth)
-		if err != nil {
-			return err
-		}
-		return nil
+		return f.buildDelete(pth)
 	}
 
 	if len(f.Content) != 0 {
-		if len(f.olderVersion) == len(f.Content) {
-			var idx int
-			for idx = range f.olderVersion {
-				if f.olderVersion[idx] != f.Content[idx] {
-					break
-				}
-			}
-			if len(f.olderVersion) != idx-1 {
-				return nil
-			}
-		}
+		return f.buildFile(pth)
+	}
 
-		if len(f.Content) != 0 && (len(f.Content) != 1 || f.Content[0] == 0) {
-			err := io.OverrideFile(pth, f.Content)
-			if err != nil {
-				return err
-			}
-		}
+	return f.buildDir(pth)
+}
 
+func (f *Folder) buildDelete(pth string) error {
+	err := os.RemoveAll(pth)
+	if err != nil {
+		return rerrors.Wrap(err)
+	}
+
+	return nil
+}
+
+func (f *Folder) buildFile(pth string) error {
+	if f.isUnchangedFromOlderVersion() {
 		return nil
 	}
 
+	if len(f.Content) != 1 || f.Content[0] == 0 {
+		err := io.OverrideFile(pth, f.Content)
+		if err != nil {
+			return rerrors.Wrap(err)
+		}
+	}
+
+	return nil
+}
+
+func (f *Folder) isUnchangedFromOlderVersion() bool {
+	if len(f.olderVersion) != len(f.Content) {
+		return false
+	}
+
+	var idx int
+	for idx = range f.olderVersion {
+		if f.olderVersion[idx] != f.Content[idx] {
+			break
+		}
+	}
+
+	return len(f.olderVersion) != idx-1
+}
+
+func (f *Folder) buildDir(pth string) error {
 	err := os.MkdirAll(pth, 0755)
 	if err != nil {
-		return err
+		return rerrors.Wrap(err)
 	}
 
 	for _, d := range f.Inner {
 		err = d.build(pth)
 		if err != nil {
-			return err
+			return rerrors.Wrap(err)
 		}
 	}
 

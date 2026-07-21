@@ -19,64 +19,79 @@ func Status(pth string) (uncommitted StatusDiff, err error) {
 	}
 
 	out := make([]Changes, 0, 2)
-	{
-		const messageForUntrackedFiles = "Untracked files"
 
-		startIdx := strings.Index(executeOut, messageForUntrackedFiles)
-		if startIdx != -1 {
-			startIdx += len(messageForUntrackedFiles)
-			changeList := strings.Split(executeOut[startIdx:], "\n")
-
-			gitChanges := Changes{
-				Type:       ChangesTypeNotStaged,
-				Changelist: make([]string, 0, len(changeList)),
-			}
-			for _, item := range changeList {
-				if len(item) == 0 {
-					continue
-				}
-				if strings.HasPrefix(item, "\t") {
-					gitChanges.Changelist = append(gitChanges.Changelist, item[1:])
-				}
-			}
-
-			out = append(out, gitChanges)
-		}
+	if untracked, ok := parseUntrackedFiles(executeOut); ok {
+		out = append(out, untracked)
 	}
 
-	{
-		var keyWords = []string{"deleted", "modified", "new file"}
-
-		for _, message := range []string{"Changes to be committed", "Changes not staged for commit"} {
-			startIdx := strings.Index(executeOut, message)
-			if startIdx != -1 {
-				startIdx += len(message)
-				changeList := strings.Split(executeOut[startIdx:], "\n")
-
-				gitChanges := Changes{
-					Type:       ChangesTypeNotCommitted,
-					Changelist: make([]string, 0, len(changeList)),
-				}
-
-				for _, item := range changeList {
-					if len(item) == 0 {
-						continue
-					}
-
-					item = strings.ReplaceAll(item, "\t", "")
-					for _, keyWord := range keyWords {
-						if strings.HasPrefix(item, keyWord) {
-							gitChanges.Changelist = append(gitChanges.Changelist, item)
-							break
-						}
-					}
-				}
-				out = append(out, gitChanges)
-			}
-		}
-	}
+	out = append(out, parseCommitChanges(executeOut)...)
 
 	return out, nil
+}
+
+func parseUntrackedFiles(executeOut string) (Changes, bool) {
+	const messageForUntrackedFiles = "Untracked files"
+
+	startIdx := strings.Index(executeOut, messageForUntrackedFiles)
+	if startIdx == -1 {
+		return Changes{}, false
+	}
+
+	startIdx += len(messageForUntrackedFiles)
+	changeList := strings.Split(executeOut[startIdx:], "\n")
+
+	gitChanges := Changes{
+		Type:       ChangesTypeNotStaged,
+		Changelist: make([]string, 0, len(changeList)),
+	}
+	for _, item := range changeList {
+		if len(item) == 0 {
+			continue
+		}
+		if strings.HasPrefix(item, "\t") {
+			gitChanges.Changelist = append(gitChanges.Changelist, item[1:])
+		}
+	}
+
+	return gitChanges, true
+}
+
+func parseCommitChanges(executeOut string) []Changes {
+	var keyWords = []string{"deleted", "modified", "new file"}
+
+	out := make([]Changes, 0, 2)
+	for _, message := range []string{"Changes to be committed", "Changes not staged for commit"} {
+		startIdx := strings.Index(executeOut, message)
+		if startIdx == -1 {
+			continue
+		}
+
+		startIdx += len(message)
+		changeList := strings.Split(executeOut[startIdx:], "\n")
+
+		gitChanges := Changes{
+			Type:       ChangesTypeNotCommitted,
+			Changelist: make([]string, 0, len(changeList)),
+		}
+
+		for _, item := range changeList {
+			if len(item) == 0 {
+				continue
+			}
+
+			item = strings.ReplaceAll(item, "\t", "")
+			for _, keyWord := range keyWords {
+				if strings.HasPrefix(item, keyWord) {
+					gitChanges.Changelist = append(gitChanges.Changelist, item)
+					break
+				}
+			}
+		}
+
+		out = append(out, gitChanges)
+	}
+
+	return out
 }
 
 type Changes struct {
