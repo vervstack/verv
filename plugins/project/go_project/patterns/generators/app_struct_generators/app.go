@@ -84,11 +84,16 @@ func (a *AppFileGenArgs) addDataSources(dataSources matreshka.DataSources, out m
 		return rerrors.Wrap(err, "error generation data source init file")
 	}
 
+	// Every data source may have opted out of app-struct wiring (e.g. a
+	// Postgres-only project), in which case there's no file or app content to
+	// add at all.
+	if initDataSourcesArgs == nil {
+		return nil
+	}
+
 	out[patterns.AppInitDataSourcesFileName] = initDataSourcesFile
 
-	if initDataSourcesArgs != nil {
-		a.AppContent = append(a.AppContent, *initDataSourcesArgs)
-	}
+	a.AppContent = append(a.AppContent, *initDataSourcesArgs)
 
 	return nil
 }

@@ -48,6 +48,19 @@ func Test_GenerateAppFiles(t *testing.T) {
 				patterns.AppCustomFileName: customPattern,
 			},
 		},
+		"with_postgres": {
+			genProj: func() project.IProject {
+				return project_mock.GetMockProject(t, project_mock.WithPostgres("test"))
+			},
+			// Postgres manages its own connections via internal/clients/postgres,
+			// so a Postgres-only project produces the same app.go as basic - no
+			// InitDataSources wiring, no extra generated file.
+			expectedApp: basicAppFile,
+			expectedKeys: map[string][]byte{
+				patterns.AppConfigFileName: appConfigPattern,
+				patterns.AppCustomFileName: customPattern,
+			},
+		},
 		"with_sqlite": {
 			genProj: func() project.IProject {
 				return project_mock.GetMockProject(t, project_mock.WithSqlite("test"))

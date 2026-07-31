@@ -73,6 +73,14 @@ func WithSqlite(name string) Opt {
 	}
 }
 
+func WithPostgres(name string) Opt {
+	return func(m *MockProject) {
+		p := resources.NewPostgres(resources.Name(resources.PostgresResourceName + "_" + name))
+
+		m.Cfg.DataSources = append(m.Cfg.DataSources, p)
+	}
+}
+
 func WithGrpcServer(port int) Opt {
 	return func(m *MockProject) {
 		m.Cfg.Servers[port] = &server.Server{

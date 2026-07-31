@@ -53,3 +53,47 @@ func Test_GenerateTelegramConn(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, telegramConnPattern, string(got))
 }
+
+func Test_GeneratePostgresConn(t *testing.T) {
+	t.Parallel()
+
+	got, err := GeneratePostgresConn()
+	require.NoError(t, err)
+	require.Equal(t, postgresConnPattern, string(got))
+}
+
+func Test_GeneratePostgresDriver_PostgresPackage(t *testing.T) {
+	t.Parallel()
+
+	got, err := GeneratePostgresDriver()
+	require.NoError(t, err)
+	require.Equal(t, postgresDriverPattern, string(got))
+	require.Contains(t, string(got), "package postgres")
+}
+
+func Test_GeneratePostgresInstances(t *testing.T) {
+	t.Parallel()
+
+	got, err := GeneratePostgresInstances(PostgresInstancesArgs{
+		Instances: []PostgresInstance{
+			{PascalName: "Postgres"},
+			{PascalName: "PostgresReplica"},
+		},
+	})
+	require.NoError(t, err)
+
+	content := string(got)
+	require.Contains(t, content, "func ConnectToPostgres() (*sql.DB, error)")
+	require.Contains(t, content, "func MigrateToPostgres() error")
+	require.Contains(t, content, "func ConnectToPostgresReplica() (*sql.DB, error)")
+	require.Contains(t, content, "func MigrateToPostgresReplica() error")
+}
+
+func Test_GeneratePostgresInstances_Empty(t *testing.T) {
+	t.Parallel()
+
+	got, err := GeneratePostgresInstances(PostgresInstancesArgs{})
+	require.NoError(t, err)
+	require.Contains(t, string(got), "package postgres")
+	require.NotContains(t, string(got), "func ConnectTo")
+}

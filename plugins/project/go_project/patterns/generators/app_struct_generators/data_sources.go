@@ -33,7 +33,13 @@ func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppC
 		var fc InitFuncCall
 
 		switch ds.GetType() {
-		case resources.PostgresResourceName, resources.SqliteResourceName:
+		case resources.PostgresResourceName:
+			// Postgres connections are self-managed via
+			// internal/clients/postgres.ConnectTo{Name}/MigrateTo{Name}
+			// (see clients_generators/templates/postgres/instances.go.pattern),
+			// so they contribute nothing to the app struct/InitDataSources wiring.
+			continue
+		case resources.SqliteResourceName:
 			fc = sqlInitFunc(ds, appContent)
 		case resources.RedisResourceName:
 			fc = redisInitFunc(ds, appContent)
@@ -52,6 +58,13 @@ func generateDataSourceInitFileAndArgs(dataSources matreshka.DataSources) (*AppC
 				Key:   fc.ResultName,
 				Value: fc.ResultType,
 			})
+	}
+
+	if len(initDsFileArgs.Functions) == 0 {
+		// Every data source (e.g. a Postgres-only project) opted out of the
+		// InitDataSources wiring, so there's nothing left to generate - an
+		// empty function would still import rerrors unused.
+		return nil, nil, nil
 	}
 
 	initDsFileArgs.Imports[patterns.ImportNameErrorsPackage] = ""
