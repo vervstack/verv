@@ -3,7 +3,7 @@ run-name: ${{ github.REF_NAME }} pull request
 on:
   push:
     branches:
-      - RSI-*
+      - VERV-*
 
 jobs:
   create-pr:
@@ -28,8 +28,8 @@ jobs:
 
       - name: Setup dependencies
         run: |
-          git config --global user.email "test@rscli.ru"
-          git config --global user.name "rscli_test"
+          git config --global user.email "test@vervstack.ru"
+          git config --global user.name "verv_test"
 
       - name: Install dependencies
         run: go mod tidy

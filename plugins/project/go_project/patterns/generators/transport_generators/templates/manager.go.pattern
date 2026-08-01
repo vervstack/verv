@@ -30,7 +30,7 @@ func NewServerManager(ctx context.Context, listener net.Listener) (*ServersManag
 		errGroup: errGroup,
 		mux:      mainMux,
 
-		grpcServer: newGrpcServer(ctx, mainMux.Match(cmux.HTTP2()), httpMux),
+		grpcServer: newGrpcServer(mainMux.Match(cmux.HTTP2()), httpMux),
 		httpServer: newHttpServer(mainMux.Match(cmux.Any()), httpMux),
 	}
 

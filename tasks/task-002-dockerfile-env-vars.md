@@ -11,7 +11,7 @@ branch: "factory/002-dockerfile-env-vars"
 
 ## Goal
 
-During `rscli project tidy`, regenerate the project's `Dockerfile` so it contains a Docker `ENV` instruction for every variable defined in `cfg.Environment`, allowing values to be overridden at `docker run` time via `-e` or a container UI.
+During `verv project tidy`, regenerate the project's `Dockerfile` so it contains a Docker `ENV` instruction for every variable defined in `cfg.Environment`, allowing values to be overridden at `docker run` time via `-e` or a container UI.
 
 ## Context
 

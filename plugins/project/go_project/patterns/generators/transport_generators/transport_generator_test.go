@@ -17,9 +17,8 @@ func Test_GenerateServerManager(t *testing.T) {
 func Test_GenerateGrpcServer(t *testing.T) {
 	t.Parallel()
 
-	got, err := GenerateGrpcServer()
-	require.NoError(t, err)
-	require.Equal(t, grpcServerPattern, string(got))
+	got := GenerateGrpcServer()
+	require.Equal(t, grpcServerFile, got)
 }
 
 func Test_GenerateHttpServer(t *testing.T) {

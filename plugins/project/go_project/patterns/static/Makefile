@@ -1,4 +1,4 @@
-include rscli.mk
+include verv.mk
 
 # generates folders and installs dependencies
 warmup:

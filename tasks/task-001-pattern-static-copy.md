@@ -35,8 +35,8 @@ The compiler (`support/compiler/main.go`) must not be changed.
 
 - [x] Every static `.go.pattern` file in `pattern_c/` that has a corresponding `//go:embed` declaration is placed into the project's `folder.Folder` tree via `Copy()` or `CopyWithNewName()` — no separate code-generation step for those files.
 - [x] Files whose content truly depends on runtime config (app struct shape, config struct fields, gRPC impl stubs) continue to be produced by their existing generators.
-- [x] `rscli project init <name>` produces a valid Go project that compiles (`go build ./...`).
-- [x] `rscli project add redis` (and other dependencies) still adds the correct client folder to the project.
+- [x] `verv project init <name>` produces a valid Go project that compiles (`go build ./...`).
+- [x] `verv project add redis` (and other dependencies) still adds the correct client folder to the project.
 - [x] `go test ./...` passes (or pre-existing failures are unchanged).
 
 ## Files to Create / Modify

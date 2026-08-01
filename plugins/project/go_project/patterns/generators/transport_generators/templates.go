@@ -11,8 +11,7 @@ var (
 	serverManagerTemplate *template.Template
 
 	//go:embed templates/grpc.go.pattern
-	grpcServerPattern  string
-	grpcServerTemplate *template.Template
+	grpcServerFile []byte
 
 	// httpServerPattern is embedded content, not a text/template: it contains a
 	// runtime HTML template (`{{ range .Routes }}`) as a Go string literal, which
@@ -34,10 +33,6 @@ func init() {
 	serverManagerTemplate = template.Must(
 		template.New("server_manager").
 			Parse(serverManagerPattern))
-
-	grpcServerTemplate = template.Must(
-		template.New("grpc_server").
-			Parse(grpcServerPattern))
 
 	telegramListenerTemplate = template.Must(
 		template.New("telegram_listener").

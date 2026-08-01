@@ -162,10 +162,7 @@ func generateTransportFiles(transportFolder *folder.Folder) error {
 
 	transportFolder.Add(&folder.Folder{Name: patterns.ServerManagerFileName, Content: serverManagerContent})
 
-	grpcServerContent, err := transport_generators.GenerateGrpcServer()
-	if err != nil {
-		return rerrors.Wrap(err, "error generating grpc server")
-	}
+	grpcServerContent := transport_generators.GenerateGrpcServer()
 
 	transportFolder.Add(&folder.Folder{Name: patterns.GrpcServerFileName, Content: grpcServerContent})
 

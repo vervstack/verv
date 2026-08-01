@@ -5,11 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Build dev binary (installs to $GOPATH/bin as rscli-dev)
-make dev-build          # compiles patterns first, then builds
+# Build dev binary (installs to $GOPATH/bin as verv-dev)
+make dev-build
 
 # Build without installing
-go build -o rscli-dev .
+go build -o verv-dev .
 
 # Run all tests
 go test ./...
@@ -26,13 +26,13 @@ make gen-test-project-with-deps
 
 ## Architecture
 
-**rscli** is a Cobra-based CLI with two top-level commands: `project` and `env`.
+**verv** is a Cobra-based CLI. `main.go` wires `init`, `tidy`, and `add` (from `cmd/project/init`, `cmd/project/tidy`, `cmd/project/add`) directly onto the root command as flat top-level commands (`verv init`, `verv tidy`, `verv add`) — there is no `project` parent command in the actual CLI surface. `cmd/project/cmd.go` defines a `NewCmd()` that would group them under a `project` subcommand, but nothing calls it — it's dead code.
 
 ### Command flow
 
 `main.go` → `cmd/` (cobra commands, thin layer) → `internal/processor.Processor` (base struct) → `plugins/` (business logic)
 
-Each subcommand embeds `processor.Processor` which holds the three shared primitives: `IO`, `RscliConfig`, and `WD` (working directory).
+Each subcommand embeds `processor.Processor` which holds the three shared primitives: `IO`, `VervConfig`, and `WD` (working directory).
 
 ### Key packages
 
@@ -42,18 +42,16 @@ Each subcommand embeds `processor.Processor` which holds the three shared primit
 - `IProject` interface is what all actions operate on
 - `Project` struct holds Name, Path, `*config.Config`, project Type, and the virtual `folder.Folder` tree
 - `actions/` contains `ActionPerformer` which runs a pipeline of `Action` steps (tidy sequence: prepare config → Makefile → clients → server → Dockerfile → build → init → fmt → git commit)
-- `actions/go_actions/dependencies/` maps dependency names (`grpc`, `redis`, `postgres`, `telegram`, `sqlite`, `env`) to constructors that append to the project
+- `actions/go_actions/dependencies/` maps dependency names (`redis`, `postgres`, `telegram`, `sqlite`, `env`) to constructors that append to the project
 
 **`internal/io/folder/`** — central data structure. `folder.Folder` is an in-memory virtual file tree assembled by all the generators, then flushed to disk. Files are loaded via `//go:embed`.
 
 
 **`plugins/project/go_project/patterns/generators/`** — code generators that produce Go source for config structs, app structs, gRPC servers, Dockerfiles, etc.
 
-**`internal/config/`** — `RsCliConfig` loaded from three sources merged in precedence order: built-in embedded `rscli.yaml` → environment variables (`RSCLI_*`) → external config file. Config is a package-level singleton initialized in `init()`.
+**`internal/config/`** — `VervConfig` loaded from three sources merged in precedence order: built-in embedded `verv.yaml` → environment variables (`VERV_*`) → external config file. Config is a package-level singleton initialized in `init()`.
 
-**`plugins/environment/`** — scans sibling project directories and generates a shared docker-compose environment.
-
-### Adding a new `project add` dependency
+### Adding a new `add` dependency
 
 1. Create a new file in `plugins/project/actions/go_actions/dependencies/`
 2. Implement the `Dependency` interface (`AppendToProject(proj Project) error`)

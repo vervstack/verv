@@ -12,8 +12,11 @@ func GenerateServerManager() ([]byte, error) {
 	return execute(serverManagerTemplate)
 }
 
-func GenerateGrpcServer() ([]byte, error) {
-	return execute(grpcServerTemplate)
+func GenerateGrpcServer() []byte {
+	res := make([]byte, len(grpcServerFile))
+	copy(res, grpcServerFile)
+
+	return res
 }
 
 func GenerateHttpServer() ([]byte, error) {

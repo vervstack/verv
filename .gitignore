@@ -22,7 +22,7 @@ test_*/*
 # vendor/
 .idea/
 
-rscli-dev
+verv-dev
 
 # graphify - local/cache only; graph.json, GRAPH_REPORT.md, and community
 # labels are versioned so `graphify query`/explain/path work from a fresh clone
