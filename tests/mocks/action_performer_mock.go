@@ -15,8 +15,8 @@ import (
 type ActionPerformerMock struct {
 	t minimock.Tester
 
-	funcTidy          func(proj project.IProject, fast bool) (err error)
-	inspectFuncTidy   func(proj project.IProject, fast bool)
+	funcTidy          func(proj project.IProject, fast bool, dirty bool) (err error)
+	inspectFuncTidy   func(proj project.IProject, fast bool, dirty bool)
 	afterTidyCounter  uint64
 	beforeTidyCounter uint64
 	TidyMock          mActionPerformerMockTidy
@@ -54,8 +54,9 @@ type ActionPerformerMockTidyExpectation struct {
 
 // ActionPerformerMockTidyParams contains parameters of the IActionPerformer.Tidy
 type ActionPerformerMockTidyParams struct {
-	proj project.IProject
-	fast bool
+	proj  project.IProject
+	fast  bool
+	dirty bool
 }
 
 // ActionPerformerMockTidyResults contains results of the IActionPerformer.Tidy
@@ -64,7 +65,7 @@ type ActionPerformerMockTidyResults struct {
 }
 
 // Expect sets up expected params for IActionPerformer.Tidy
-func (mmTidy *mActionPerformerMockTidy) Expect(proj project.IProject, fast bool) *mActionPerformerMockTidy {
+func (mmTidy *mActionPerformerMockTidy) Expect(proj project.IProject, fast bool, dirty bool) *mActionPerformerMockTidy {
 	if mmTidy.mock.funcTidy != nil {
 		mmTidy.mock.t.Fatalf("ActionPerformerMock.Tidy mock is already set by Set")
 	}
@@ -73,7 +74,7 @@ func (mmTidy *mActionPerformerMockTidy) Expect(proj project.IProject, fast bool)
 		mmTidy.defaultExpectation = &ActionPerformerMockTidyExpectation{}
 	}
 
-	mmTidy.defaultExpectation.params = &ActionPerformerMockTidyParams{proj, fast}
+	mmTidy.defaultExpectation.params = &ActionPerformerMockTidyParams{proj, fast, dirty}
 	for _, e := range mmTidy.expectations {
 		if minimock.Equal(e.params, mmTidy.defaultExpectation.params) {
 			mmTidy.mock.t.Fatalf("Expectation set by When has same params: %#v", *mmTidy.defaultExpectation.params)
@@ -84,7 +85,7 @@ func (mmTidy *mActionPerformerMockTidy) Expect(proj project.IProject, fast bool)
 }
 
 // Inspect accepts an inspector function that has same arguments as the IActionPerformer.Tidy
-func (mmTidy *mActionPerformerMockTidy) Inspect(f func(proj project.IProject, fast bool)) *mActionPerformerMockTidy {
+func (mmTidy *mActionPerformerMockTidy) Inspect(f func(proj project.IProject, fast bool, dirty bool)) *mActionPerformerMockTidy {
 	if mmTidy.mock.inspectFuncTidy != nil {
 		mmTidy.mock.t.Fatalf("Inspect function is already set for ActionPerformerMock.Tidy")
 	}
@@ -108,7 +109,7 @@ func (mmTidy *mActionPerformerMockTidy) Return(err error) *ActionPerformerMock {
 }
 
 // Set uses given function f to mock the IActionPerformer.Tidy method
-func (mmTidy *mActionPerformerMockTidy) Set(f func(proj project.IProject, fast bool) (err error)) *ActionPerformerMock {
+func (mmTidy *mActionPerformerMockTidy) Set(f func(proj project.IProject, fast bool, dirty bool) (err error)) *ActionPerformerMock {
 	if mmTidy.defaultExpectation != nil {
 		mmTidy.mock.t.Fatalf("Default expectation is already set for the IActionPerformer.Tidy method")
 	}
@@ -123,14 +124,14 @@ func (mmTidy *mActionPerformerMockTidy) Set(f func(proj project.IProject, fast b
 
 // When sets expectation for the IActionPerformer.Tidy which will trigger the result defined by the following
 // Then helper
-func (mmTidy *mActionPerformerMockTidy) When(proj project.IProject, fast bool) *ActionPerformerMockTidyExpectation {
+func (mmTidy *mActionPerformerMockTidy) When(proj project.IProject, fast bool, dirty bool) *ActionPerformerMockTidyExpectation {
 	if mmTidy.mock.funcTidy != nil {
 		mmTidy.mock.t.Fatalf("ActionPerformerMock.Tidy mock is already set by Set")
 	}
 
 	expectation := &ActionPerformerMockTidyExpectation{
 		mock:   mmTidy.mock,
-		params: &ActionPerformerMockTidyParams{proj, fast},
+		params: &ActionPerformerMockTidyParams{proj, fast, dirty},
 	}
 	mmTidy.expectations = append(mmTidy.expectations, expectation)
 	return expectation
@@ -143,15 +144,15 @@ func (e *ActionPerformerMockTidyExpectation) Then(err error) *ActionPerformerMoc
 }
 
 // Tidy implements actions.IActionPerformer
-func (mmTidy *ActionPerformerMock) Tidy(proj project.IProject, fast bool) (err error) {
+func (mmTidy *ActionPerformerMock) Tidy(proj project.IProject, fast bool, dirty bool) (err error) {
 	mm_atomic.AddUint64(&mmTidy.beforeTidyCounter, 1)
 	defer mm_atomic.AddUint64(&mmTidy.afterTidyCounter, 1)
 
 	if mmTidy.inspectFuncTidy != nil {
-		mmTidy.inspectFuncTidy(proj, fast)
+		mmTidy.inspectFuncTidy(proj, fast, dirty)
 	}
 
-	mm_params := &ActionPerformerMockTidyParams{proj, fast}
+	mm_params := &ActionPerformerMockTidyParams{proj, fast, dirty}
 
 	// Record call args
 	mmTidy.TidyMock.mutex.Lock()
@@ -168,7 +169,7 @@ func (mmTidy *ActionPerformerMock) Tidy(proj project.IProject, fast bool) (err e
 	if mmTidy.TidyMock.defaultExpectation != nil {
 		mm_atomic.AddUint64(&mmTidy.TidyMock.defaultExpectation.Counter, 1)
 		mm_want := mmTidy.TidyMock.defaultExpectation.params
-		mm_got := ActionPerformerMockTidyParams{proj, fast}
+		mm_got := ActionPerformerMockTidyParams{proj, fast, dirty}
 		if mm_want != nil && !minimock.Equal(*mm_want, mm_got) {
 			mmTidy.t.Errorf("ActionPerformerMock.Tidy got unexpected parameters, want: %#v, got: %#v%s\n", *mm_want, mm_got, minimock.Diff(*mm_want, mm_got))
 		}
@@ -180,9 +181,9 @@ func (mmTidy *ActionPerformerMock) Tidy(proj project.IProject, fast bool) (err e
 		return (*mm_results).err
 	}
 	if mmTidy.funcTidy != nil {
-		return mmTidy.funcTidy(proj, fast)
+		return mmTidy.funcTidy(proj, fast, dirty)
 	}
-	mmTidy.t.Fatalf("Unexpected call to ActionPerformerMock.Tidy. %v %v", proj, fast)
+	mmTidy.t.Fatalf("Unexpected call to ActionPerformerMock.Tidy. %v %v %v", proj, fast, dirty)
 	return
 }
 

@@ -44,6 +44,10 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		processor.FastFlag, "f", false,
 		`skip git init/hooks/commit steps`)
 
+	c.Flags().BoolP(
+		processor.DirtyFlag, "d", false,
+		`skip git commit after codegen (repo is still initialized/hooks installed)`)
+
 	return c
 }
 
@@ -77,14 +81,19 @@ func (p *Proc) run(cmd *cobra.Command, args []string) error {
 		return rerrors.Wrap(err, "error reading fast flag")
 	}
 
-	err = p.ActionPerformer.Tidy(project, fast)
+	dirty, err := cmd.Flags().GetBool(processor.DirtyFlag)
+	if err != nil {
+		return rerrors.Wrap(err, "error reading dirty flag")
+	}
+
+	err = p.ActionPerformer.Tidy(project, fast, dirty)
 	if err != nil {
 		return rerrors.Wrap(err, "error tidying project")
 	}
 
 	p.IO.Println(endMsg)
 
-	if !fast {
+	if !fast && !dirty {
 		err = git.CommitWithUntracked(project.GetProjectPath(), "added "+strings.Join(args, "; "))
 		if err != nil {
 			return rerrors.Wrap(err, "error performing git commit")

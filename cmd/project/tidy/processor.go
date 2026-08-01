@@ -43,6 +43,10 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		processor.FastFlag, "f", false,
 		`skip git init/hooks/commit steps`)
 
+	c.Flags().BoolP(
+		processor.DirtyFlag, "d", false,
+		`skip git commit after codegen (repo is still initialized/hooks installed)`)
+
 	return c
 }
 
@@ -57,9 +61,14 @@ func (p *projectTidy) run(cmd *cobra.Command, _ []string) error {
 		return rerrors.Wrap(err, "error reading fast flag")
 	}
 
+	dirty, err := cmd.Flags().GetBool(processor.DirtyFlag)
+	if err != nil {
+		return rerrors.Wrap(err, "error reading dirty flag")
+	}
+
 	ap := actions.NewActionPerformer(p.io)
 
-	err = ap.Tidy(proj, fast)
+	err = ap.Tidy(proj, fast, dirty)
 	if err != nil {
 		return rerrors.Wrap(err, "error performing tidy")
 	}

@@ -13,26 +13,32 @@ func Test_InitProject_Fast(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name    string
-		fast    bool
-		wantGit bool
+		name           string
+		fast           bool
+		dirty          bool
+		wantGit        bool
+		wantSkipCommit bool
 	}{
-		{name: "normal run includes git init", fast: false, wantGit: true},
-		{name: "fast run skips git init", fast: true, wantGit: false},
+		{name: "normal run includes git init", fast: false, dirty: false, wantGit: true, wantSkipCommit: false},
+		{name: "dirty run includes git init but skips commit", fast: false, dirty: true, wantGit: true, wantSkipCommit: true},
+		{name: "fast run skips git init", fast: true, dirty: false, wantGit: false},
+		{name: "fast+dirty run skips git init", fast: true, dirty: true, wantGit: false},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			acts := InitProject(project.TypeGo, tt.fast)
+			acts := InitProject(project.TypeGo, tt.fast, tt.dirty)
 			require.NotEmpty(t, acts)
 
 			hasGitInit := false
 
 			for _, a := range acts {
-				if _, ok := a.(git.InitGit); ok {
+				if ig, ok := a.(git.InitGit); ok {
 					hasGitInit = true
+
+					require.Equal(t, tt.wantSkipCommit, ig.SkipCommit)
 				}
 			}
 
@@ -44,6 +50,6 @@ func Test_InitProject_Fast(t *testing.T) {
 func Test_InitProject_UnknownType(t *testing.T) {
 	t.Parallel()
 
-	acts := InitProject(project.Type("unknown"), false)
+	acts := InitProject(project.Type("unknown"), false, false)
 	require.Nil(t, acts)
 }

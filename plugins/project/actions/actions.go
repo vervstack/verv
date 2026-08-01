@@ -20,7 +20,7 @@ type Action interface {
 }
 
 type IActionPerformer interface {
-	Tidy(proj project.IProject, fast bool) error
+	Tidy(proj project.IProject, fast, dirty bool) error
 }
 
 type ActionPerformer struct {
@@ -33,8 +33,8 @@ func NewActionPerformer(printer io.IO) *ActionPerformer {
 	}
 }
 
-func (a *ActionPerformer) Tidy(proj project.IProject, fast bool) error {
-	acts := GetTidyActionsForProject(proj.GetType(), fast)
+func (a *ActionPerformer) Tidy(proj project.IProject, fast, dirty bool) error {
+	acts := GetTidyActionsForProject(proj.GetType(), fast, dirty)
 
 	return RunPipeline(a.printer, proj, acts, PipelineLabels{
 		StartEmoji: "🚀",

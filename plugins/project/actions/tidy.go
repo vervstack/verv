@@ -10,8 +10,10 @@ import (
 // GetTidyActionsForProject builds the tidy pipeline. When fast is true, the git
 // hooks-install and commit steps are skipped — they contribute nothing to
 // whether the generated project compiles, and callers that only want to
-// validate codegen shouldn't pay for them.
-func GetTidyActionsForProject(pt project.Type, fast bool) []Action {
+// validate codegen shouldn't pay for them. When dirty is true (and fast is
+// false), hooks are still installed but the final commit is skipped so the
+// caller can review/amend the generated changes before committing manually.
+func GetTidyActionsForProject(pt project.Type, fast, dirty bool) []Action {
 	out := commonProjectTidyPreActions()
 
 	switch pt {
@@ -22,7 +24,7 @@ func GetTidyActionsForProject(pt project.Type, fast bool) []Action {
 	}
 
 	if !fast {
-		out = append(out, commonProjectTidyPostActions()...)
+		out = append(out, commonProjectTidyPostActions(dirty)...)
 	}
 
 	return out
@@ -49,11 +51,16 @@ func commonProjectTidyPreActions() []Action {
 	}
 }
 
-func commonProjectTidyPostActions() []Action {
-	return []Action{
+func commonProjectTidyPostActions(dirty bool) []Action {
+	out := []Action{
 		git.InstallHooksAction{},
-		git.CommitWithUntrackedAction{},
 	}
+
+	if !dirty {
+		out = append(out, git.CommitWithUntrackedAction{})
+	}
+
+	return out
 }
 
 func unknownProjectActions() []Action {
