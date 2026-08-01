@@ -11,7 +11,9 @@ import (
 
 // commitTimeout is longer than the default command timeout because `git commit`
 // runs the project's pre-commit hook, which lints and tests the whole project.
-const commitTimeout = 5 * time.Minute
+const (
+	commitTimeout = 5 * time.Minute
+)
 
 type CommitWithUntrackedAction struct {
 }

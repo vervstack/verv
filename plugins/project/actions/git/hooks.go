@@ -24,7 +24,7 @@ func (a InstallHooksAction) NameInAction() string {
 
 func InstallHooks(workDir string) error {
 	hookPath := filepath.Join(workDir, patterns.GitHooksFolder, patterns.PreCommitHook.Name)
-
+	//nolint:mnd
 	err := os.Chmod(hookPath, 0o755)
 	if err != nil {
 		return rerrors.Wrap(err, "error making pre-commit hook executable")

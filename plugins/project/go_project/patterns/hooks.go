@@ -6,7 +6,9 @@ import (
 	"go.vervstack.ru/verv/internal/io/folder"
 )
 
-const GitHooksFolder = ".githooks"
+const (
+	GitHooksFolder = ".githooks"
+)
 
 var (
 	//go:embed static/hooks/pre-commit

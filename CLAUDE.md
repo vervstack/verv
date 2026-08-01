@@ -11,11 +11,6 @@ make dev-build          # compiles patterns first, then builds
 # Build without installing
 go build -o rscli-dev .
 
-# Compile embedded project patterns (required before first build and after pattern changes)
-go run support/compiler/main.go
-# or
-make .compile-pattern
-
 # Run all tests
 go test ./...
 
@@ -51,7 +46,6 @@ Each subcommand embeds `processor.Processor` which holds the three shared primit
 
 **`internal/io/folder/`** — central data structure. `folder.Folder` is an in-memory virtual file tree assembled by all the generators, then flushed to disk. Files are loaded via `//go:embed`.
 
-**`plugins/project/go_project/patterns/`** — embedded file templates for generated projects. The `pattern/` subdirectory contains a real Go module that is compiled by `support/compiler/main.go` into `pattern_c/` byte-array files embedded via `//go:embed`. **Always run `make .compile-pattern` after modifying anything under `patterns/pattern/`**.
 
 **`plugins/project/go_project/patterns/generators/`** — code generators that produce Go source for config structs, app structs, gRPC servers, Dockerfiles, etc.
 

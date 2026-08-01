@@ -67,6 +67,7 @@ func Test_Postgres_AppendToProject_MultipleInstances(t *testing.T) {
 	require.NoError(t, err)
 
 	replicaDep := postgresClient(dependencyBase{Name: "postgres_replica", Cfg: cfg})
+
 	err = replicaDep.AppendToProject(proj)
 	require.NoError(t, err)
 
@@ -104,6 +105,7 @@ func Test_Postgres_AppendToProject_Idempotent(t *testing.T) {
 
 	connFileFirst := proj.GetFolder().GetByPath("internal/clients", "postgres", "conn.go")
 	require.NotNil(t, connFileFirst)
+
 	firstContent := string(connFileFirst.Content)
 
 	err = dep.AppendToProject(proj)
@@ -122,12 +124,14 @@ func Test_Postgres_AppendToProject_Idempotent(t *testing.T) {
 
 	instancesFile := proj.GetFolder().GetByPath("internal/clients", "postgres", "instances.go")
 	require.NotNil(t, instancesFile)
+
 	instancesContent := string(instancesFile.Content)
 	require.Equal(t, 1, countOccurrences(instancesContent, "func ConnectToPostgres()"))
 }
 
 func countOccurrences(s, substr string) int {
 	count := 0
+
 	for i := 0; i+len(substr) <= len(s); i++ {
 		if s[i:i+len(substr)] == substr {
 			count++
