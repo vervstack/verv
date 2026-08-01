@@ -1,6 +1,6 @@
 package actions
 
-//go:generate minimock -i ActionPerformer -o ./../../../tests/mocks -g -s "_mock.go"
+//go:generate minimock -i IActionPerformer -n ActionPerformerMock -o ./../../../tests/mocks/action_performer_mock.go -g
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ type Action interface {
 }
 
 type IActionPerformer interface {
-	Tidy(proj project.IProject) error
+	Tidy(proj project.IProject, fast bool) error
 }
 
 type ActionPerformer struct {
@@ -33,8 +33,8 @@ func NewActionPerformer(printer io.IO) *ActionPerformer {
 	}
 }
 
-func (a *ActionPerformer) Tidy(proj project.IProject) error {
-	acts := GetTidyActionsForProject(proj.GetType())
+func (a *ActionPerformer) Tidy(proj project.IProject, fast bool) error {
+	acts := GetTidyActionsForProject(proj.GetType(), fast)
 
 	return RunPipeline(a.printer, proj, acts, PipelineLabels{
 		StartEmoji: "🚀",

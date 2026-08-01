@@ -7,7 +7,11 @@ import (
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions"
 )
 
-func GetTidyActionsForProject(pt project.Type) []Action {
+// GetTidyActionsForProject builds the tidy pipeline. When fast is true, the git
+// hooks-install and commit steps are skipped — they contribute nothing to
+// whether the generated project compiles, and callers that only want to
+// validate codegen shouldn't pay for them.
+func GetTidyActionsForProject(pt project.Type, fast bool) []Action {
 	out := commonProjectTidyPreActions()
 
 	switch pt {
@@ -17,7 +21,9 @@ func GetTidyActionsForProject(pt project.Type) []Action {
 		return unknownProjectActions()
 	}
 
-	out = append(out, commonProjectTidyPostActions()...)
+	if !fast {
+		out = append(out, commonProjectTidyPostActions()...)
+	}
 
 	return out
 }

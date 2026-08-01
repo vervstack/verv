@@ -39,18 +39,27 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		processor.PathFlag,
 		processor.PathFlag[:1], "", `path to folder with project`)
 
+	c.Flags().BoolP(
+		processor.FastFlag, "f", false,
+		`skip git init/hooks/commit steps`)
+
 	return c
 }
 
-func (p *projectTidy) run(_ *cobra.Command, _ []string) error {
+func (p *projectTidy) run(cmd *cobra.Command, _ []string) error {
 	proj, err := project.LoadProject(p.path, p.config)
 	if err != nil {
 		return rerrors.Wrap(err, "error fetching project for tidy")
 	}
 
+	fast, err := cmd.Flags().GetBool(processor.FastFlag)
+	if err != nil {
+		return rerrors.Wrap(err, "error reading fast flag")
+	}
+
 	ap := actions.NewActionPerformer(p.io)
 
-	err = ap.Tidy(proj)
+	err = ap.Tidy(proj, fast)
 	if err != nil {
 		return rerrors.Wrap(err, "error performing tidy")
 	}

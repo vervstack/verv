@@ -14,6 +14,7 @@ import (
 
 const (
 	PathFlag = "path"
+	FastFlag = "fast"
 )
 
 // Processor - represents a single process of execution.

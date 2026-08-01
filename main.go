@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -18,6 +19,13 @@ import (
 )
 
 func main() {
+	os.Exit(run())
+}
+
+// run returns the process exit code. It's a separate function from main so
+// that main's deferred cleanup (closer.Close) still executes before the
+// process exits — os.Exit does not run deferred calls.
+func run() int {
 	defer func() {
 		err := closer.Close()
 		if err != nil {
@@ -59,5 +67,9 @@ Run this to install it:
 	err := root.Execute()
 	if err != nil {
 		io.StdIO{}.Error(colors.TerminalColor(colors.ColorRed) + fmt.Sprintf("%+v\n", err))
+
+		return 1
 	}
+
+	return 0
 }

@@ -37,10 +37,14 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		SilenceUsage:  true,
 	}
 
+	c.Flags().BoolP(
+		processor.FastFlag, "f", false,
+		`skip git init/hooks/commit steps`)
+
 	return c
 }
 
-func (p *Proc) run(_ *cobra.Command, cmdArgs []string) (err error) {
+func (p *Proc) run(cmd *cobra.Command, cmdArgs []string) (err error) {
 	cArgs := project.CreateArgs{
 		CfgPath: p.VervConfig.Env.PathToConfig,
 	}
@@ -54,7 +58,12 @@ func (p *Proc) run(_ *cobra.Command, cmdArgs []string) (err error) {
 	// step 2: obtain path to project folder
 	cArgs.ProjectPath = p.collectOsPath(cArgs.Name, cmdArgs)
 
-	proj, err := p.createProject(cArgs)
+	fast, err := cmd.Flags().GetBool(processor.FastFlag)
+	if err != nil {
+		return rerrors.Wrap(err, "error reading fast flag")
+	}
+
+	proj, err := p.createProject(cArgs, fast)
 	if err != nil {
 		return rerrors.Wrap(err, "error building project")
 	}

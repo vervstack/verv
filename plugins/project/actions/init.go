@@ -6,17 +6,20 @@ import (
 	"go.vervstack.ru/verv/plugins/project/actions/go_actions"
 )
 
-func InitProject(pt project.Type) []Action {
+func InitProject(pt project.Type, fast bool) []Action {
 	switch pt {
 	case project.TypeGo:
-		return initVirtualGoProject()
+		return initVirtualGoProject(fast)
 	default:
 		return nil
 	}
 }
 
-func initVirtualGoProject() []Action {
-	return []Action{
+// initVirtualGoProject builds the init pipeline. When fast is true, git.InitGit
+// is skipped — it contributes nothing to whether the generated project compiles,
+// and callers that only want to validate codegen shouldn't pay for it.
+func initVirtualGoProject(fast bool) []Action {
+	acts := []Action{
 		go_actions.PrepareProjectStructure{}, // basic go project structure
 		go_actions.InitGoProjectApp{},
 		go_actions.GenerateProjectConfig{},
@@ -32,7 +35,11 @@ func initVirtualGoProject() []Action {
 		go_actions.BuildProjectAction{}, // builds project to file system
 
 		go_actions.RunGoTidyAction{}, // resolves real dependencies and formats go code
-
-		git.InitGit{},
 	}
+
+	if !fast {
+		acts = append(acts, git.InitGit{})
+	}
+
+	return acts
 }

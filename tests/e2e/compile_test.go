@@ -1,6 +1,6 @@
 // Package e2e scaffolds real projects with the compiled verv CLI and checks
 // that the generated source actually compiles. Unlike the generator unit
-// tests, this exercises the full `project init` / `project add` pipeline
+// tests, this exercises the full `init` / `add` pipeline
 // end-to-end (real go.mod, real `go mod tidy`, real `go build`), which is the
 // only way to catch generators that produce code referencing something that
 // doesn't exist (missing imports, renamed fields, wrong function arity...).
@@ -89,9 +89,10 @@ func run(t *testing.T, dir, name string, args ...string) {
 }
 
 // Test_GeneratedProjectsCompile scaffolds a fresh project for each dependency
-// set below via the real CLI, then runs `go mod tidy` and `go build ./...`
-// against the result. A case failing here means `verv project init`/`add`
-// produced code that doesn't compile.
+// set below via the real CLI, then runs `go build ./...` against the result.
+// A case failing here means `verv project init`/`add` produced code that
+// doesn't compile. `go mod tidy` is not run here — `init`/`add` already leave
+// a tidy go.mod/go.sum as the last step of their own action pipeline.
 func Test_GeneratedProjectsCompile(t *testing.T) {
 	t.Parallel()
 
@@ -144,15 +145,14 @@ func Test_GeneratedProjectsCompile(t *testing.T) {
 			workDir := t.TempDir()
 			projName := "sanity_" + tc.name
 
-			run(t, workDir, bin, "project", "init", projName)
+			run(t, workDir, bin, "init", projName, "--fast")
 
 			projDir := filepath.Join(workDir, projName)
 
 			if len(tc.deps) > 0 {
-				run(t, projDir, bin, append([]string{"project", "add"}, tc.deps...)...)
+				run(t, projDir, bin, append([]string{"add", "--fast"}, tc.deps...)...)
 			}
 
-			run(t, projDir, "go", "mod", "tidy")
 			run(t, projDir, "go", "build", "./...")
 		})
 	}

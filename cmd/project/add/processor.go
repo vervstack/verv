@@ -40,6 +40,10 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		proc.WD,
 		`path to folder with project`)
 
+	c.Flags().BoolP(
+		processor.FastFlag, "f", false,
+		`skip git init/hooks/commit steps`)
+
 	return c
 }
 
@@ -68,16 +72,23 @@ func (p *Proc) run(cmd *cobra.Command, args []string) error {
 
 	p.IO.Println(startingMsg)
 
-	err = p.ActionPerformer.Tidy(project)
+	fast, err := cmd.Flags().GetBool(processor.FastFlag)
+	if err != nil {
+		return rerrors.Wrap(err, "error reading fast flag")
+	}
+
+	err = p.ActionPerformer.Tidy(project, fast)
 	if err != nil {
 		return rerrors.Wrap(err, "error tidying project")
 	}
 
 	p.IO.Println(endMsg)
 
-	err = git.CommitWithUntracked(project.GetProjectPath(), "added "+strings.Join(args, "; "))
-	if err != nil {
-		return rerrors.Wrap(err, "error performing git commit")
+	if !fast {
+		err = git.CommitWithUntracked(project.GetProjectPath(), "added "+strings.Join(args, "; "))
+		if err != nil {
+			return rerrors.Wrap(err, "error performing git commit")
+		}
 	}
 
 	return nil
