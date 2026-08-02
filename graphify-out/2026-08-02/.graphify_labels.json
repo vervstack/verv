@@ -222,9 +222,5 @@
   "220": "AppConfig",
   "221": "common_imports.go",
   "222": "conn_names.go",
-  "223": "const.go",
-  "224": "Environment Setup Feature (scans sibling projects, generates docker-compose)",
-  "225": "basic_config.yaml",
-  "226": "full_config.yaml",
-  "227": "version.yaml"
+  "223": "const.go"
 }

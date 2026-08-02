@@ -1,0 +1,1797 @@
+{
+  "/Users/alexbukov/redsock/rscli/.claude/settings.local.json": {
+    "mtime": 1782241850.994338,
+    "ast_hash": "431076a9712b20000160894bae835b6f",
+    "semantic_hash": "431076a9712b20000160894bae835b6f"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/environment/cmd.go": {
+    "mtime": 1761675789.5422194,
+    "ast_hash": "70016c980d150d6aee624b0b68502acf",
+    "semantic_hash": "70016c980d150d6aee624b0b68502acf"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/environment/env_tidy.go": {
+    "mtime": 1761675789.5425148,
+    "ast_hash": "ddb3a27cbc9637955a398a6fa4f6af2a",
+    "semantic_hash": "ddb3a27cbc9637955a398a6fa4f6af2a"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/environment/install.go": {
+    "mtime": 1761675789.5428371,
+    "ast_hash": "2f12013516716c7745545458d8e01499",
+    "semantic_hash": "2f12013516716c7745545458d8e01499"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/grpc/internal/transport/grpc.go": {
+    "mtime": 1761675789.5213747,
+    "ast_hash": "d76a7392c3fe182f6280a23353d475cb",
+    "semantic_hash": "d76a7392c3fe182f6280a23353d475cb"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/grpc/internal/transport/http.go": {
+    "mtime": 1761675789.5217133,
+    "ast_hash": "40d14837472326776503113466cbe786",
+    "semantic_hash": "40d14837472326776503113466cbe786"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/grpc/internal/transport/manager.go": {
+    "mtime": 1761675789.522035,
+    "ast_hash": "b0a355b18a3b5c11304dabb6aa224d82",
+    "semantic_hash": "b0a355b18a3b5c11304dabb6aa224d82"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/postgres/internal/clients/sqldb/conn.go": {
+    "mtime": 1761675789.5345285,
+    "ast_hash": "3eb7e41a9427101647e9c55d703d924c",
+    "semantic_hash": "3eb7e41a9427101647e9c55d703d924c"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/postgres/internal/clients/sqldb/postgres.go": {
+    "mtime": 1761675789.5341954,
+    "ast_hash": "d1663ed1ee789245c452011daa836cc3",
+    "semantic_hash": "d1663ed1ee789245c452011daa836cc3"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/redis/internal/clients/redis/conn.go": {
+    "mtime": 1761675789.5253723,
+    "ast_hash": "9dc2c4d6ee5f400f5332cbc437a6b94f",
+    "semantic_hash": "9dc2c4d6ee5f400f5332cbc437a6b94f"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/redis/internal/config/data_sources.go": {
+    "mtime": 1761675789.52811,
+    "ast_hash": "d442160c351cce1f0992e22e2383bf80",
+    "semantic_hash": "d442160c351cce1f0992e22e2383bf80"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/sqlite/internal/clients/sqldb/conn.go": {
+    "mtime": 1761675789.5303032,
+    "ast_hash": "3eb7e41a9427101647e9c55d703d924c",
+    "semantic_hash": "3eb7e41a9427101647e9c55d703d924c"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/sqlite/internal/clients/sqldb/sqlite.go": {
+    "mtime": 1761675789.529982,
+    "ast_hash": "6c424d716fe79bf0810f6d33d8ab2baa",
+    "semantic_hash": "6c424d716fe79bf0810f6d33d8ab2baa"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/telegram/internal/clients/telegram/conn.go": {
+    "mtime": 1761675789.537026,
+    "ast_hash": "bd23169dbd59b4ea325d50452657b2e5",
+    "semantic_hash": "bd23169dbd59b4ea325d50452657b2e5"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/messages.go": {
+    "mtime": 1761675789.5405824,
+    "ast_hash": "c129298446cfeb04de6c5a5022c050f6",
+    "semantic_hash": "c129298446cfeb04de6c5a5022c050f6"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/processor.go": {
+    "mtime": 1769244027.7332487,
+    "ast_hash": "15063d93b6e735cb09529496ee076ceb",
+    "semantic_hash": "15063d93b6e735cb09529496ee076ceb"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/processor_test.go": {
+    "mtime": 1761675789.5190756,
+    "ast_hash": "9390314134bf04d0f25af0c31b457ae9",
+    "semantic_hash": "9390314134bf04d0f25af0c31b457ae9"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/cmd.go": {
+    "mtime": 1761675789.2884922,
+    "ast_hash": "dae933dfa51a05e90cdd2d634de2fe8a",
+    "semantic_hash": "dae933dfa51a05e90cdd2d634de2fe8a"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init.go": {
+    "mtime": 1761675789.5414915,
+    "ast_hash": "6c960420adf0a7a28dc89f9719e94245",
+    "semantic_hash": "6c960420adf0a7a28dc89f9719e94245"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/collect_name.go": {
+    "mtime": 1761675789.292533,
+    "ast_hash": "184fba105893612eaf369c24e246ce16",
+    "semantic_hash": "184fba105893612eaf369c24e246ce16"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/collect_name_test.go": {
+    "mtime": 1761675789.2918694,
+    "ast_hash": "af850d8ae1d30fa205d96b0b8395b15a",
+    "semantic_hash": "af850d8ae1d30fa205d96b0b8395b15a"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/collect_os_path.go": {
+    "mtime": 1761675789.2912102,
+    "ast_hash": "7f0ab042bcc82ebc709e534ee970e889",
+    "semantic_hash": "7f0ab042bcc82ebc709e534ee970e889"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/expected/load_config/environment.go": {
+    "mtime": 1761675789.2900064,
+    "ast_hash": "a8acdf0b4aa3114e407a0f51d3ab8d01",
+    "semantic_hash": "a8acdf0b4aa3114e407a0f51d3ab8d01"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/expected/load_config/load_config_file.go": {
+    "mtime": 1761675789.2904658,
+    "ast_hash": "bf33d56c8398bb7addb6b421cf180880",
+    "semantic_hash": "bf33d56c8398bb7addb6b421cf180880"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/processor.go": {
+    "mtime": 1761675789.2908394,
+    "ast_hash": "1ce49d1857f777dd7f8533722482c9fc",
+    "semantic_hash": "1ce49d1857f777dd7f8533722482c9fc"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/processor_test.go": {
+    "mtime": 1761675789.289177,
+    "ast_hash": "61b072d18c7b094a045be98cbaf3122a",
+    "semantic_hash": "61b072d18c7b094a045be98cbaf3122a"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/init_new/project_assembler.go": {
+    "mtime": 1761675789.2915182,
+    "ast_hash": "6aeb269dd01b1876584e9c07e9d8feaa",
+    "semantic_hash": "6aeb269dd01b1876584e9c07e9d8feaa"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/link.go": {
+    "mtime": 1761675789.2928379,
+    "ast_hash": "01349fd2bf1aa30f1d44a284ae955ae5",
+    "semantic_hash": "01349fd2bf1aa30f1d44a284ae955ae5"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/tidy.go": {
+    "mtime": 1761675789.5411873,
+    "ast_hash": "b3f07344b4ff606c96fac8ffdc4e9b41",
+    "semantic_hash": "b3f07344b4ff606c96fac8ffdc4e9b41"
+  },
+  "/Users/alexbukov/redsock/rscli/go.mod": {
+    "mtime": 1767027578.8548818,
+    "ast_hash": "1b89e3e85e205c69897b1343a7ab2f39",
+    "semantic_hash": "1b89e3e85e205c69897b1343a7ab2f39"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/cmd/executer.go": {
+    "mtime": 1761675789.67718,
+    "ast_hash": "99e4f0248b0d842548d06908f0be07de",
+    "semantic_hash": "99e4f0248b0d842548d06908f0be07de"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/compose/compose_assembler.go": {
+    "mtime": 1761675789.6795852,
+    "ast_hash": "e9ccf2e6e40ca90ae342af89a491c998",
+    "semantic_hash": "e9ccf2e6e40ca90ae342af89a491c998"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/compose/compose_resources.go": {
+    "mtime": 1761675789.6804004,
+    "ast_hash": "2106702c2fcfa1682c6acbab0946459e",
+    "semantic_hash": "2106702c2fcfa1682c6acbab0946459e"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/config/cfg.go": {
+    "mtime": 1761675789.6777072,
+    "ast_hash": "a66275c036a65620986ff870772ee943",
+    "semantic_hash": "a66275c036a65620986ff870772ee943"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/envpatterns/embedded.go": {
+    "mtime": 1761675789.6889393,
+    "ast_hash": "bc050d45e6b104a8dc595cd4f3eebc79",
+    "semantic_hash": "bc050d45e6b104a8dc595cd4f3eebc79"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/colors/parser.go": {
+    "mtime": 1761675789.6827977,
+    "ast_hash": "2f6b55abfdeca67ef58e2b73e51c43e7",
+    "semantic_hash": "2f6b55abfdeca67ef58e2b73e51c43e7"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/folder/folder.go": {
+    "mtime": 1761675789.6815026,
+    "ast_hash": "7a300082718226222762ebcdbe0aa5a7",
+    "semantic_hash": "7a300082718226222762ebcdbe0aa5a7"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/folder/loader.go": {
+    "mtime": 1781853276.2425156,
+    "ast_hash": "e37c18156b10966f9ce77da75a99303d",
+    "semantic_hash": "e37c18156b10966f9ce77da75a99303d"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/folder/opts.go": {
+    "mtime": 1761675789.6821113,
+    "ast_hash": "2dcf7e487b243f6bc428c747d73b44d0",
+    "semantic_hash": "2dcf7e487b243f6bc428c747d73b44d0"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/loader/infinite_progress.go": {
+    "mtime": 1761675789.6833508,
+    "ast_hash": "6f8492baebd1b8280f158018b6d53602",
+    "semantic_hash": "6f8492baebd1b8280f158018b6d53602"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/loader/multi_loader.go": {
+    "mtime": 1761675789.684148,
+    "ast_hash": "9f89df91287f5bc37e61bf15faee04ee",
+    "semantic_hash": "9f89df91287f5bc37e61bf15faee04ee"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/loader/percent_progress.go": {
+    "mtime": 1761675789.6839452,
+    "ast_hash": "db6d62b655acc8ebabc684285de01425",
+    "semantic_hash": "db6d62b655acc8ebabc684285de01425"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/loader/seq_loader.go": {
+    "mtime": 1761675789.683738,
+    "ast_hash": "43aa8e1cd6d03c51fbfde60ce799d3e2",
+    "semantic_hash": "43aa8e1cd6d03c51fbfde60ce799d3e2"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/loader/spinners.go": {
+    "mtime": 1761675789.6843586,
+    "ast_hash": "846f37ee3000761ee8e5096a620ce4d3",
+    "semantic_hash": "846f37ee3000761ee8e5096a620ce4d3"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/std_files.go": {
+    "mtime": 1761675789.6811018,
+    "ast_hash": "f3c449bbbeb9f8d880963ac9fbebd600",
+    "semantic_hash": "f3c449bbbeb9f8d880963ac9fbebd600"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/std_printer.go": {
+    "mtime": 1761675789.6808352,
+    "ast_hash": "e5b98eb24d84f98f988e50e165ca5db1",
+    "semantic_hash": "e5b98eb24d84f98f988e50e165ca5db1"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/io/working_directory.go": {
+    "mtime": 1761675789.6823678,
+    "ast_hash": "f6ef7b02f9cf589ac2df844015cdca28",
+    "semantic_hash": "f6ef7b02f9cf589ac2df844015cdca28"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/makefile/makefile.go": {
+    "mtime": 1761675789.6785324,
+    "ast_hash": "a74d1c7a0cb5bf7a5a96dd4c3f5cb032",
+    "semantic_hash": "a74d1c7a0cb5bf7a5a96dd4c3f5cb032"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/ports/manager.go": {
+    "mtime": 1761675789.6898918,
+    "ast_hash": "234260b262febb7aaadb277215b0b617",
+    "semantic_hash": "234260b262febb7aaadb277215b0b617"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/processor/opts.go": {
+    "mtime": 1761675789.6791432,
+    "ast_hash": "131f0a2ec4b78006ab7f9b718d6da1c8",
+    "semantic_hash": "131f0a2ec4b78006ab7f9b718d6da1c8"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/processor/processor.go": {
+    "mtime": 1761675789.6788752,
+    "ast_hash": "79ab931006322453161affee3d006856",
+    "semantic_hash": "79ab931006322453161affee3d006856"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/rw/rw.go": {
+    "mtime": 1761675789.6902747,
+    "ast_hash": "fcfb6a72ebec5e5e3aacf67dd977106f",
+    "semantic_hash": "fcfb6a72ebec5e5e3aacf67dd977106f"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/utils/bins/makefile/makefile.go": {
+    "mtime": 1761675789.6858113,
+    "ast_hash": "30dd7709b3ad89eb54656582bc4ad065",
+    "semantic_hash": "30dd7709b3ad89eb54656582bc4ad065"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/utils/cases/cases.go": {
+    "mtime": 1761675789.68622,
+    "ast_hash": "94a770090ca755aeebb52270d79d6619",
+    "semantic_hash": "94a770090ca755aeebb52270d79d6619"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/utils/copier/copy.go": {
+    "mtime": 1761675789.686657,
+    "ast_hash": "2543a4beee689b265e1c09a47e4f6953",
+    "semantic_hash": "2543a4beee689b265e1c09a47e4f6953"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/utils/nums/nums.go": {
+    "mtime": 1761675789.6870766,
+    "ast_hash": "b092cdb8bfdb3e0864814c70e9e07f52",
+    "semantic_hash": "b092cdb8bfdb3e0864814c70e9e07f52"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/utils/renamer/renamer.go": {
+    "mtime": 1761675789.684875,
+    "ast_hash": "4640f5e028ff34b19cebcb536e034b56",
+    "semantic_hash": "4640f5e028ff34b19cebcb536e034b56"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/utils/slices/slices.go": {
+    "mtime": 1761675789.6852317,
+    "ast_hash": "8fc81b39313513a2946d7c796951ae02",
+    "semantic_hash": "8fc81b39313513a2946d7c796951ae02"
+  },
+  "/Users/alexbukov/redsock/rscli/main.go": {
+    "mtime": 1761675792.3855557,
+    "ast_hash": "f8fcc7502ff4ff741742c5f7398269af",
+    "semantic_hash": "f8fcc7502ff4ff741742c5f7398269af"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/env.go": {
+    "mtime": 1761675789.669844,
+    "ast_hash": "fc2e1e712d2607fb5c83899ccb55153b",
+    "semantic_hash": "fc2e1e712d2607fb5c83899ccb55153b"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/init.go": {
+    "mtime": 1761675789.6726623,
+    "ast_hash": "98147f4699556303327c047ea1c2323d",
+    "semantic_hash": "98147f4699556303327c047ea1c2323d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/env_config.go": {
+    "mtime": 1761675789.670824,
+    "ast_hash": "eed7569cc55a894dd8534a67c122b28f",
+    "semantic_hash": "eed7569cc55a894dd8534a67c122b28f"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/env_makefile.go": {
+    "mtime": 1761675789.670585,
+    "ast_hash": "6ec96fce5794bb8b10c5cce3b021cabd",
+    "semantic_hash": "6ec96fce5794bb8b10c5cce3b021cabd"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/env_variables.go": {
+    "mtime": 1761675789.6713161,
+    "ast_hash": "e3f96c08cb638930b1ef968e7212f2f9",
+    "semantic_hash": "e3f96c08cb638930b1ef968e7212f2f9"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/project.go": {
+    "mtime": 1761675789.6716433,
+    "ast_hash": "752603d04821e435fc6aafe3c7418b88",
+    "semantic_hash": "752603d04821e435fc6aafe3c7418b88"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/tidy_api.go": {
+    "mtime": 1761675789.6710525,
+    "ast_hash": "a7593c6c095a5c5b63a75c1a9a80ce58",
+    "semantic_hash": "a7593c6c095a5c5b63a75c1a9a80ce58"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/tidy_migrations.go": {
+    "mtime": 1761675789.6702898,
+    "ast_hash": "62df9190b4f6e7b6db343b31531b3d52",
+    "semantic_hash": "62df9190b4f6e7b6db343b31531b3d52"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/tidy_resources.go": {
+    "mtime": 1761675789.6720653,
+    "ast_hash": "b23390dd2d773e0fd3afc91f764c754a",
+    "semantic_hash": "b23390dd2d773e0fd3afc91f764c754a"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/project/tidy_service.go": {
+    "mtime": 1761675789.6722763,
+    "ast_hash": "0dc6fb50e5b503604024e84b32776c6c",
+    "semantic_hash": "0dc6fb50e5b503604024e84b32776c6c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/environment/tidy.go": {
+    "mtime": 1761675789.6724675,
+    "ast_hash": "941aa7656f138ee0ae586153959fcb9c",
+    "semantic_hash": "941aa7656f138ee0ae586153959fcb9c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/actions.go": {
+    "mtime": 1761675789.6117382,
+    "ast_hash": "e0b1a690d9ee004ecf646528b56573d6",
+    "semantic_hash": "e0b1a690d9ee004ecf646528b56573d6"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/git/commit.go": {
+    "mtime": 1761675789.6211877,
+    "ast_hash": "35ace924d0daab963fb48b32a997edcc",
+    "semantic_hash": "35ace924d0daab963fb48b32a997edcc"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/git/git.go": {
+    "mtime": 1761675789.620838,
+    "ast_hash": "27e87554dd2d9baf7567e6145a7b4ce4",
+    "semantic_hash": "27e87554dd2d9baf7567e6145a7b4ce4"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/git/init.go": {
+    "mtime": 1761675789.6221092,
+    "ast_hash": "5af7f73b8a03032511b5b367d1807d63",
+    "semantic_hash": "5af7f73b8a03032511b5b367d1807d63"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/git/set_origin.go": {
+    "mtime": 1761675789.6217167,
+    "ast_hash": "0ce1069f79503b60a74959394a994824",
+    "semantic_hash": "0ce1069f79503b60a74959394a994824"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/git/status.go": {
+    "mtime": 1761675789.6219099,
+    "ast_hash": "ff59da18f6002f057685b94b8e1da96c",
+    "semantic_hash": "ff59da18f6002f057685b94b8e1da96c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/actions.go": {
+    "mtime": 1761675789.6141796,
+    "ast_hash": "574f5c1d4142031d6290527de2deef98",
+    "semantic_hash": "574f5c1d4142031d6290527de2deef98"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/build.go": {
+    "mtime": 1761675789.6138325,
+    "ast_hash": "0db3df639648871d64471332069b0bee",
+    "semantic_hash": "0db3df639648871d64471332069b0bee"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/build_test.go": {
+    "mtime": 1761675789.619157,
+    "ast_hash": "350c8defc468f2fca9b4c3daa564fdda",
+    "semantic_hash": "350c8defc468f2fca9b4c3daa564fdda"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/config.go": {
+    "mtime": 1782414640.6718152,
+    "ast_hash": "753da4e07c5eb5d6ae8686d48866d644",
+    "semantic_hash": "753da4e07c5eb5d6ae8686d48866d644"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/config_test.go": {
+    "mtime": 1761675789.620104,
+    "ast_hash": "685fa85781285190bbf61f7040608382",
+    "semantic_hash": "685fa85781285190bbf61f7040608382"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/client_pg.go": {
+    "mtime": 1761675789.6158674,
+    "ast_hash": "05ff1b1065bfd36c2d4614a0b6c2242c",
+    "semantic_hash": "05ff1b1065bfd36c2d4614a0b6c2242c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/client_redis.go": {
+    "mtime": 1761675789.6148186,
+    "ast_hash": "5afdcf449b20ebf0b678d7e2e9f2f740",
+    "semantic_hash": "5afdcf449b20ebf0b678d7e2e9f2f740"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/client_sqlite.go": {
+    "mtime": 1761675789.6186287,
+    "ast_hash": "5b6ab309b061bb1675e336ed6980a690",
+    "semantic_hash": "5b6ab309b061bb1675e336ed6980a690"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/dependencies.go": {
+    "mtime": 1770499280.3715932,
+    "ast_hash": "ed05fbd26b16bae6990e2e2c61c0cbe2",
+    "semantic_hash": "ed05fbd26b16bae6990e2e2c61c0cbe2"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/env_variable.go": {
+    "mtime": 1761675789.6153333,
+    "ast_hash": "52eec7c9413c1fd08abc9c2456557c25",
+    "semantic_hash": "52eec7c9413c1fd08abc9c2456557c25"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/interfaces.go": {
+    "mtime": 1761675789.615126,
+    "ast_hash": "5dc2d455a554a29709218bfc93a93ab4",
+    "semantic_hash": "5dc2d455a554a29709218bfc93a93ab4"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/link_service/client_grpc.go": {
+    "mtime": 1761675789.6181042,
+    "ast_hash": "8404310af97b9663a61a5f6208bd4545",
+    "semantic_hash": "8404310af97b9663a61a5f6208bd4545"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/discovery.go": {
+    "mtime": 1761675789.616844,
+    "ast_hash": "4a41abff46ce0fb23b88299280ba5898",
+    "semantic_hash": "4a41abff46ce0fb23b88299280ba5898"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/fetcher.go": {
+    "mtime": 1761675789.6174364,
+    "ast_hash": "70a8cdba3bcd187d30af69e8f38176d2",
+    "semantic_hash": "70a8cdba3bcd187d30af69e8f38176d2"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/grpc.go": {
+    "mtime": 1761675789.6172163,
+    "ast_hash": "a8c774ae18625b587d88738530422283",
+    "semantic_hash": "a8c774ae18625b587d88738530422283"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/name_filter.go": {
+    "mtime": 1761675789.617721,
+    "ast_hash": "afabf853d0ae6e963dfb5118e5f586ad",
+    "semantic_hash": "afabf853d0ae6e963dfb5118e5f586ad"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/server.go": {
+    "mtime": 1761675789.614605,
+    "ast_hash": "e8afabbe1ff477cb9fa2184a96bbc562",
+    "semantic_hash": "e8afabbe1ff477cb9fa2184a96bbc562"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/server_grpc.go": {
+    "mtime": 1761675789.616173,
+    "ast_hash": "cf5ef87e028bb9bf25d4a3767947f347",
+    "semantic_hash": "cf5ef87e028bb9bf25d4a3767947f347"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/sql.go": {
+    "mtime": 1761675789.6189396,
+    "ast_hash": "bd6d15590cd823d687f30f5bdd9213e6",
+    "semantic_hash": "bd6d15590cd823d687f30f5bdd9213e6"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/dependencies/telegram.go": {
+    "mtime": 1761675789.6155467,
+    "ast_hash": "890eba5164ac094222e80029f0c29ce0",
+    "semantic_hash": "890eba5164ac094222e80029f0c29ce0"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/go_mod.go": {
+    "mtime": 1761675789.6194706,
+    "ast_hash": "78db15a0b00e87062ade7848ed2b35b6",
+    "semantic_hash": "78db15a0b00e87062ade7848ed2b35b6"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/init.go": {
+    "mtime": 1761675789.620405,
+    "ast_hash": "acc2cbbe72ad6687a7024fe01187ef2a",
+    "semantic_hash": "acc2cbbe72ad6687a7024fe01187ef2a"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/preparation.go": {
+    "mtime": 1780922025.294374,
+    "ast_hash": "7f1e393200a9a3cddc031f5354bd2381",
+    "semantic_hash": "7f1e393200a9a3cddc031f5354bd2381"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/go_actions/renamer/renaming.go": {
+    "mtime": 1761675789.6132085,
+    "ast_hash": "53f94875d95963b4f0d2d610979b3a3e",
+    "semantic_hash": "53f94875d95963b4f0d2d610979b3a3e"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/init_project.go": {
+    "mtime": 1761675789.611405,
+    "ast_hash": "cb19a3a1d80ef3625a23f627dcb2c84a",
+    "semantic_hash": "cb19a3a1d80ef3625a23f627dcb2c84a"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/pipelines/github_workflow.go": {
+    "mtime": 1761675789.6121166,
+    "ast_hash": "248dd02889836113e230dc4a0a77d67c",
+    "semantic_hash": "248dd02889836113e230dc4a0a77d67c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/actions/tidy_project.go": {
+    "mtime": 1761675789.6111186,
+    "ast_hash": "29019f1c3ab20d927dc7e1d281655758",
+    "semantic_hash": "29019f1c3ab20d927dc7e1d281655758"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/config/config.go": {
+    "mtime": 1761675789.6102636,
+    "ast_hash": "07c709d99da27a9ef542f78fd4e8699f",
+    "semantic_hash": "07c709d99da27a9ef542f78fd4e8699f"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/create.go": {
+    "mtime": 1761675789.609886,
+    "ast_hash": "07b77001b753a6eb42554aee9730d52d",
+    "semantic_hash": "07b77001b753a6eb42554aee9730d52d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/ci_cd.go": {
+    "mtime": 1761675789.623697,
+    "ast_hash": "1b521f1320a1892208fe09a2d0daba6b",
+    "semantic_hash": "1b521f1320a1892208fe09a2d0daba6b"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/common_files.go": {
+    "mtime": 1761675789.6246827,
+    "ast_hash": "c8efad487783e4022dfe0fd274740f75",
+    "semantic_hash": "c8efad487783e4022dfe0fd274740f75"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/common_imports.go": {
+    "mtime": 1761675789.6239126,
+    "ast_hash": "572151674849e4b7f0c2e67ab4cb08c9",
+    "semantic_hash": "572151674849e4b7f0c2e67ab4cb08c9"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/conn_names.go": {
+    "mtime": 1761675789.6689982,
+    "ast_hash": "87f33bcccbe0fee9589ea64d8d054e5d",
+    "semantic_hash": "87f33bcccbe0fee9589ea64d8d054e5d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/app_struct_generators/app.go": {
+    "mtime": 1772987278.8786073,
+    "ast_hash": "dd71c14c078e142ed4a8f974b5270de0",
+    "semantic_hash": "dd71c14c078e142ed4a8f974b5270de0"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/app_struct_generators/common.go": {
+    "mtime": 1772986985.3476279,
+    "ast_hash": "cbb880b9b0d57a6cc8af5628a781966d",
+    "semantic_hash": "cbb880b9b0d57a6cc8af5628a781966d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/app_struct_generators/data_sources.go": {
+    "mtime": 1761675789.651089,
+    "ast_hash": "0f086fcfc448e134425d1fcd356558c1",
+    "semantic_hash": "0f086fcfc448e134425d1fcd356558c1"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/app_struct_generators/server.go": {
+    "mtime": 1772989416.7204185,
+    "ast_hash": "42eaf495bb8f871d1805a642f1c98864",
+    "semantic_hash": "42eaf495bb8f871d1805a642f1c98864"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/app_struct_generators/templates.go": {
+    "mtime": 1767603380.886941,
+    "ast_hash": "672cece22f54f75901c5028fbd3a057d",
+    "semantic_hash": "672cece22f54f75901c5028fbd3a057d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config.go": {
+    "mtime": 1761675789.6428337,
+    "ast_hash": "4d647f41987ffc538e578b9d1df85ac0",
+    "semantic_hash": "4d647f41987ffc538e578b9d1df85ac0"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/common.go": {
+    "mtime": 1761675789.6409678,
+    "ast_hash": "af1ff5d8b4587336f253c71bf0cef864",
+    "semantic_hash": "af1ff5d8b4587336f253c71bf0cef864"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/gen_config_struct.go": {
+    "mtime": 1761675789.642504,
+    "ast_hash": "e5726cb156d1dc7cd9bcff18d56383ab",
+    "semantic_hash": "e5726cb156d1dc7cd9bcff18d56383ab"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/gen_data_sources.go": {
+    "mtime": 1761675789.6399124,
+    "ast_hash": "d63862b8fbdef1cd032b97d21df3eb35",
+    "semantic_hash": "d63862b8fbdef1cd032b97d21df3eb35"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/gen_env.go": {
+    "mtime": 1761675789.6404738,
+    "ast_hash": "3f8f04d71c85cf0d92033e23183670d3",
+    "semantic_hash": "3f8f04d71c85cf0d92033e23183670d3"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/gen_env_test.go": {
+    "mtime": 1761675789.640719,
+    "ast_hash": "4ac069539a00a5d06fd320e7455ee36c",
+    "semantic_hash": "4ac069539a00a5d06fd320e7455ee36c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/gen_servers.go": {
+    "mtime": 1761675789.6402135,
+    "ast_hash": "567e594c8fe7c64a1c556b47bbadc8db",
+    "semantic_hash": "567e594c8fe7c64a1c556b47bbadc8db"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/gen_servers_test.go": {
+    "mtime": 1761675789.6395636,
+    "ast_hash": "1e265ed15026f073c2f2d55270284600",
+    "semantic_hash": "1e265ed15026f073c2f2d55270284600"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/config_generators/templates.go": {
+    "mtime": 1761675789.6413183,
+    "ast_hash": "22713edf09c2b561bbc347b53044c5d1",
+    "semantic_hash": "22713edf09c2b561bbc347b53044c5d1"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/dockerfile_generator/const.go": {
+    "mtime": 1761675789.6467814,
+    "ast_hash": "d86c54d5139dd138df694e6aaa50dc9b",
+    "semantic_hash": "d86c54d5139dd138df694e6aaa50dc9b"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/dockerfile_generator/service_dockerfile.go": {
+    "mtime": 1761675789.6464727,
+    "ast_hash": "f7b5e18edf6d2df78c0fe73bc904b7ce",
+    "semantic_hash": "f7b5e18edf6d2df78c0fe73bc904b7ce"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/dockerfile_generator/service_dockerfile_test.go": {
+    "mtime": 1761675789.6470954,
+    "ast_hash": "cdcdec150ca9077804a0a05d50e9b2cb",
+    "semantic_hash": "cdcdec150ca9077804a0a05d50e9b2cb"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/grpc_api_generator/generator.go": {
+    "mtime": 1761675789.6476038,
+    "ast_hash": "d7abbacb80158e0d4d164fa3f388a8bf",
+    "semantic_hash": "d7abbacb80158e0d4d164fa3f388a8bf"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/grpc_api_generator/templates.go": {
+    "mtime": 1761675789.647855,
+    "ast_hash": "d416707a5ce44196c9876b34a826fa1b",
+    "semantic_hash": "d416707a5ce44196c9876b34a826fa1b"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/server_generators/file_server.go": {
+    "mtime": 1761675789.6503341,
+    "ast_hash": "2c0b0d361efaf11500f3517ec197dcf8",
+    "semantic_hash": "2c0b0d361efaf11500f3517ec197dcf8"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/server_generators/impl_gen/impl.go": {
+    "mtime": 1761675789.6496916,
+    "ast_hash": "3a27606a2c0a8c1e01986454b11dca9d",
+    "semantic_hash": "3a27606a2c0a8c1e01986454b11dca9d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/generators/server_generators/impl_gen/impl_test.go": {
+    "mtime": 1761675789.648942,
+    "ast_hash": "284b3fcc930e51a3438760201f202bcd",
+    "semantic_hash": "284b3fcc930e51a3438760201f202bcd"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/go_clients.go": {
+    "mtime": 1761675789.6234121,
+    "ast_hash": "7e53087ed9f2424935978f252a520074",
+    "semantic_hash": "7e53087ed9f2424935978f252a520074"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/go_files.go": {
+    "mtime": 1781853276.243291,
+    "ast_hash": "a459e272083c7296bb7036ae36c9ac10",
+    "semantic_hash": "a459e272083c7296bb7036ae36c9ac10"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/go_server.go": {
+    "mtime": 1779549146.6041102,
+    "ast_hash": "c203a39f4065a626fe581620a3170787",
+    "semantic_hash": "c203a39f4065a626fe581620a3170787"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/grpc.go": {
+    "mtime": 1761675789.6241217,
+    "ast_hash": "e4caebfdd62ab9ca494f56966b27b503",
+    "semantic_hash": "e4caebfdd62ab9ca494f56966b27b503"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/cmd/service/main.go": {
+    "mtime": 1761675789.6542442,
+    "ast_hash": "c180466df924d38989671c281164d552",
+    "semantic_hash": "c180466df924d38989671c281164d552"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/go.mod": {
+    "mtime": 1761675789.6547873,
+    "ast_hash": "600b1bca79fc5eebed17b1540587e0f0",
+    "semantic_hash": "600b1bca79fc5eebed17b1540587e0f0"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/clients/grpc/conn.go": {
+    "mtime": 1761675789.6557941,
+    "ast_hash": "9e4146819438dc1abaec0fde0da07a53",
+    "semantic_hash": "9e4146819438dc1abaec0fde0da07a53"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/clients/redis/conn.go": {
+    "mtime": 1761675789.6561615,
+    "ast_hash": "9dc2c4d6ee5f400f5332cbc437a6b94f",
+    "semantic_hash": "9dc2c4d6ee5f400f5332cbc437a6b94f"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/clients/sqldb/conn.go": {
+    "mtime": 1761675789.6576426,
+    "ast_hash": "3eb7e41a9427101647e9c55d703d924c",
+    "semantic_hash": "3eb7e41a9427101647e9c55d703d924c"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/clients/sqldb/postgres.go": {
+    "mtime": 1761675789.6573322,
+    "ast_hash": "d1663ed1ee789245c452011daa836cc3",
+    "semantic_hash": "d1663ed1ee789245c452011daa836cc3"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/clients/sqldb/sqlite.go": {
+    "mtime": 1761675789.657036,
+    "ast_hash": "6c424d716fe79bf0810f6d33d8ab2baa",
+    "semantic_hash": "6c424d716fe79bf0810f6d33d8ab2baa"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/clients/telegram/conn.go": {
+    "mtime": 1761675789.6565387,
+    "ast_hash": "bd23169dbd59b4ea325d50452657b2e5",
+    "semantic_hash": "bd23169dbd59b4ea325d50452657b2e5"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/config/environment.go": {
+    "mtime": 1761675789.6611526,
+    "ast_hash": "ccd973817a8e142836a87bdb17c68a08",
+    "semantic_hash": "ccd973817a8e142836a87bdb17c68a08"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/config/keys.go": {
+    "mtime": 1761675789.6606815,
+    "ast_hash": "b2f4baddf10c23f4b95f8f0aa26f8035",
+    "semantic_hash": "b2f4baddf10c23f4b95f8f0aa26f8035"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/transport/grpc.go": {
+    "mtime": 1761675789.658125,
+    "ast_hash": "d76a7392c3fe182f6280a23353d475cb",
+    "semantic_hash": "d76a7392c3fe182f6280a23353d475cb"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/transport/grpc/example_api_impl/impl.go": {
+    "mtime": 1761675789.6587715,
+    "ast_hash": "fe634d96453085a0b7d1a549a984843f",
+    "semantic_hash": "fe634d96453085a0b7d1a549a984843f"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/transport/http.go": {
+    "mtime": 1761675789.65898,
+    "ast_hash": "40d14837472326776503113466cbe786",
+    "semantic_hash": "40d14837472326776503113466cbe786"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/transport/manager.go": {
+    "mtime": 1772989521.0183027,
+    "ast_hash": "e9396f1c0ab5c45ec93d1ec4f7347d58",
+    "semantic_hash": "e9396f1c0ab5c45ec93d1ec4f7347d58"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/transport/telegram/listener.go": {
+    "mtime": 1761675789.6598802,
+    "ast_hash": "de27828883f09762d8115b0737cded09",
+    "semantic_hash": "de27828883f09762d8115b0737cded09"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/internal/transport/telegram/version/handler.go": {
+    "mtime": 1761675789.6595714,
+    "ast_hash": "0f5212c3da3c4ebb451efe079c55751d",
+    "semantic_hash": "0f5212c3da3c4ebb451efe079c55751d"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/docs/grpc/api.swagger.json": {
+    "mtime": 1761675789.6668742,
+    "ast_hash": "fc68a80791cf562917683d6cbdb6b4a3",
+    "semantic_hash": "fc68a80791cf562917683d6cbdb6b4a3"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/example_api/api.pb.go": {
+    "mtime": 1761675789.668193,
+    "ast_hash": "50538a77e155f719e43f2198db7a9791",
+    "semantic_hash": "50538a77e155f719e43f2198db7a9791"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/example_api/api.pb.gw.go": {
+    "mtime": 1761675789.6678245,
+    "ast_hash": "623ff9d23090d883c6d28d0452e26ac7",
+    "semantic_hash": "623ff9d23090d883c6d28d0452e26ac7"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/example_api/api.pb.validate.go": {
+    "mtime": 1761675789.6674216,
+    "ast_hash": "ed9e2d33ce6d6c4968962c693fc9f2d1",
+    "semantic_hash": "ed9e2d33ce6d6c4968962c693fc9f2d1"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/example_api/api_grpc.pb.go": {
+    "mtime": 1761675789.6684108,
+    "ast_hash": "76a39204310a96b5e509f83e67437074",
+    "semantic_hash": "76a39204310a96b5e509f83e67437074"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/web/fetch.pb.ts": {
+    "mtime": 1761675789.666354,
+    "ast_hash": "611a00bd7dd14cbdfe7c5ea6170b6625",
+    "semantic_hash": "611a00bd7dd14cbdfe7c5ea6170b6625"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/pkg/web/grpc/api.pb.ts": {
+    "mtime": 1761675789.6659722,
+    "ast_hash": "4f920541ebc3c24b2685a4a0f1922f00",
+    "semantic_hash": "4f920541ebc3c24b2685a4a0f1922f00"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/pkg/docs/grpc/api.swagger.json": {
+    "mtime": 1781880416.608219,
+    "ast_hash": "fc68a80791cf562917683d6cbdb6b4a3",
+    "semantic_hash": "fc68a80791cf562917683d6cbdb6b4a3"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/pkg/web/fetch.pb.ts": {
+    "mtime": 1781880416.6097434,
+    "ast_hash": "611a00bd7dd14cbdfe7c5ea6170b6625",
+    "semantic_hash": "611a00bd7dd14cbdfe7c5ea6170b6625"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/pkg/web/grpc/api.pb.ts": {
+    "mtime": 1781880416.6099007,
+    "ast_hash": "4f920541ebc3c24b2685a4a0f1922f00",
+    "semantic_hash": "4f920541ebc3c24b2685a4a0f1922f00"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/i_project.go": {
+    "mtime": 1761675789.6105914,
+    "ast_hash": "ff8804452cff016076dc7e6641cf8883",
+    "semantic_hash": "ff8804452cff016076dc7e6641cf8883"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/load.go": {
+    "mtime": 1781853276.2442987,
+    "ast_hash": "86e06fb986a7c2a39fc40c76d7a8f90f",
+    "semantic_hash": "86e06fb986a7c2a39fc40c76d7a8f90f"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/project.go": {
+    "mtime": 1761675789.6224017,
+    "ast_hash": "62d9bdb02c147b2b587e4f452d1d04f1",
+    "semantic_hash": "62d9bdb02c147b2b587e4f452d1d04f1"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/validators/name_validation.go": {
+    "mtime": 1761675789.6227489,
+    "ast_hash": "5a1c3597dc9790417889dc967894714e",
+    "semantic_hash": "5a1c3597dc9790417889dc967894714e"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/tools/list.go": {
+    "mtime": 1761675789.6087883,
+    "ast_hash": "f4d3ec8736fc6c06c470f220223340d3",
+    "semantic_hash": "f4d3ec8736fc6c06c470f220223340d3"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/tools/migrations/goose/tool.go": {
+    "mtime": 1761675789.6084428,
+    "ast_hash": "31b71a8aa4423ba29195b70701fbfdc6",
+    "semantic_hash": "31b71a8aa4423ba29195b70701fbfdc6"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/tools/migrations/migrators.go": {
+    "mtime": 1761675789.6079483,
+    "ast_hash": "2191e2848eacb9195143dd3dc930a1e2",
+    "semantic_hash": "2191e2848eacb9195143dd3dc930a1e2"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/tools/shared/ghversion/version.go": {
+    "mtime": 1761675789.6094825,
+    "ast_hash": "d5025f8c80c6c7dde43b829d538b2c4a",
+    "semantic_hash": "d5025f8c80c6c7dde43b829d538b2c4a"
+  },
+  "/Users/alexbukov/redsock/rscli/support/compiler/main.go": {
+    "mtime": 1761675789.691849,
+    "ast_hash": "c1c71739f819e229ea9cb325207fc679",
+    "semantic_hash": "c1c71739f819e229ea9cb325207fc679"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/long_compare.go": {
+    "mtime": 1761675789.6733985,
+    "ast_hash": "dc8f0db97bd2534aaed561145facb232",
+    "semantic_hash": "dc8f0db97bd2534aaed561145facb232"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/mocks/action_performer_mock.go": {
+    "mtime": 1761675789.6739347,
+    "ast_hash": "1b5f3dac1679816dab326eec98b6c600",
+    "semantic_hash": "1b5f3dac1679816dab326eec98b6c600"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/mocks/i_project_mock.go": {
+    "mtime": 1761675789.6749647,
+    "ast_hash": "eb9c7d3d82a83c51426116b2a369300c",
+    "semantic_hash": "eb9c7d3d82a83c51426116b2a369300c"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/mocks/io_dev_null.go": {
+    "mtime": 1761675789.6746078,
+    "ast_hash": "0b124db8bae4aefee5d3e70731443d3f",
+    "semantic_hash": "0b124db8bae4aefee5d3e70731443d3f"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/mocks/io_mock.go": {
+    "mtime": 1761675789.6743112,
+    "ast_hash": "7332f33a3581daa87fad6aff28148b10",
+    "semantic_hash": "7332f33a3581daa87fad6aff28148b10"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/project_mock/config.go": {
+    "mtime": 1761675789.6753824,
+    "ast_hash": "776232822952830878d5873e764eb38f",
+    "semantic_hash": "776232822952830878d5873e764eb38f"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/project_mock/opts.go": {
+    "mtime": 1761675789.6759965,
+    "ast_hash": "4cbe7c4727d4ede09d3e6b6f0484b389",
+    "semantic_hash": "4cbe7c4727d4ede09d3e6b6f0484b389"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/project_mock/prepare.go": {
+    "mtime": 1761675789.6762648,
+    "ast_hash": "d67d8e5e7499f034fece043e51506e45",
+    "semantic_hash": "d67d8e5e7499f034fece043e51506e45"
+  },
+  "/Users/alexbukov/redsock/rscli/version/update_check.go": {
+    "mtime": 1761675789.6922724,
+    "ast_hash": "a9fadbfc696fa32f9f9d85221d16211c",
+    "semantic_hash": "a9fadbfc696fa32f9f9d85221d16211c"
+  },
+  "/Users/alexbukov/redsock/rscli/version/version.go": {
+    "mtime": 1761675789.692601,
+    "ast_hash": "89c5efa23810fb1a5859b90eb2730433",
+    "semantic_hash": "89c5efa23810fb1a5859b90eb2730433"
+  },
+  "/Users/alexbukov/redsock/rscli/.github/workflows/branch-push.yml": {
+    "mtime": 1761675789.70844,
+    "ast_hash": "cf54efb9623d91c9e3923d241afb48b0",
+    "semantic_hash": "cf54efb9623d91c9e3923d241afb48b0"
+  },
+  "/Users/alexbukov/redsock/rscli/.github/workflows/pre-master.yml": {
+    "mtime": 1761675789.706716,
+    "ast_hash": "24e342eb6b2d683e92ab03ae8b65e65f",
+    "semantic_hash": "24e342eb6b2d683e92ab03ae8b65e65f"
+  },
+  "/Users/alexbukov/redsock/rscli/.github/workflows/release.yaml": {
+    "mtime": 1761675789.7100847,
+    "ast_hash": "7be762de4d3fbecfa713dd216251de01",
+    "semantic_hash": "7be762de4d3fbecfa713dd216251de01"
+  },
+  "/Users/alexbukov/redsock/rscli/CLAUDE.md": {
+    "mtime": 1780922025.294157,
+    "ast_hash": "c0197355aed5a850e8e2d95df4d9dd43",
+    "semantic_hash": "c0197355aed5a850e8e2d95df4d9dd43"
+  },
+  "/Users/alexbukov/redsock/rscli/README.md": {
+    "mtime": 1761675789.6909513,
+    "ast_hash": "cf434a067f713382d2b7c94ec59d60d0",
+    "semantic_hash": "cf434a067f713382d2b7c94ec59d60d0"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/grpc/config/config.yaml": {
+    "mtime": 1761675789.5202072,
+    "ast_hash": "ce167350b625b109399d797d2e097dfa",
+    "semantic_hash": "ce167350b625b109399d797d2e097dfa"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/grpc/config/config_template.yaml": {
+    "mtime": 1761675789.5207186,
+    "ast_hash": "ce167350b625b109399d797d2e097dfa",
+    "semantic_hash": "ce167350b625b109399d797d2e097dfa"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/grpc/config/dev.yaml": {
+    "mtime": 1761675789.519849,
+    "ast_hash": "ce167350b625b109399d797d2e097dfa",
+    "semantic_hash": "ce167350b625b109399d797d2e097dfa"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/postgres/config/config.yaml": {
+    "mtime": 1761675789.533345,
+    "ast_hash": "d823c980c10db27102ba9b90899eced8",
+    "semantic_hash": "d823c980c10db27102ba9b90899eced8"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/postgres/config/dev.yaml": {
+    "mtime": 1761675789.533043,
+    "ast_hash": "eb2351325c74bca9da952581b958ec88",
+    "semantic_hash": "eb2351325c74bca9da952581b958ec88"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/redis/config/config.yaml": {
+    "mtime": 1761675789.5238905,
+    "ast_hash": "397e797de7f3b61587392218f2811bee",
+    "semantic_hash": "397e797de7f3b61587392218f2811bee"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/redis/config/config_template.yaml": {
+    "mtime": 1761675789.5243378,
+    "ast_hash": "c0364823c262ebe97bfc6ee959e98c22",
+    "semantic_hash": "c0364823c262ebe97bfc6ee959e98c22"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/redis/config/dev.yaml": {
+    "mtime": 1761675789.5235152,
+    "ast_hash": "530f463dad9bfac58698f31e6350659a",
+    "semantic_hash": "530f463dad9bfac58698f31e6350659a"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/sqlite/config/config.yaml": {
+    "mtime": 1761675789.528827,
+    "ast_hash": "054477834ab7525a9e91464e388711d4",
+    "semantic_hash": "054477834ab7525a9e91464e388711d4"
+  },
+  "/Users/alexbukov/redsock/rscli/cmd/project/add/expected/telegram/config/config.yaml": {
+    "mtime": 1761675789.5361824,
+    "ast_hash": "f587a762f3c4b03bbe526f86fd495a76",
+    "semantic_hash": "f587a762f3c4b03bbe526f86fd495a76"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/config/rscli.yaml": {
+    "mtime": 1761675789.6779947,
+    "ast_hash": "67c2c1b873236cb77a023423b9351325",
+    "semantic_hash": "67c2c1b873236cb77a023423b9351325"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/envpatterns/files/compose.examples.yaml": {
+    "mtime": 1761675789.688138,
+    "ast_hash": "198cd1122094012dd5add2ec5e8d155c",
+    "semantic_hash": "198cd1122094012dd5add2ec5e8d155c"
+  },
+  "/Users/alexbukov/redsock/rscli/internal/envpatterns/files/docker-compose.yaml": {
+    "mtime": 1761675789.6878035,
+    "ast_hash": "79b808de96fcf635fd85c48a5106b871",
+    "semantic_hash": "79b808de96fcf635fd85c48a5106b871"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/.github/workflows/go-branch-push.yml": {
+    "mtime": 1761675789.664089,
+    "ast_hash": "53a463bd43189f69dc1455d6330634a9",
+    "semantic_hash": "53a463bd43189f69dc1455d6330634a9"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/.github/workflows/release.yaml": {
+    "mtime": 1761675789.6643655,
+    "ast_hash": "7087946ffc97e1a24749d6c1c36032cc",
+    "semantic_hash": "7087946ffc97e1a24749d6c1c36032cc"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/.golangci.yaml": {
+    "mtime": 1780922025.2947867,
+    "ast_hash": "47575ab66c0e5e113f24b9c1850a1338",
+    "semantic_hash": "47575ab66c0e5e113f24b9c1850a1338"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/README.md": {
+    "mtime": 1761675789.6624691,
+    "ast_hash": "c40edc893bc7f160b08928fb8c393723",
+    "semantic_hash": "c40edc893bc7f160b08928fb8c393723"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern/easyp.yaml": {
+    "mtime": 1761675789.6617002,
+    "ast_hash": "551a3504adb9e6f2f98d3ec5706b4ed6",
+    "semantic_hash": "551a3504adb9e6f2f98d3ec5706b4ed6"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/.github/workflows/go-branch-push.yml": {
+    "mtime": 1781880416.6033175,
+    "ast_hash": "53a463bd43189f69dc1455d6330634a9",
+    "semantic_hash": "53a463bd43189f69dc1455d6330634a9"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/.github/workflows/release.yaml": {
+    "mtime": 1781880416.6034918,
+    "ast_hash": "7087946ffc97e1a24749d6c1c36032cc",
+    "semantic_hash": "7087946ffc97e1a24749d6c1c36032cc"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/.golangci.yaml": {
+    "mtime": 1781880416.6040006,
+    "ast_hash": "47575ab66c0e5e113f24b9c1850a1338",
+    "semantic_hash": "47575ab66c0e5e113f24b9c1850a1338"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/README.md": {
+    "mtime": 1781880416.604205,
+    "ast_hash": "c40edc893bc7f160b08928fb8c393723",
+    "semantic_hash": "c40edc893bc7f160b08928fb8c393723"
+  },
+  "/Users/alexbukov/redsock/rscli/plugins/project/go_project/patterns/pattern_c/easyp.yaml": {
+    "mtime": 1781880416.604763,
+    "ast_hash": "551a3504adb9e6f2f98d3ec5706b4ed6",
+    "semantic_hash": "551a3504adb9e6f2f98d3ec5706b4ed6"
+  },
+  "/Users/alexbukov/redsock/rscli/tasks/task-001-pattern-static-copy.md": {
+    "mtime": 1780922025.2950633,
+    "ast_hash": "a3ed6a35958aaa38dfaec9f09a351cd7",
+    "semantic_hash": "a3ed6a35958aaa38dfaec9f09a351cd7"
+  },
+  "/Users/alexbukov/redsock/rscli/tasks/task-002-dockerfile-env-vars.md": {
+    "mtime": 1780922025.295349,
+    "ast_hash": "51357b3bb2a566b005dc60680d47a05d",
+    "semantic_hash": "51357b3bb2a566b005dc60680d47a05d"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/project_mock/basic_config.yaml": {
+    "mtime": 1761675789.6756907,
+    "ast_hash": "042ce9ebdd8bf7c7b160b3a2ee9ce0cd",
+    "semantic_hash": "042ce9ebdd8bf7c7b160b3a2ee9ce0cd"
+  },
+  "/Users/alexbukov/redsock/rscli/tests/project_mock/full_config.yaml": {
+    "mtime": 1761675789.6765332,
+    "ast_hash": "b3525fc78b604d512824086047edb60c",
+    "semantic_hash": "b3525fc78b604d512824086047edb60c"
+  },
+  "/Users/alexbukov/redsock/rscli/version/version.yaml": {
+    "mtime": 1780922025.2955198,
+    "ast_hash": "19649d54a174ed90d708c98536108ef6",
+    "semantic_hash": "19649d54a174ed90d708c98536108ef6"
+  },
+  ".claude/settings.local.json": {
+    "mtime": 1784627892.5244083,
+    "ast_hash": "3dd7d570540cd052642eb61d93658534",
+    "semantic_hash": ""
+  },
+  ".githooks/pre-commit": {
+    "mtime": 1785613159.9463503,
+    "ast_hash": "db59dcb212f977c70c4cd9b359231c98",
+    "semantic_hash": ""
+  },
+  "cmd/project/add/messages.go": {
+    "mtime": 1784230008.2276914,
+    "ast_hash": "d37a4cda2f32a277ca3204e9b8fc14bc",
+    "semantic_hash": ""
+  },
+  "cmd/project/add/processor.go": {
+    "mtime": 1785618454.6235151,
+    "ast_hash": "9c5021a2eb42c3d0a9e6a3093ed042a2",
+    "semantic_hash": ""
+  },
+  "cmd/project/cmd.go": {
+    "mtime": 1784571603.3799675,
+    "ast_hash": "bfaa8f14e5a03d42f0c14299f2238ed0",
+    "semantic_hash": ""
+  },
+  "cmd/project/init/collect_name.go": {
+    "mtime": 1784632642.5690148,
+    "ast_hash": "9ab629b2f3f1cc092811f2feb313bcfe",
+    "semantic_hash": ""
+  },
+  "cmd/project/init/collect_os_path.go": {
+    "mtime": 1784570427.356514,
+    "ast_hash": "d88bdfe038b760810401c3036c7fbdef",
+    "semantic_hash": ""
+  },
+  "cmd/project/init/processor.go": {
+    "mtime": 1785618432.0168726,
+    "ast_hash": "fdfaf7bad62db3fc8f3b2c3117d75e73",
+    "semantic_hash": ""
+  },
+  "cmd/project/init/project_assembler.go": {
+    "mtime": 1785618436.7245216,
+    "ast_hash": "e02a8fe17b40b9049b1751ed1f9365da",
+    "semantic_hash": ""
+  },
+  "cmd/project/tidy/processor.go": {
+    "mtime": 1785618445.051453,
+    "ast_hash": "94931249db0761ec1a571f01a52f5c56",
+    "semantic_hash": ""
+  },
+  "go.mod": {
+    "mtime": 1785654380.9166856,
+    "ast_hash": "064c45dc2ec486054b0398c78c30a2b1",
+    "semantic_hash": ""
+  },
+  "internal/cmd/executer.go": {
+    "mtime": 1784629327.2338586,
+    "ast_hash": "08dd21df73100e5037c34001e757f39d",
+    "semantic_hash": ""
+  },
+  "internal/config/cfg.go": {
+    "mtime": 1784623839.9577699,
+    "ast_hash": "4a329d8678598d686872e952784cf442",
+    "semantic_hash": ""
+  },
+  "internal/envpatterns/embedded.go": {
+    "mtime": 1784407969.3780336,
+    "ast_hash": "f0682f89d2f40334c64b1a5d81947b64",
+    "semantic_hash": ""
+  },
+  "internal/io/colors/parser.go": {
+    "mtime": 1784620696.8375428,
+    "ast_hash": "01efe7ce2048e5b421b6c0577dde0a4a",
+    "semantic_hash": ""
+  },
+  "internal/io/folder/folder.go": {
+    "mtime": 1784628295.362994,
+    "ast_hash": "87a92684f779d6abe3e138fee238a0be",
+    "semantic_hash": ""
+  },
+  "internal/io/folder/loader.go": {
+    "mtime": 1784623810.9444017,
+    "ast_hash": "207a56b230d73b7f68fd97f6acbf9015",
+    "semantic_hash": ""
+  },
+  "internal/io/folder/opts.go": {
+    "mtime": 1784226353.3564014,
+    "ast_hash": "2dcf7e487b243f6bc428c747d73b44d0",
+    "semantic_hash": ""
+  },
+  "internal/io/spinner.go": {
+    "mtime": 1784631530.9319508,
+    "ast_hash": "a948414728a98d498183fcb957a535e7",
+    "semantic_hash": ""
+  },
+  "internal/io/std_files.go": {
+    "mtime": 1784618841.9421787,
+    "ast_hash": "a71e5fd21b080016d338f605db0d90ee",
+    "semantic_hash": ""
+  },
+  "internal/io/std_printer.go": {
+    "mtime": 1784623810.7542903,
+    "ast_hash": "99f3506daba96bb46fbff4e6d323f40e",
+    "semantic_hash": ""
+  },
+  "internal/processor/opts.go": {
+    "mtime": 1784571280.849936,
+    "ast_hash": "e2dde5b9f19b9b08a4f757144fff2c55",
+    "semantic_hash": ""
+  },
+  "internal/processor/processor.go": {
+    "mtime": 1785618390.733624,
+    "ast_hash": "e707651ede88ce014cdbebdace4398b4",
+    "semantic_hash": ""
+  },
+  "internal/rw/rw.go": {
+    "mtime": 1784623839.9797032,
+    "ast_hash": "7cc70b8153c494b99bdf245a8f1e98ab",
+    "semantic_hash": ""
+  },
+  "internal/utils/bins/makefile/makefile.go": {
+    "mtime": 1784620696.7886217,
+    "ast_hash": "e16b34cd092197fa274da4e39092f67b",
+    "semantic_hash": ""
+  },
+  "internal/utils/cases/cases.go": {
+    "mtime": 1785654996.296797,
+    "ast_hash": "d79bd54a94d9ff77988d6bb16ea23ecd",
+    "semantic_hash": ""
+  },
+  "internal/utils/global_context/ctx.go": {
+    "mtime": 1784629273.6566658,
+    "ast_hash": "8db4d05c4921733df86e158014a1053e",
+    "semantic_hash": ""
+  },
+  "internal/utils/renamer/renamer.go": {
+    "mtime": 1784623840.0022962,
+    "ast_hash": "974b4e61199af50309eaa9063bd2534c",
+    "semantic_hash": ""
+  },
+  "main.go": {
+    "mtime": 1785616843.059308,
+    "ast_hash": "e621a3144cb61aa491622f862cdecddb",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/actions.go": {
+    "mtime": 1785618423.0538042,
+    "ast_hash": "5eaf61c167c68c2038b79364ca4d4d21",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/ci_cd/github_workflow.go": {
+    "mtime": 1784623840.0780702,
+    "ast_hash": "3b99d613c460c50e3373c386bdf13ab8",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/binaries.go": {
+    "mtime": 1784616980.6915495,
+    "ast_hash": "b96e5a0ae34c1c106e5666e31d9fd479",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/commit.go": {
+    "mtime": 1785612656.7658465,
+    "ast_hash": "8794b1ac1ce8e7f953026b1353cbb17d",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/git.go": {
+    "mtime": 1785618399.4979248,
+    "ast_hash": "27a43a85f921c731a808409b48b194ab",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/git_test.go": {
+    "mtime": 1785618603.7468512,
+    "ast_hash": "a60f47dec8d6a31b69745ada5929244e",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/hooks.go": {
+    "mtime": 1785612702.3278308,
+    "ast_hash": "cb025dac127f28cdb0ad215d3ca781cb",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/init.go": {
+    "mtime": 1784226818.5900154,
+    "ast_hash": "d201bbd3cfa51eac8d8a775ff4ffff68",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/set_origin.go": {
+    "mtime": 1784623810.6850166,
+    "ast_hash": "fca9a40147d43d51eb4fd152f70da543",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/git/status.go": {
+    "mtime": 1784623839.994992,
+    "ast_hash": "299862ad9d750ec2d55fcdb12e12ae9e",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/actions.go": {
+    "mtime": 1784226818.790982,
+    "ast_hash": "15af8fb6ad83cda73726e0210ece7ad3",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/build.go": {
+    "mtime": 1784619300.571741,
+    "ast_hash": "27ddcd456a969c9662f8a91bc7803791",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/build_test.go": {
+    "mtime": 1784623839.9650593,
+    "ast_hash": "f0486e37390a66c4a170d0ae61fa092a",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/config.go": {
+    "mtime": 1784623840.0515683,
+    "ast_hash": "1553b4a7059278970d3ab436fca29174",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/client_pg.go": {
+    "mtime": 1785525215.4685524,
+    "ast_hash": "70341fa17cb85e44fc7b5154162130e0",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/client_pg_test.go": {
+    "mtime": 1785612725.429138,
+    "ast_hash": "77577cff40e7cf35351505ea9d22e9c6",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/client_redis.go": {
+    "mtime": 1784619072.762249,
+    "ast_hash": "2397ac358aa191de222c592de163aa4b",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/client_sqlite.go": {
+    "mtime": 1784617844.3362455,
+    "ast_hash": "63012a7b8b50fdbf61b977e734891166",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/dependencies.go": {
+    "mtime": 1784625581.2755053,
+    "ast_hash": "e3fe60f2aa8ea7ebfc357c77e81c16c7",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/env_variable.go": {
+    "mtime": 1784622250.6112933,
+    "ast_hash": "11056970c245ba01299489a9a4c76af4",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/interfaces.go": {
+    "mtime": 1784226818.8331132,
+    "ast_hash": "53289a38b8b9be6fa67b4ec927833b5e",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/link_service/client_grpc.go": {
+    "mtime": 1784625484.4044514,
+    "ast_hash": "0ec3f43cf42a299e98335236c7a2a3e8",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/discovery.go": {
+    "mtime": 1784623840.0364492,
+    "ast_hash": "8e48a1f855faa26775e701ad95c19de9",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/fetcher.go": {
+    "mtime": 1784230360.1520011,
+    "ast_hash": "cb296795be910be24e6f25ee13db9add",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/grpc.go": {
+    "mtime": 1784625484.4324212,
+    "ast_hash": "aa711c92da1b05c622a31c52b13eb367",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/link_service/grpc_discovery/name_filter.go": {
+    "mtime": 1784623810.907511,
+    "ast_hash": "e8e23d2a74a8cb831dcd7cb751e050f8",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/sql.go": {
+    "mtime": 1784625537.5303695,
+    "ast_hash": "5c04fa78b8729d869bd724f4115b6159",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/dependencies/telegram.go": {
+    "mtime": 1784623810.853324,
+    "ast_hash": "7955e7bfcd4df06d459803ccf6fe6384",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/git_hooks.go": {
+    "mtime": 1784628054.708604,
+    "ast_hash": "54b2cac812494c33c462a5d08e572e6a",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/go_mod.go": {
+    "mtime": 1785654329.4811642,
+    "ast_hash": "04b03ee3b949266f98516ad67c0ee045",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/init.go": {
+    "mtime": 1784623810.729254,
+    "ast_hash": "8f63ec6734e6a10a8b2154e0315289a9",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/preparation.go": {
+    "mtime": 1785613248.981191,
+    "ast_hash": "915e7b8bdbbc5328ae32ec2674350744",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/go_actions/renamer/renaming.go": {
+    "mtime": 1784623810.9839234,
+    "ast_hash": "19d6381bcd65d29083ed368c48d355a7",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/init.go": {
+    "mtime": 1785618416.7393725,
+    "ast_hash": "8d02689e52fd1cb777e7ea4dacfd1254",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/init_test.go": {
+    "mtime": 1785618468.5733395,
+    "ast_hash": "b0721edcb610848f4f1ff1e696408878",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/tidy.go": {
+    "mtime": 1785618409.007577,
+    "ast_hash": "316aefa451d19694bc3651f9fe829e7b",
+    "semantic_hash": ""
+  },
+  "plugins/project/actions/tidy_test.go": {
+    "mtime": 1785618612.4163644,
+    "ast_hash": "2cda8602822120cb52db9f7734988991",
+    "semantic_hash": ""
+  },
+  "plugins/project/config/config.go": {
+    "mtime": 1784226353.2840073,
+    "ast_hash": "07c709d99da27a9ef542f78fd4e8699f",
+    "semantic_hash": ""
+  },
+  "plugins/project/create.go": {
+    "mtime": 1784625506.5544329,
+    "ast_hash": "ed9ff89601364ef4d75af68519d42db6",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/ci_cd.go": {
+    "mtime": 1784306574.404454,
+    "ast_hash": "2cf1130a126959cd9c41032ccacf1f67",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/common_files.go": {
+    "mtime": 1784625567.972621,
+    "ast_hash": "c807102b5ae0b467d2bd160cadd2555b",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/common_imports.go": {
+    "mtime": 1784226353.2996776,
+    "ast_hash": "572151674849e4b7f0c2e67ab4cb08c9",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/conn_names.go": {
+    "mtime": 1784226353.3450475,
+    "ast_hash": "87f33bcccbe0fee9589ea64d8d054e5d",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/app.go": {
+    "mtime": 1785525215.468995,
+    "ast_hash": "50231f12bb2d92b9213db9007e0931ec",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/app_files_test.go": {
+    "mtime": 1785525215.469261,
+    "ast_hash": "02262bb04aa3a4b331f25cad4f35cb82",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/common.go": {
+    "mtime": 1784226353.3316772,
+    "ast_hash": "cbb880b9b0d57a6cc8af5628a781966d",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/data_sources.go": {
+    "mtime": 1785654335.5189428,
+    "ast_hash": "ac78d2f75768bdcbb95e417b9309eecc",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/data_sources_test.go": {
+    "mtime": 1785524992.9620676,
+    "ast_hash": "37a5aa9933b1d592e155ba27cfbd6548",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/server.go": {
+    "mtime": 1784623810.710759,
+    "ast_hash": "2645b142e5f9f850ec3f3165967edd89",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/app_struct_generators/templates.go": {
+    "mtime": 1784268642.5242162,
+    "ast_hash": "2d22be33cab7c0966281b498fb03bbd9",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/clients_generators/clients_generator.go": {
+    "mtime": 1785525215.46965,
+    "ast_hash": "9a29c42199feb3b72758545f2543c6ac",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/clients_generators/clients_generator_test.go": {
+    "mtime": 1785525215.4698253,
+    "ast_hash": "cf16773807f53196d4ac1012bbd993ae",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/clients_generators/templates.go": {
+    "mtime": 1785525215.4700887,
+    "ast_hash": "a948b97198dab813682993aeece2e94b",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config.go": {
+    "mtime": 1784620696.7219784,
+    "ast_hash": "eceb1b7bf172c39f0a21691c1c5d95f9",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/common.go": {
+    "mtime": 1784226818.8834462,
+    "ast_hash": "8d786fc4bd34c816aaa0865dbac1c735",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/env_config_generator/env_config_generator.go": {
+    "mtime": 1784623839.9418888,
+    "ast_hash": "d5cdb4eb18b4af2c0bcf0175e7d06f0e",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/env_config_generator/env_config_generator_test.go": {
+    "mtime": 1785654485.673465,
+    "ast_hash": "daf0486d46aa6ffe51940e41ac97427a",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/env_config_generator/templates.go": {
+    "mtime": 1784616227.4948735,
+    "ast_hash": "f9e7864ebe82ed8c3c075b556278706c",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/gen_config_struct.go": {
+    "mtime": 1784623810.6765826,
+    "ast_hash": "9d153a4107cd939d861c7f5c710f3e3f",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/gen_data_sources.go": {
+    "mtime": 1784623810.8445857,
+    "ast_hash": "544f7ed9aa92795af1e071284b75e4cd",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/gen_servers.go": {
+    "mtime": 1784623810.8369563,
+    "ast_hash": "863075a8d7501db57f68cc8ea1344a2d",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/gen_servers_test.go": {
+    "mtime": 1785655614.209916,
+    "ast_hash": "8d812ba396b08b80835fd78f387a80b3",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/config_generators/templates.go": {
+    "mtime": 1784616049.8620787,
+    "ast_hash": "e2ae022ad7c84ed6083c739a4aaabb2c",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/dockerfile_generator/const.go": {
+    "mtime": 1784226353.3273523,
+    "ast_hash": "d86c54d5139dd138df694e6aaa50dc9b",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/dockerfile_generator/service_dockerfile.go": {
+    "mtime": 1784621479.373506,
+    "ast_hash": "499f1afbd045b85d7a8746f29e874cf9",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/dockerfile_generator/service_dockerfile_test.go": {
+    "mtime": 1784621845.7111132,
+    "ast_hash": "16fa101ba80f5eff811b838309a72073",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/grpc_api_generator/generator.go": {
+    "mtime": 1784623810.8198476,
+    "ast_hash": "b08ab2f02cdd29e4a3dec88d4e3bd6fc",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/grpc_api_generator/generator_test.go": {
+    "mtime": 1784623840.043528,
+    "ast_hash": "652fa286e6e60bbfb0fcb9bcb9b7b1ea",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/grpc_api_generator/templates.go": {
+    "mtime": 1784268652.6276557,
+    "ast_hash": "8e3a5c3455c4a988276566b44dc8b5d8",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/internal_config.go": {
+    "mtime": 1784614389.1381416,
+    "ast_hash": "5934636fdc887ac2083b9d33954dc888",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/main_generators/main_generator.go": {
+    "mtime": 1784408646.638012,
+    "ast_hash": "3df8914e30ef43bb3f1ad7b100926d27",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/main_generators/main_generator_test.go": {
+    "mtime": 1784621294.5015364,
+    "ast_hash": "f0bc7752f07c28901b9fb2ce5157b943",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/main_generators/templates.go": {
+    "mtime": 1784408646.6383612,
+    "ast_hash": "ffffac3f4c7756109c97830358e82568",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/server_generators/file_server.go": {
+    "mtime": 1784623810.875646,
+    "ast_hash": "8b64a3f09f3a4e02b3eff8448b11fa38",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/server_generators/file_server_test.go": {
+    "mtime": 1784621368.281569,
+    "ast_hash": "7cb7e3ce4e2f3a66ad9f9398fea5fd2f",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/server_generators/impl_gen/impl.go": {
+    "mtime": 1784625565.56677,
+    "ast_hash": "80dd8364b9415bf4a4fce775a6e17870",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/server_generators/impl_gen/impl_test.go": {
+    "mtime": 1784625537.5165372,
+    "ast_hash": "e2d7378a9fdec5b6a1251029ff2c46ee",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/transport_generators/templates.go": {
+    "mtime": 1785613248.9814205,
+    "ast_hash": "f258c5b4b5ce54cd4d573e5d39292e89",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/transport_generators/transport_generator.go": {
+    "mtime": 1785613248.9816158,
+    "ast_hash": "07783e60333d74961bd115cc6e41547b",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/generators/transport_generators/transport_generator_test.go": {
+    "mtime": 1785613248.9818022,
+    "ast_hash": "4bcde86efa8f19b3a2f8d67e7c62cb5d",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/go_files.go": {
+    "mtime": 1784448098.9157045,
+    "ast_hash": "2137471abbd0e906e7d707706dd7c813",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/grpc.go": {
+    "mtime": 1784616211.6279962,
+    "ast_hash": "6575e2a1a35f87e3c0f2f99df89a3bb8",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/hooks.go": {
+    "mtime": 1785612676.062108,
+    "ast_hash": "2325da9c7963a3035324dc8bcf84ba7f",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/static/hooks/pre-commit": {
+    "mtime": 1784628044.0193055,
+    "ast_hash": "c367b942ac3baacd684a960ae3173e95",
+    "semantic_hash": ""
+  },
+  "plugins/project/i_project.go": {
+    "mtime": 1784226818.660641,
+    "ast_hash": "be882db16e46f653e0c1090ed8193589",
+    "semantic_hash": ""
+  },
+  "plugins/project/load.go": {
+    "mtime": 1784625468.3787756,
+    "ast_hash": "da8ee7b8b17f960aba6a48821ffd0217",
+    "semantic_hash": ""
+  },
+  "plugins/project/project.go": {
+    "mtime": 1784226818.7800474,
+    "ast_hash": "f05b0591992a755a76a23bed357daabe",
+    "semantic_hash": ""
+  },
+  "plugins/project/validators/name_validation.go": {
+    "mtime": 1784623810.7716594,
+    "ast_hash": "b269d71e22254deb84874addc8ec285e",
+    "semantic_hash": ""
+  },
+  "plugins/tools/shared/ghversion/version.go": {
+    "mtime": 1784226353.2830093,
+    "ast_hash": "d5025f8c80c6c7dde43b829d538b2c4a",
+    "semantic_hash": ""
+  },
+  "tests/e2e/compile_test.go": {
+    "mtime": 1785616859.8502054,
+    "ast_hash": "2a8d75e01198a686b0601c9e64a1604d",
+    "semantic_hash": ""
+  },
+  "tests/e2e/lint_test.go": {
+    "mtime": 1785655452.4976392,
+    "ast_hash": "39f4fc72327a738e9ccf3b541ee47fd7",
+    "semantic_hash": ""
+  },
+  "tests/long_compare.go": {
+    "mtime": 1784623810.804431,
+    "ast_hash": "4c93eb3f1789be7152c54fb253f2d9ae",
+    "semantic_hash": ""
+  },
+  "tests/mocks/action_performer_mock.go": {
+    "mtime": 1785618495.3861191,
+    "ast_hash": "1fba48ff2ae1595e55d1e9c53222457a",
+    "semantic_hash": ""
+  },
+  "tests/mocks/i_project_mock.go": {
+    "mtime": 1785618495.0502212,
+    "ast_hash": "5cbeb8c1a971d3242e7a6e717ca58999",
+    "semantic_hash": ""
+  },
+  "tests/mocks/io_dev_null.go": {
+    "mtime": 1784226818.7435727,
+    "ast_hash": "5faeb2982213399fee1d662fa8adc8f5",
+    "semantic_hash": ""
+  },
+  "tests/mocks/io_mock.go": {
+    "mtime": 1785618494.769913,
+    "ast_hash": "fb04745da183bdde2f5cf6fbcd452734",
+    "semantic_hash": ""
+  },
+  "tests/project_mock/config.go": {
+    "mtime": 1784619226.7955782,
+    "ast_hash": "bd905167d4bc53e8fb507614f384ccfa",
+    "semantic_hash": ""
+  },
+  "tests/project_mock/opts.go": {
+    "mtime": 1785525215.471373,
+    "ast_hash": "913d95b53a82f0bd48ef4379c495b71b",
+    "semantic_hash": ""
+  },
+  "tests/project_mock/prepare.go": {
+    "mtime": 1784623780.334077,
+    "ast_hash": "409741d020c73d90986eb2218feb1215",
+    "semantic_hash": ""
+  },
+  "version/update_check.go": {
+    "mtime": 1784623856.9185777,
+    "ast_hash": "86ac7ff77287502015c76d36114d27c6",
+    "semantic_hash": ""
+  },
+  "version/version.go": {
+    "mtime": 1784623810.8910582,
+    "ast_hash": "785fba64a0cf03d1fe0d8a1ac3326a78",
+    "semantic_hash": ""
+  },
+  ".github/workflows/branch-push.yml": {
+    "mtime": 1785613168.5178995,
+    "ast_hash": "02de4013a27295edf67b9557dba695b4",
+    "semantic_hash": ""
+  },
+  ".github/workflows/release.yaml": {
+    "mtime": 1784226353.524668,
+    "ast_hash": "7be762de4d3fbecfa713dd216251de01",
+    "semantic_hash": ""
+  },
+  ".golangci.yaml": {
+    "mtime": 1784623885.5801651,
+    "ast_hash": "a76e81823e95edd88aa6ac5668cad5ed",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1785613676.3707967,
+    "ast_hash": "d9331abdb349b7d0ca4a06f87b625345",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1785613129.5576735,
+    "ast_hash": "a6815dafa0d34c353419bf973044a2e4",
+    "semantic_hash": ""
+  },
+  "internal/config/verv.yaml": {
+    "mtime": 1784407969.3778768,
+    "ast_hash": "67c2c1b873236cb77a023423b9351325",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/static/.github/workflows/go-branch-push.yml": {
+    "mtime": 1784306574.405226,
+    "ast_hash": "53a463bd43189f69dc1455d6330634a9",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/static/.github/workflows/release.yaml": {
+    "mtime": 1784306574.4052994,
+    "ast_hash": "7087946ffc97e1a24749d6c1c36032cc",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/static/.golangci.yaml": {
+    "mtime": 1785091426.5784895,
+    "ast_hash": "880919f9cf8adcd79903dee10a55154d",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/static/README.md": {
+    "mtime": 1785613144.9980805,
+    "ast_hash": "733ac9c19bbcafbb7bd0c29598821388",
+    "semantic_hash": ""
+  },
+  "plugins/project/go_project/patterns/static/moti.yaml": {
+    "mtime": 1784452951.636527,
+    "ast_hash": "5b4eb61a9b1118a5f5959a0a0260d14a",
+    "semantic_hash": ""
+  },
+  "tasks/task-001-pattern-static-copy.md": {
+    "mtime": 1785613163.4301336,
+    "ast_hash": "ffed44936e7278eb0e5af177108581b4",
+    "semantic_hash": ""
+  },
+  "tasks/task-002-dockerfile-env-vars.md": {
+    "mtime": 1785613164.5415227,
+    "ast_hash": "a50f600f9277b2e9084c6cdc041db3f7",
+    "semantic_hash": ""
+  },
+  "tests/project_mock/basic_config.yaml": {
+    "mtime": 1784226353.350278,
+    "ast_hash": "042ce9ebdd8bf7c7b160b3a2ee9ce0cd",
+    "semantic_hash": ""
+  },
+  "tests/project_mock/full_config.yaml": {
+    "mtime": 1784226353.3509164,
+    "ast_hash": "b3525fc78b604d512824086047edb60c",
+    "semantic_hash": ""
+  },
+  "version/version.yaml": {
+    "mtime": 1785525802.694729,
+    "ast_hash": "8ace31eab78f75cc241fef191cc9b33f",
+    "semantic_hash": ""
+  }
+}

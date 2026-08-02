@@ -65,8 +65,13 @@ func (s *grpcServer) start() error {
 		impl.Register(server)
 	}
 
-	s.stopCall = server.GracefulStop
-
+	// stopCall is intentionally NOT set to server.GracefulStop: cmux's matched
+	// listener embeds the shared root net.Listener without overriding Close(),
+	// so calling GracefulStop/Stop here would close the root listener out from
+	// under the whole mux (grpc and http share one socket). Shutdown goes
+	// through ServersManager.Stop's m.mux.Close() instead, which unblocks
+	// Serve() via cmux's own ErrServerClosed/ErrListenerClosed signal without
+	// touching the socket.
 	err := server.Serve(s.listener)
 	if err != nil {
 		if !rerrors.Is(err, cmux.ErrServerClosed) && !rerrors.Is(err, cmux.ErrListenerClosed) {
