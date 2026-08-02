@@ -37,6 +37,7 @@ func goProjectTidyActions() []Action {
 		go_actions.PrepareServer{},
 		go_actions.PrepareDockerfile{},
 		go_actions.PrepareGitHooks{},
+		go_actions.PrepareVervMarker{},
 		go_actions.BuildProjectAction{},
 		go_actions.InitGoProjectApp{},
 

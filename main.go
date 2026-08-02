@@ -14,6 +14,7 @@ import (
 	"go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/internal/menu"
 	"go.vervstack.ru/verv/internal/processor"
 	"go.vervstack.ru/verv/version"
 )
@@ -64,6 +65,13 @@ Run this to install it:
 	root.AddCommand(tidyProject.NewCommand(basicProc))
 	root.AddCommand(addProject.NewCommand(basicProc))
 
+	if len(os.Args) == 1 {
+		code, exit := runCommandMenu(root, basicProc)
+		if exit {
+			return code
+		}
+	}
+
 	err := root.Execute()
 	if err != nil {
 		io.StdIO{}.Error(colors.TerminalColor(colors.ColorRed) + fmt.Sprintf("%+v\n", err))
@@ -72,4 +80,27 @@ Run this to install it:
 	}
 
 	return 0
+}
+
+// runCommandMenu drives the interactive command picker shown for a bare
+// `verv` invocation. It returns the exit code to use and whether run should
+// return immediately with it; when exit is false, root has been prepared
+// (via SetArgs) for the caller's normal root.Execute() call.
+func runCommandMenu(root *cobra.Command, basicProc processor.Processor) (code int, exit bool) {
+	header := menu.BuildHeader(basicProc.WD, basicProc.VervConfig)
+
+	entry, err := menu.Select(menu.BuildEntries(root.Commands()), header)
+	if err != nil {
+		io.StdIO{}.Error(colors.TerminalColor(colors.ColorRed) + fmt.Sprintf("%+v\n", err))
+
+		return 1, true
+	}
+
+	if entry == nil {
+		return 0, true
+	}
+
+	root.SetArgs([]string{entry.Name})
+
+	return 0, false
 }

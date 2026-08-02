@@ -30,6 +30,8 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 
 		RunE: proc.run,
 
+		Annotations: map[string]string{"verv:emoji": "➕", "verv:requiresProject": "true"},
+
 		SilenceErrors: true,
 		SilenceUsage:  true,
 	}

@@ -33,6 +33,8 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		Long:  `Can be used to init a project via configuration file, constructor or global config`,
 		RunE:  proc.run,
 
+		Annotations: map[string]string{"verv:emoji": "🚀"},
+
 		SilenceErrors: true,
 		SilenceUsage:  true,
 	}

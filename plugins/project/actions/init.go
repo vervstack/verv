@@ -30,6 +30,7 @@ func initVirtualGoProject(fast, dirty bool) []Action {
 		go_actions.PrepareClients{},
 		go_actions.PrepareServer{},
 		go_actions.PrepareGitHooks{},
+		go_actions.PrepareVervMarker{},
 
 		go_actions.BuildProjectAction{}, // build project in file system
 
