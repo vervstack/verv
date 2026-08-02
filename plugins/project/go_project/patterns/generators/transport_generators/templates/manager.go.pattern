@@ -44,7 +44,12 @@ func (m *ServersManager) Start() error {
 	m.errGroup.Go(m.grpcServer.start)
 	m.errGroup.Go(m.httpServer.start)
 
-	return rerrors.Wrap(m.errGroup.Wait())
+	err := m.errGroup.Wait()
+	if err != nil {
+		return rerrors.Wrap(err, "error returned from errgroup when starting servers ")
+	}
+
+	return nil
 }
 
 func (m *ServersManager) Stop() error {
