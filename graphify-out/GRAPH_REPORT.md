@@ -1,12 +1,18 @@
-# Graph Report - .  (2026-07-14)
+# Graph Report - verv  (2026-08-02)
 
 ## Corpus Check
-- Corpus is ~44,230 words - fits in a single context window. You may not need a graph.
+- 135 files · ~31,215 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1533 nodes · 2338 edges · 211 communities (104 shown, 107 thin omitted)
-- Extraction: 87% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 292 edges (avg confidence: 0.82)
-- Token cost: 764,541 input · 0 output
+- 1685 nodes · 2652 edges · 224 communities (112 shown, 112 thin omitted)
+- Extraction: 85% EXTRACTED · 15% INFERRED · 0% AMBIGUOUS · INFERRED: 400 edges (avg confidence: 0.82)
+- Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `03aaf9a3`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Project Action Pipeline
@@ -114,6 +120,9 @@
 - ProjEnv Tidy Migration Dirs
 - ProjEnv Tidy Service
 - Telegram Folder Name
+- Embedded Template Registration
+- Embedded Template Registration
+- Embedded Template Registration
 - Pattern GitHub Workflows
 - Generated README Reference
 - Goose Migration Tool
@@ -196,30 +205,36 @@
 - Version Command Handler
 - Project Name Substitution
 - Mock Project WriteFile
+- proj_name
+- Proc
+- pre-commit
+- pre-commit
+- go.vervstack.ru/verv
+- AppConfig
 
 ## God Nodes (most connected - your core abstractions)
 1. `IOMock` - 74 edges
 2. `IProjectMock` - 65 edges
-3. `IProject` - 39 edges
-4. `RsCliConfig` - 33 edges
-5. `Folder` - 26 edges
-6. `Test_AddDependency()` - 25 edges
-7. `IO` - 23 edges
-8. `Execute function` - 21 edges
-9. `Color` - 18 edges
-10. `ActionPerformerMock` - 18 edges
+3. `IProject` - 43 edges
+4. `Folder` - 35 edges
+5. `RsCliConfig` - 33 edges
+6. `IO` - 29 edges
+7. `Execute()` - 25 edges
+8. `Test_AddDependency()` - 24 edges
+9. `GetMockProject()` - 22 edges
+10. `New()` - 21 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `rscli Architecture Overview (Cobra CLI, two top-level commands)` --references--> `NewCmd() (env command constructor)`  [INFERRED]
-  CLAUDE.md → cmd/environment/cmd.go
-- `rscli Architecture Overview (Cobra CLI, two top-level commands)` --references--> `NewCmd() (project command constructor)`  [INFERRED]
+- `rscli Architecture Overview (Cobra CLI, two top-level commands)` --references--> `NewCmd()`  [INFERRED]
   CLAUDE.md → cmd/project/cmd.go
-- `InitConfig function` --semantically_similar_to--> `Load function`  [INFERRED] [semantically similar]
+- `InitConfig()` --semantically_similar_to--> `Load function`  [INFERRED] [semantically similar]
   internal/config/cfg.go → cmd/project/init_new/expected/load_config/load_config_file.go
 - `main()` --references--> `go.mod module manifest (github.com/Red-Sock/rscli)`  [INFERRED]
   main.go → go.mod
-- `pattern go.mod module dependencies` --references--> `setUpCors function`  [EXTRACTED]
-  plugins/project/go_project/patterns/pattern/go.mod → cmd/project/add/expected/grpc/internal/transport/http.go
+- `Config` --shares_data_with--> `expected grpc config_template.yaml fixture`  [INFERRED]
+  plugins/project/config/config.go → cmd/project/add/expected/grpc/config/config_template.yaml
+- `Config` --shares_data_with--> `expected grpc dev.yaml fixture`  [INFERRED]
+  plugins/project/config/config.go → cmd/project/add/expected/grpc/config/dev.yaml
 
 ## Import Cycles
 - None detected.
@@ -237,9 +252,6 @@
 - **ProjEnv.Tidy orchestration pipeline (resources, server APIs, flush, migrations)** — plugins_environment_project_project_tidy, plugins_environment_project_tidy_resources_tidyresources, plugins_environment_project_tidy_api_tidyserverapis, plugins_environment_project_project_flush, plugins_environment_project_tidy_migrations_tidymigrationdirs [EXTRACTED 1.00]
 - **GlobalEnvironment.fetchFiles data-gathering pipeline** — plugins_environment_env_fetchfiles, plugins_environment_env_fetchsrcprojectdirs, plugins_environment_env_fetchcompose, plugins_environment_env_fetchdotenv, plugins_environment_env_fetchmakefile [EXTRACTED 1.00]
 - **GlobalEnvironment.Init scaffolding pipeline** — plugins_environment_init_init, plugins_environment_init_initbasis, plugins_environment_init_initprojectsdirs, plugins_environment_init_initprojectdir [EXTRACTED 1.00]
-- **Structs implementing the actions.Action interface** — plugins_project_actions_actions_action, plugins_project_actions_go_actions_build_buildprojectaction, plugins_project_actions_go_actions_config_generateprojectconfig, plugins_project_actions_go_actions_config_prepareconfigfolder, plugins_project_actions_go_actions_go_mod_gofmt, plugins_project_actions_go_actions_preparation_prepareprojectstructure, plugins_project_actions_git_git_initgit, plugins_project_actions_git_commit_commitwithuntrackedaction [INFERRED 0.85]
-- **Tidy action pipeline assembled by GetTidyActionsForProject** — plugins_project_actions_tidy_project_gettidyactionsforproject, plugins_project_actions_tidy_project_goprojecttidyactions, plugins_project_actions_tidy_project_commonprojecttidypreactions, plugins_project_actions_tidy_project_commonprojecttidypostactions, plugins_project_actions_go_actions_preparation_prepareclients, plugins_project_actions_go_actions_preparation_prepareserver, plugins_project_actions_git_commit_commitwithuntrackedaction [EXTRACTED 1.00]
-- **Go project initialization pipeline assembled by initVirtualGoProject** — plugins_project_actions_init_project_initvirtualgoproject, plugins_project_actions_go_actions_preparation_prepareprojectstructure, plugins_project_actions_go_actions_init_initgoprojectapp, plugins_project_actions_go_actions_config_generateprojectconfig, plugins_project_actions_go_actions_config_prepareconfigfolder, plugins_project_actions_go_actions_preparation_preparemakefile, plugins_project_actions_go_actions_preparation_prepareclients, plugins_project_actions_go_actions_preparation_prepareserver, plugins_project_actions_go_actions_build_buildprojectaction, plugins_project_actions_go_actions_init_initgomod, plugins_project_actions_go_actions_go_mod_gofmt, plugins_project_actions_git_git_initgit [EXTRACTED 1.00]
 - **Dependency interface implementers (Sqlite, EnvVariable, GrpcServer, Telegram)** — plugins_project_actions_go_actions_dependencies_dependencies_dependency, plugins_project_actions_go_actions_dependencies_client_sqlite_sqlite, plugins_project_actions_go_actions_dependencies_env_variable_envvariable, plugins_project_actions_go_actions_dependencies_server_grpc_grpcserver, plugins_project_actions_go_actions_dependencies_telegram_telegram [EXTRACTED 1.00]
 - **Duplicated gRPC package-discovery logic between link_service/client_grpc.go and grpc_discovery package** — plugins_project_actions_go_actions_dependencies_link_service_client_grpc_grpcclient, plugins_project_actions_go_actions_dependencies_link_service_client_grpc_readgrpcpackage, plugins_project_actions_go_actions_dependencies_link_service_client_grpc_grpcclient_filterpackagename, plugins_project_actions_go_actions_dependencies_link_service_grpc_discovery_grpc_grpcdiscovery, plugins_project_actions_go_actions_dependencies_link_service_grpc_discovery_grpc_readgrpcpackagefrompackageclientpath, plugins_project_actions_go_actions_dependencies_link_service_grpc_discovery_name_filter_filterpackagename [INFERRED 0.85]
 - **Flow for adding a sqlite dependency to a project** — plugins_project_actions_go_actions_dependencies_client_sqlite_sqlite_appendtoproject, plugins_project_actions_go_actions_dependencies_sql_sqlconn_applysqlconnectionfile, plugins_project_actions_go_actions_dependencies_sql_sqlconn_applysqldriver, plugins_project_go_project_patterns_go_clients_sqlconnfile [EXTRACTED 1.00]
@@ -252,207 +264,209 @@
 - **Generated gRPC Version RPC Stack** — plugins_project_go_project_patterns_pattern_pkg_example_api_api_pb_pingrequest, plugins_project_go_project_patterns_pattern_pkg_example_api_api_pb_pingresponse, plugins_project_go_project_patterns_pattern_pkg_example_api_api_grpc_pb_projnameapiclient, plugins_project_go_project_patterns_pattern_pkg_example_api_api_grpc_pb_projnameapiserver, plugins_project_go_project_patterns_pattern_pkg_example_api_api_pb_gw_registerprojnameapihandlerserver [INFERRED 0.85]
 - **PingRequest Message Across Codegen Targets** — plugins_project_go_project_patterns_pattern_c_easyp, plugins_project_go_project_patterns_pattern_pkg_example_api_api_pb_pingrequest, plugins_project_go_project_patterns_pattern_pkg_web_grpc_api_pb_pingrequest, plugins_project_go_project_patterns_pattern_pkg_docs_grpc_api_swagger_pingrequest [INFERRED 0.85]
 - **Goose Migration Tool Component** — plugins_tools_migrations_goose_tool_tool, plugins_tools_migrations_migrators_migrationtool, plugins_tools_shared_ghversion_version_githubversion [INFERRED 0.75]
-- **Minimock-generated interface mocks (ActionPerformer, IProject, IO)** — tests_mocks_action_performer_mock_actionperformermock, tests_mocks_i_project_mock_iprojectmock, tests_mocks_io_mock_iomock [INFERRED 0.85]
-- **MockProject functional-options construction pattern** — tests_project_mock_prepare_getmockproject, tests_project_mock_prepare_mockproject, tests_project_mock_opts_withfile, tests_project_mock_opts_withenvironmentvariables, tests_project_mock_opts_withfilesystem, tests_project_mock_opts_withbasicconfig, tests_project_mock_opts_withgit, tests_project_mock_opts_withsqlite, tests_project_mock_opts_withgrpcserver [INFERRED 0.85]
 - **Test support chain for Dockerfile ENV var feature** — tasks_task_002_dockerfile_env_vars, tests_project_mock_config_getallenvvariables, tests_project_mock_opts_withenvironmentvariables [INFERRED 0.75]
 
-## Communities (211 total, 107 thin omitted)
+## Communities (224 total, 112 thin omitted)
 
 ### Community 0 - "Project Action Pipeline"
-Cohesion: 0.06
-Nodes (51): Action, ActionPerformer, Proc, testCase, Dependency Names (grpc, redis, postgres, telegram, sqlite, env), endMsg constant, preparingMsg constant, startingMsg constant (+43 more)
+Cohesion: 0.07
+Nodes (35): testCase, Dependency Names (grpc, redis, postgres, telegram, sqlite, env), endMsg constant, preparingMsg constant, startingMsg constant, Proc.run() method, expectedEnv(), expectedGrpc() (+27 more)
 
 ### Community 1 - "gRPC Package Discovery"
-Cohesion: 0.05
-Nodes (43): GrpcDiscovery, GrpcPackage, genArgs, KebabToSnake, SnakeToPascal, ToPascal, slices.Contains, slices.Exclude (+35 more)
+Cohesion: 0.06
+Nodes (36): File, FuncDecl, GenDecl, GrpcDiscovery, GrpcPackage, SnakeToPascal(), ToPascal(), slices.Contains (+28 more)
 
 ### Community 2 - "Dockerfile Generation & Build Tests"
-Cohesion: 0.07
-Nodes (37): serviceDockerfileArgs, BuildProjectSuite, InitGoProjectApp, PrepareDockerfile, DirEntry, T, fullConfigGoFile, T (+29 more)
+Cohesion: 0.06
+Nodes (45): DirEntry, serviceDockerfileArgs, BuildProjectAction, BuildProjectSuite, BuildProjectSuite.Test_BuildProject, T, Test_BuildProject(), fullConfigGoFile (+37 more)
 
 ### Community 3 - "App File Generator"
-Cohesion: 0.07
-Nodes (43): AppContent, AppFileGenArgs, AppStarter, InitDepFuncGenArgs, InitFuncCall, InitServerListenerArgs, InitServerListenersArgs, EnumGenArg (+35 more)
+Cohesion: 0.16
+Nodes (14): InternalConfig, internalConfigGenerator, loadConfigFileGenArgs, Environment, getTypeName(), GenerateConfigFolder(), DataSources, newGenerateDataSourcesConfigStruct() (+6 more)
 
 ### Community 4 - "Environment File Fetching"
-Cohesion: 0.07
-Nodes (31): Container, Variable, MewEmptyMakefile, NewMakeFile, parseRule, parseVariable, ReadMakeFile, PortManager.SaveIfNotExist (+23 more)
+Cohesion: 0.05
+Nodes (37): MewEmptyMakefile, NewMakeFile, parseRule, parseVariable, ReadMakeFile, NewPortManager, PortManager.SaveIfNotExist, Makefile (+29 more)
 
 ### Community 5 - "Compiled Pattern Scaffold Files"
 Cohesion: 0.06
-Nodes (45): easyp.yaml proto codegen config (pattern_c), branch-push GitHub Actions workflow, master-actions RELEASE GitHub Actions workflow, .golangci.yaml lint config (pattern_c), README.md template (pattern_c), RedSock CLI (referenced tool), telegram version Handler struct, proj_name_apiPingRequest swagger definition (+37 more)
+Nodes (44): easyp.yaml proto codegen config (pattern_c), branch-push GitHub Actions workflow, master-actions RELEASE GitHub Actions workflow, .golangci.yaml lint config (pattern_c), README.md template (pattern_c), RedSock CLI (referenced tool), proj_name_apiPingRequest swagger definition, proj_name_apiPingResponse swagger definition (+36 more)
 
 ### Community 6 - "Config Folder Generation"
-Cohesion: 0.08
-Nodes (21): GenerateProjectConfig, PrepareConfigFolder, ActionPerformerMock, ActionPerformerMockTidyExpectation, ActionPerformerMockTidyParams, ActionPerformerMockTidyResults, mActionPerformerMockTidy, Node (+13 more)
+Cohesion: 0.19
+Nodes (9): ActionPerformerMock, ActionPerformerMockTidyExpectation, ActionPerformerMockTidyParams, ActionPerformerMockTidyResults, mActionPerformerMockTidy, IProject, RWMutex, Tester (+1 more)
 
 ### Community 7 - "Env Tidy & Terminal Loader UI"
-Cohesion: 0.07
-Nodes (23): Color type, TerminalColor function, InfiniteLoader.Done method, Mutex, NewInfiniteLoader constructor, Context, RunMultiLoader function, percentLoader.GetLoaderSymb method (+15 more)
+Cohesion: 0.06
+Nodes (23): go.mod module manifest (github.com/Red-Sock/rscli), Color type, TerminalColor(), InfiniteLoader.Done method, NewInfiniteLoader constructor, RunMultiLoader function, percentLoader.GetLoaderSymb method, NewPercentLoader constructor (+15 more)
 
 ### Community 8 - "Project Structure Preparation Actions"
-Cohesion: 0.06
-Nodes (27): PrepareClients, PrepareMakefile, PrepareProjectStructure, PrepareServer, PortManager.GetNextPort, renamer.ReplaceProjectName, ReplaceProjectNameFull, ReplaceProjectNameShort (+19 more)
+Cohesion: 0.12
+Nodes (10): PrepareMakefile, PrepareProjectStructure, PrepareServer, renamer.ReplaceProjectName, ReplaceProjectNameFull, ReplaceProjectNameShort(), Dependency.AppendToProject, addMissingImplFolders() (+2 more)
 
 ### Community 9 - "gRPC Client/Gateway Interfaces"
-Cohesion: 0.08
-Nodes (34): ClientConnInterface, Request, DialOption, Impl, ProjNameAPIClient, ProjNameAPIServer, UnimplementedProjNameAPIServer, UnsafeProjNameAPIServer (+26 more)
+Cohesion: 0.09
+Nodes (20): Request, RW, Impl, ProjNameAPIClient, ProjNameAPIServer, UnimplementedProjNameAPIServer, UnsafeProjNameAPIServer, Duration (+12 more)
 
 ### Community 10 - "IO Mock (minimock)"
 Cohesion: 0.07
 Nodes (4): IOMock, Duration, Tester, NewIOMock()
 
 ### Community 11 - "Docker Compose Assembly"
-Cohesion: 0.08
-Nodes (26): Compose, ContainerSettings, Pattern, PatternManager, compose.examples.yaml template, docker-compose.yaml template, ContainerSettings struct, AddEnvironmentBrackets function (+18 more)
+Cohesion: 0.05
+Nodes (33): Compose, ContainerSettings, Pattern, PatternManager, compose.examples.yaml template, docker-compose.yaml template, ContainerSettings struct, AddEnvironmentBrackets function (+25 more)
 
 ### Community 12 - "CLI Command Wiring (environment)"
-Cohesion: 0.08
-Nodes (18): rscli Architecture Overview (Cobra CLI, two top-level commands), Command, NewCmd() (env command constructor), Command, newTidyEnvCmd(), Command, NewCmd() (project command constructor), Command (+10 more)
+Cohesion: 0.22
+Nodes (7): rscli Architecture Overview (Cobra CLI, two top-level commands), NewCmd() (env command constructor), Command, NewCmd(), newLinkCmd(), projectLink.run() method, projectLink
+
+### Community 13 - "IProject Mock (minimock)"
+Cohesion: 0.09
+Nodes (4): IProjectMock, Duration, Tester, NewIProjectMock()
 
 ### Community 14 - "Postgres Client & Config"
-Cohesion: 0.08
-Nodes (24): Postgres master config.yaml, Postgres dev.yaml config, DB, DB, sqlLogger, SqlResource, sqldb.New (SQL connection + goose migration) function, postgres.go blank import of lib/pq driver (+16 more)
+Cohesion: 0.05
+Nodes (31): httpServer struct, ServersManager struct, Postgres master config.yaml, Postgres dev.yaml config, DB, sqlLogger, sqldb.New (SQL connection + goose migration) function, postgres.go blank import of lib/pq driver (+23 more)
 
 ### Community 15 - "Generated Proto Validation (Ping)"
 Cohesion: 0.08
 Nodes (6): PingRequestMultiError, PingRequestValidationError, PingResponseMultiError, PingResponseValidationError, PingRequest, PingResponse
 
 ### Community 16 - "gRPC Server Transport"
-Cohesion: 0.10
-Nodes (19): Context, Listener, ServeMux, ServerOption, GrpcImpl, grpcServer, GrpcWithGateway, grpcServer struct (+11 more)
+Cohesion: 0.05
+Nodes (24): GrpcImpl, grpcServer, GrpcWithGateway, grpcServer struct, newGrpcServer(), httpServer, newHttpServer function, setUpCors function (+16 more)
 
 ### Community 17 - "TS gRPC-Gateway Fetch Client"
 Cohesion: 0.10
 Nodes (20): b64, b64Encode(), fetchStreamingRequest(), FlattenedRequestPayload, flattenRequestPayload(), getNewLineDelimitedJSONDecodingStream(), getNotifyEntityArrivalSink(), InitReq (+12 more)
 
 ### Community 18 - "Project Init Command"
-Cohesion: 0.12
-Nodes (16): projectInit.buildProject() method, Command, Proc, newInitCmd(), projectInit.obtainFolderPathFromUser() method, projectInit.obtainNameFromUser() method, projectInit.run() method, Action (+8 more)
+Cohesion: 0.09
+Nodes (20): projectInit.buildProject() method, Proc, newInitCmd(), projectInit.obtainFolderPathFromUser() method, projectInit.obtainNameFromUser() method, Proc, Project, projectInit.run() method (+12 more)
 
 ### Community 19 - "Terminal Color Parser & IO Stub"
-Cohesion: 0.11
-Nodes (7): Attribute, Color, UIColor function, IoDevNul, IOMockPrintlnColoredExpectation, IOMockPrintlnColoredParams, mIOMockPrintlnColored
+Cohesion: 0.17
+Nodes (5): Color, UIColor function, IOMockPrintColoredExpectation, IOMockPrintColoredParams, mIOMockPrintColored
 
 ### Community 20 - "Generated Protobuf Message Methods"
-Cohesion: 0.12
-Nodes (10): MessageState, file_grpc_api_proto_init(), file_grpc_api_proto_rawDescGZIP(), PingRequest, PingResponse, Message, init(), SizeCache (+2 more)
+Cohesion: 0.13
+Nodes (5): file_grpc_api_proto_init(), file_grpc_api_proto_rawDescGZIP(), PingRequest, PingResponse, init()
 
 ### Community 21 - "Dependency AppendToProject (Sqlite/Env)"
-Cohesion: 0.15
-Nodes (16): Dependency, EnvVariable, Sqlite struct, sqlite() constructor, Dependency interface, dependencyBase struct, GetDependencies func, HelpWithDependencyNames func (+8 more)
+Cohesion: 0.14
+Nodes (19): Command, Dependency, dependencyBase, EnvVariable, redisClient(), sqlite(), sqlite() constructor, Dependency interface (+11 more)
 
 ### Community 22 - "IProjectMock GetFolder Expectations"
-Cohesion: 0.17
-Nodes (11): IProjectMockGetFolderExpectation, IProjectMockGetFolderResults, IProjectMockGetNameExpectation, IProjectMockGetNameResults, IProjectMockGetProjectPathExpectation, IProjectMockGetProjectPathResults, IProjectMockGetShortNameExpectation, IProjectMockGetShortNameResults (+3 more)
+Cohesion: 0.14
+Nodes (10): IProjectMockGetFolderExpectation, IProjectMockGetFolderResults, IProjectMockGetNameExpectation, IProjectMockGetNameResults, IProjectMockGetProjectPathExpectation, IProjectMockGetProjectPathResults, IProjectMockGetShortNameExpectation, IProjectMockGetShortNameResults (+2 more)
 
 ### Community 23 - "Telegram Dependency Wiring"
-Cohesion: 0.27
-Nodes (9): Telegram, containsDependencyFolder func, Project, Telegram.AppendToProject, Telegram.applyClient, Telegram.applyConfig, Telegram.applyFolder, ReplaceProjectName func (+1 more)
+Cohesion: 0.42
+Nodes (4): Telegram, containsDependencyFolder(), Project, New()
 
 ### Community 24 - "Sqlite Dependency Client"
-Cohesion: 0.14
-Nodes (12): Sqlite, Project, Sqlite.AppendToProject, containsDependency func, DataSources, Resource, EnvVariable.AppendToProject, Project interface (dependencies pkg) (+4 more)
+Cohesion: 0.17
+Nodes (12): Sqlite.AppendToProject, EnvVariable.AppendToProject, Project interface (dependencies pkg), sqlConn.applySqlConnectionFile, sqlConn.applySqlDriver, Telegram.AppendToProject, Telegram.applyClient, Telegram.applyConfig (+4 more)
 
 ### Community 25 - "IOMock GetInput Expectations"
-Cohesion: 0.22
-Nodes (6): IOMockGetInputExpectation, IOMockGetInputOneOfExpectation, IOMockGetInputOneOfParams, IOMockGetInputOneOfResults, IOMockGetInputResults, mIOMockGetInputOneOf
+Cohesion: 0.24
+Nodes (4): IOMockGetInputOneOfExpectation, IOMockGetInputOneOfParams, IOMockGetInputOneOfResults, mIOMockGetInputOneOf
 
 ### Community 26 - "gRPC Server Dependency Wiring"
-Cohesion: 0.26
-Nodes (8): GrpcServer, Project, Project, GrpcServer.addGrpcServerToConfig, GrpcServer.AppendToProject, GrpcServer.applyApiFolder, initServerManagerFiles func, prepareServerConfig func
+Cohesion: 0.27
+Nodes (6): GrpcServer, GrpcServer.addGrpcServerToConfig, GrpcServer.AppendToProject, GrpcServer.applyApiFolder, initServerManagerFiles func, prepareServerConfig func
 
 ### Community 27 - "Environment Init & File IO"
-Cohesion: 0.24
-Nodes (6): CreateFileIfNotExists function, CreateFolderIfNotExists function, OverrideFile function, DirEntry, GlobalEnvironment, T
+Cohesion: 0.18
+Nodes (22): execute(), executeWith(), GenerateGRPCConn(), GeneratePostgresConn(), GeneratePostgresDriver(), GeneratePostgresInstances(), GenerateRedisConn(), GenerateSQLConn() (+14 more)
 
 ### Community 28 - "gRPC Server Transport (pattern)"
-Cohesion: 0.22
-Nodes (8): Context, Listener, ServeMux, ServerOption, GrpcImpl, grpcServer, GrpcWithGateway, newGrpcServer()
+Cohesion: 0.17
+Nodes (9): AppFileGenArgs, AppStarter, AppFileGenArgs.addAppContent method, T, Test_GenerateAppFiles_CustomFileAlreadyExists(), GenerateAppFiles(), DataSources, Servers (+1 more)
 
 ### Community 29 - "Virtual Folder Tree"
-Cohesion: 0.18
-Nodes (3): Folder, Client, New()
+Cohesion: 0.14
+Nodes (3): Folder, OverrideFile(), mIProjectMockGetFolder
 
 ### Community 30 - "Go Fmt & Makefile Gen Actions"
-Cohesion: 0.23
-Nodes (6): GoFmt, RunGoTidyAction, RunMakeGenAction, UpdateAllPackages, Action interface (actions pkg), Action interface (go_actions pkg)
+Cohesion: 0.13
+Nodes (8): GoFmt, InitGoMod, InitGoProjectApp, PrepareDockerfile, RunGoTidyAction, UpdateAllPackages, Action interface (actions pkg), Action interface (go_actions pkg)
 
 ### Community 31 - "HTTP Server Transport"
-Cohesion: 0.29
-Nodes (6): Cors, Listener, ServeMux, httpServer, newHttpServer function, setUpCors function
+Cohesion: 0.23
+Nodes (14): generateTransportFiles(), execute(), GenerateGrpcServer(), GenerateHttpServer(), GenerateServerManager(), GenerateTelegramListener(), GenerateTelegramVersionHandler(), Template (+6 more)
 
 ### Community 32 - "RsCli Config Loading"
-Cohesion: 0.29
-Nodes (10): Project, builtInConfig embedded var, GetConfig function, getConfigFromEnvironment function, getConfigFromFile function, Command, init(), InitConfig function (+2 more)
+Cohesion: 0.22
+Nodes (16): Project, RsCliConfig, VervConfig, RunMakeGenAction, builtInConfig embedded var, GetConfig(), getConfigFromEnvironment(), getConfigFromFile() (+8 more)
 
 ### Community 33 - "HTTP Server Transport (pattern)"
-Cohesion: 0.29
-Nodes (6): Cors, Listener, ServeMux, httpServer, newHttpServer(), setUpCors()
+Cohesion: 0.19
+Nodes (7): newNameCollector(), Command, Proc, NewCommand(), nameCollector, ErrInvalidNameErr sentinel error, ValidateProjectNameStr()
 
 ### Community 34 - "Project Name Collection Prompt"
-Cohesion: 0.20
-Nodes (9): nameCollector.askUserForName method, nameCollector.collect method, nameCollector.preAppendHost method, nameCollector.removeHttpProtoc method, T, Test_collectName test function, Proc.collectOsPath method, Proc.run method (+1 more)
+Cohesion: 0.07
+Nodes (26): nameCollector.askUserForName method, nameCollector.collect method, newNameCollector function, nameCollector.preAppendHost method, nameCollector.removeHttpProtoc method, Test_collectName test function, Proc.collectOsPath method, Proc (+18 more)
 
 ### Community 35 - "Postgres Dependency Client"
-Cohesion: 0.27
-Nodes (7): dependencyBase, Postgres, Project, Postgres struct, postgresClient, Redis struct, redisClient
+Cohesion: 0.24
+Nodes (7): PostgresInstance, PostgresInstancesArgs, Postgres, DataSources, Project, postgresInstances(), ReplaceProjectName()
 
 ### Community 36 - "IProjectMock GetType Expectations"
-Cohesion: 0.24
-Nodes (4): IProjectMockGetTypeExpectation, IProjectMockGetTypeResults, mIProjectMockGetType, Type
+Cohesion: 0.15
+Nodes (5): IProjectMockGetTypeExpectation, IProjectMockGetTypeResults, mIProjectMockGetType, Project, Type
 
 ### Community 37 - "Multiplexed Server Manager"
-Cohesion: 0.24
-Nodes (7): CMux, Context, grpcServer, httpServer, Listener, ServersManager, NewServerManager()
+Cohesion: 0.26
+Nodes (9): PrepareConfigFolder, Node, appendToConfig(), AppConfig, isEnvVarName(), marshalEnvExample(), PrepareConfigFolder.generateConfigYamlFile, PrepareConfigFolder.generateEnvExampleFile (+1 more)
 
 ### Community 38 - "Telegram Version Handler"
-Cohesion: 0.25
-Nodes (5): Chat, MessageIn, Config, version.New constructor, Handler
+Cohesion: 0.24
+Nodes (9): enumGenArg, structGenArgs, InternalConfig, appendEnvField(), NewGenerateEnvironmentConfigStruct(), newStructGenArgs(), T, Test_GenerateEnvConfig() (+1 more)
 
 ### Community 39 - "Telegram Transport Listener"
-Cohesion: 0.31
-Nodes (5): Bot, Config, Context, NewServer (telegram transport), Server
+Cohesion: 0.35
+Nodes (10): buildCLI(), T, run(), Test_GeneratedProjectsCompile(), T, scaffoldComboProject(), stripGeneratedMarker(), Test_GeneratedProject_GoimportsClean() (+2 more)
 
 ### Community 40 - "Environment Config Struct"
-Cohesion: 0.31
-Nodes (6): RsCliConfig, Project, AppConfig, Config, LoadProjectConfig, envConfig
+Cohesion: 0.44
+Nodes (10): AppContent, generateDataSourceInitFileAndArgs(), DataSources, Resource, grpcInitFunc function, redisInitFunc(), sqlInitFunc(), telegramInitFunc() (+2 more)
 
 ### Community 41 - "Folder Loader Options"
-Cohesion: 0.33
-Nodes (7): opt, opts, Load function (folder loader), load internal helper function, matchesAnyPattern function, opts struct, WithIgnore function
+Cohesion: 0.29
+Nodes (8): opt, opts, Load(), load internal helper function, matchesAnyPattern(), opts struct, WithIgnore function, WithIgnore()
 
 ### Community 42 - "Git Status Diff"
-Cohesion: 0.36
-Nodes (5): Changes, gitChangesType, StatusDiff, Changes struct, Status
+Cohesion: 0.05
+Nodes (33): Context, Changes, CommitWithUntrackedAction, gitChangesType, InitGit, InstallHooksAction, StatusDiff, Tool (+25 more)
 
 ### Community 43 - "Build Project Action"
+Cohesion: 0.36
+Nodes (9): commonProjectTidyPostActions(), commonProjectTidyPreActions(), GetTidyActionsForProject(), Action, goProjectTidyActions(), T, Test_GetTidyActionsForProject_Fast(), Test_GetTidyActionsForProject_UnknownType() (+1 more)
+
+### Community 44 - "ProjEnv Config Access"
 Cohesion: 0.22
-Nodes (4): BuildProjectAction, Run (make bin), BuildProjectSuite.Test_BuildProject, Test_BuildProject
+Nodes (6): NewCommand(), newTidyCmd(), projectTidy.run() method, ActionPerformer interface, NewActionPerformer(), projectTidy
 
 ### Community 45 - "Migration Tool Interface"
-Cohesion: 0.28
-Nodes (4): Tool, ErrUnknownResourceToMigrate sentinel error, Resource, GithubVersion struct
+Cohesion: 0.38
+Nodes (9): Postgres struct, postgresClient(), countOccurrences(), T, Test_Postgres_AppendToProject_Idempotent(), Test_Postgres_AppendToProject_MultipleInstances(), Test_Postgres_AppendToProject_Single(), testVervConfig() (+1 more)
 
 ### Community 46 - "RW File Locking Utility"
 Cohesion: 0.25
 Nodes (3): Mutex, Reader, RW
 
 ### Community 47 - "IOMock Error Expectations"
-Cohesion: 0.28
-Nodes (4): IOMockErrorExpectation, IOMockErrorParams, mIOMockError, RWMutex
+Cohesion: 0.32
+Nodes (3): IOMockErrorExpectation, IOMockErrorParams, mIOMockError
 
 ### Community 48 - "IProjectMock GetConfig Expectations"
-Cohesion: 0.28
-Nodes (4): IProjectMockGetConfigExpectation, IProjectMockGetConfigResults, mIProjectMockGetConfig, Config
+Cohesion: 0.16
+Nodes (6): expected grpc config_template.yaml fixture, expected grpc dev.yaml fixture, Config, IProjectMockGetConfigExpectation, IProjectMockGetConfigResults, mIProjectMockGetConfig
 
 ### Community 49 - "Env Config/Variables Fetching"
-Cohesion: 0.28
-Nodes (6): envConfig.fetch, envConfig.findEnvConfig, envVariables.fetch, Container, ProjEnv, LoadProjectEnvironment
-
-### Community 50 - "Generated Project Config Loader"
-Cohesion: 0.29
-Nodes (7): AppInfo, EnvironmentConfig struct, Config struct, Load function, EnvironmentConfig, Config, ServiceDiscovery
+Cohesion: 0.36
+Nodes (7): Action, ActionPerformer, IActionPerformer, PipelineLabels, Proc, RunPipeline(), stepEmoji()
 
 ### Community 51 - "Redis Dependency Client"
 Cohesion: 0.46
@@ -460,19 +474,19 @@ Nodes (3): DataSourcesConfig, Redis, Project
 
 ### Community 52 - "SQL Connection (pattern)"
 Cohesion: 0.25
-Nodes (5): DB, DB, sqlLogger, SqlResource, New()
+Nodes (6): Adding a new `add` dependency, Architecture, Command flow, Commands, Key packages, Test helpers
 
 ### Community 53 - "Git Init Action"
-Cohesion: 0.32
-Nodes (4): InitGit, git.Init, Init, SetOrigin
+Cohesion: 0.29
+Nodes (3): newTidyEnvCmd(), envTidy, GetWd function
 
 ### Community 54 - "RW Read/Execute"
 Cohesion: 0.29
-Nodes (5): Execute function, RW struct, RW.Read method, RW.String method, FetchPackage func
+Nodes (5): Sqlite, Project, containsDependency(), DataSources, Resource
 
 ### Community 55 - "IOMock Print Expectations"
-Cohesion: 0.32
-Nodes (3): IOMockPrintExpectation, IOMockPrintParams, mIOMockPrint
+Cohesion: 0.28
+Nodes (4): IOMockPrintExpectation, IOMockPrintParams, mIOMockPrint, RWMutex
 
 ### Community 56 - "IOMock Println Expectations"
 Cohesion: 0.32
@@ -480,43 +494,43 @@ Nodes (3): IOMockPrintlnExpectation, IOMockPrintlnParams, mIOMockPrintln
 
 ### Community 57 - "Generator Tests & Folder Comparison"
 Cohesion: 0.43
-Nodes (6): T, TestGenServer test, AssertFolderInFs(), AssertVirtualFolder(), CompareLongStrings(), T
+Nodes (6): T, TestGenServer(), AssertFolderInFs(), AssertVirtualFolder(), CompareLongStrings(), T
 
 ### Community 58 - "SQL Connection (pattern, dup)"
-Cohesion: 0.25
-Nodes (5): DB, DB, sqlLogger, SqlResource, New()
+Cohesion: 0.38
+Nodes (6): PrepareClients, Postgres.AppendToProject, Redis.AppendToProject, Redis.applyClientFolder, Redis.applyConfig, Redis.GetFolderName
 
 ### Community 59 - "Environment Aggregate Structs"
 Cohesion: 0.29
 Nodes (7): Makefile struct, PortManager struct, GlobalEnvironment struct, envConfig struct, envMakefile struct, envVariables struct, ProjEnv struct
 
 ### Community 60 - "Port Manager"
-Cohesion: 0.33
-Nodes (3): Mutex, NewPortManager, PortManager
+Cohesion: 0.48
+Nodes (6): actionPerformer.Tidy, commonProjectTidyPostActions, commonProjectTidyPreActions, GetTidyActionsForProject, goProjectTidyActions, unknownProjectActions
 
 ### Community 61 - "IOMock PrintColored Expectations"
-Cohesion: 0.38
-Nodes (3): IOMockPrintColoredExpectation, IOMockPrintColoredParams, mIOMockPrintColored
+Cohesion: 0.29
+Nodes (7): Acceptance Criteria, Context, Do NOT change, Files to Create / Modify, Goal, Notes, Task 001 — Pattern system: embed and copy static template files directly
 
 ### Community 62 - "Env Variables Manager"
-Cohesion: 0.52
-Nodes (4): Container, newEnvManager, envResources, envVariables
+Cohesion: 0.67
+Nodes (4): InitDepFuncGenArgs, InitFuncCall, InitServerListenerArgs, InitServerListenersArgs
 
 ### Community 63 - "Env Install Command (unwired)"
-Cohesion: 0.40
-Nodes (3): Command, newEnvInstallCmd(), envInstall
+Cohesion: 0.22
+Nodes (6): newEnvInstallCmd(), envInstall, Mutex, NewSpinner(), IO, Spinner
 
 ### Community 65 - "Git Commit Action"
 Cohesion: 0.53
-Nodes (3): CommitWithUntrackedAction, Commit, CommitWithUntracked
+Nodes (4): EnumGenArg, generalGenArgs, KeyValue, newConfigStructGenArgs()
 
 ### Community 66 - "Project Loader"
-Cohesion: 0.53
-Nodes (5): Project, goProjectLoader, LoadProject, readIgnoredFiles, unknownProjectLoader
+Cohesion: 0.27
+Nodes (7): Project, goProjectLoader(), LoadProject(), LoadProjectConfig(), readIgnoredFiles(), unknownProjectLoader(), envConfig
 
 ### Community 67 - "gRPC Dependency Test Fixtures"
-Cohesion: 0.50
-Nodes (4): expected grpc config_template.yaml fixture, expected grpc dev.yaml fixture, Config, AppConfig
+Cohesion: 0.33
+Nodes (3): GenerateMain(), T, Test_GenerateMain()
 
 ### Community 68 - "gRPC Implementation Registration"
 Cohesion: 0.50
@@ -527,16 +541,24 @@ Cohesion: 0.40
 Nodes (5): grpcServer.start() method, httpServer.AddHttpHandler method, httpServer.buildHomePageHandler method, httpServer.start method, ServersManager.Start method
 
 ### Community 71 - "File Server Generator"
-Cohesion: 0.40
-Nodes (4): FS, fileServerTemplate (fs.go.pattern template), GenerateFileServer function, fileServerGenArgs
+Cohesion: 0.25
+Nodes (6): FS, fileServerTemplate (fs.go.pattern template), GenerateFileServer(), T, Test_GenerateFileServer(), fileServerGenArgs
 
 ### Community 72 - "Proto API Generator"
-Cohesion: 0.40
-Nodes (3): serviceProtoApiArgs, GenerateServiceApiProto function, basicApiProtoTemplate (api.proto.pattern template)
+Cohesion: 0.25
+Nodes (5): serviceProtoApiArgs, GenerateServiceApiProto(), T, Test_GenerateServiceApiProto(), basicApiProtoTemplate (api.proto.pattern template)
 
 ### Community 73 - "Make Binary Installer"
-Cohesion: 0.70
-Nodes (4): Exists (make bin check), Install (make bin), installLinux, installMacOS
+Cohesion: 0.50
+Nodes (3): Command, NewCommand(), projectTidy
+
+### Community 74 - "IOMock GetInput Builder"
+Cohesion: 0.23
+Nodes (6): IOMockGetInputExpectation, IOMockGetInputResults, IOMockPrintlnColoredExpectation, IOMockPrintlnColoredParams, mIOMockGetInput, mIOMockPrintlnColored
+
+### Community 75 - "IProjectMock GetName Builder"
+Cohesion: 0.40
+Nodes (4): ErrServerMustHaveName error var, generateServerInitFileAndArgs(), Servers, initServerTemplate (init_server.go.pattern template)
 
 ### Community 78 - "GlobalEnvironment Init"
 Cohesion: 0.40
@@ -562,10 +584,6 @@ Nodes (4): plugins/environment package description, envTidy.getEnvDirPath() meth
 Cohesion: 0.50
 Nodes (3): app.New (inferred external constructor), app.Start (inferred external method), main() entrypoint
 
-### Community 85 - "gRPC Client Connect Helper"
-Cohesion: 0.50
-Nodes (3): connect (grpc client dial helper), ClientConn, Resource_GRPC_Rscli_example key
-
 ### Community 86 - "Server Stop Lifecycle"
 Cohesion: 0.67
 Nodes (3): grpcServer.stop() method, httpServer.stop method, ServersManager.Stop method
@@ -578,6 +596,14 @@ Nodes (3): InfiniteLoader struct, Progress interface, percentLoader struct
 Cohesion: 0.67
 Nodes (3): Project interface (go_actions pkg), IProject interface, Project struct
 
+### Community 105 - "Embedded Template Registration"
+Cohesion: 0.67
+Nodes (3): T, Test_generateDataSourceInitFileAndArgs_PostgresExcluded(), Test_generateDataSourceInitFileAndArgs_PostgresOnly()
+
+### Community 209 - "Project Name Substitution"
+Cohesion: 0.15
+Nodes (12): Config example can be found in internal/config/verv.yaml, Configuration, Configuration structure (all fields are optional), Features:, Installation, SPECIAL VARS, THE LAST, NOT THE LEAST on project creation, TODO (+4 more)
+
 ## Ambiguous Edges - Review These
 - `main() entrypoint` → `app.New (inferred external constructor)`  [AMBIGUOUS]
   plugins/project/go_project/patterns/pattern/cmd/service/main.go · relation: calls
@@ -587,9 +613,9 @@ Nodes (3): Project interface (go_actions pkg), IProject interface, Project struc
   internal/io/loader/percent_progress.go · relation: implements
 
 ## Knowledge Gaps
-- **261 isolated node(s):** `GrpcWithGateway`, `DB`, `DB`, `Proc`, `EnvironmentConfig` (+256 more)
+- **286 isolated node(s):** `Proc`, `Proc`, `go.vervstack.ru/verv`, `Project`, `opt` (+281 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **107 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **112 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -600,11 +626,11 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: calls) - confidence is low._
 - **What is the exact relationship between `Progress interface` and `percentLoader struct`?**
   _Edge tagged AMBIGUOUS (relation: implements) - confidence is low._
-- **Why does `RsCliConfig` connect `Environment Config Struct` to `Project Action Pipeline`, `SQL Connection Pattern Wiring`, `gRPC Package Discovery`, `Postgres Dependency Client`, `RsCli Config Loading`, `Environment File Fetching`, `Project Loader`, `Dockerfile Generation & Build Tests`, `Project Structure Preparation Actions`, `CLI Command Wiring (environment)`, `Env Config/Variables Fetching`, `Project Init Command`, `Dependency AppendToProject (Sqlite/Env)`, `Go Fmt & Makefile Gen Actions`, `Env Install Command (unwired)`?**
-  _High betweenness centrality (0.167) - this node is a cross-community bridge._
-- **Why does `IO` connect `Project Action Pipeline` to `gRPC Package Discovery`, `Environment File Fetching`, `Env Tidy & Terminal Loader UI`, `Project Structure Preparation Actions`, `IO Mock (minimock)`, `CLI Command Wiring (environment)`, `Project Init Command`, `Terminal Color Parser & IO Stub`, `Go Fmt & Makefile Gen Actions`, `Env Install Command (unwired)`?**
-  _High betweenness centrality (0.126) - this node is a cross-community bridge._
-- **Why does `Folder` connect `Virtual Folder Tree` to `gRPC Package Discovery`, `App File Generator`, `Environment File Fetching`, `Config Folder Generation`, `File Server Generator`, `Proto API Generator`, `Folder Loader Options`, `ProjEnv Config Access`, `IProject Mock (minimock)`, `IProjectMock GetFolder Expectations`, `Telegram Dependency Wiring`, `Generator Tests & Folder Comparison`, `Environment Init & File IO`?**
-  _High betweenness centrality (0.116) - this node is a cross-community bridge._
-- **What connects `GrpcWithGateway`, `DB`, `DB` to the rest of the system?**
-  _262 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `IO` connect `Env Install Command (unwired)` to `RsCli Config Loading`, `HTTP Server Transport (pattern)`, `Project Name Collection Prompt`, `Project Action Pipeline`, `gRPC Package Discovery`, `Environment File Fetching`, `Env Tidy & Terminal Loader UI`, `Make Binary Installer`, `IO Mock (minimock)`, `ProjEnv Config Access`, `CLI Command Wiring (environment)`, `Env Config/Variables Fetching`, `Generated Project Config Loader`, `Project Init Command`, `Git Init Action`, `SQL Connection (pattern, dup)`?**
+  _High betweenness centrality (0.152) - this node is a cross-community bridge._
+- **Why does `IProject` connect `Config Folder Generation` to `gRPC Package Discovery`, `Dockerfile Generation & Build Tests`, `Project Structure Preparation Actions`, `IProject Mock (minimock)`, `Project Init Command`, `gRPC Server Transport (pattern)`, `Go Fmt & Makefile Gen Actions`, `Project Name Collection Prompt`, `IProjectMock GetType Expectations`, `Multiplexed Server Manager`, `Git Status Diff`, `IProjectMock GetConfig Expectations`, `Env Config/Variables Fetching`, `Generator Tests & Folder Comparison`, `gRPC Dependency Test Fixtures`, `Proto API Generator`, `IProjectMock GetProjectPath Builder`, `Go Mod Init Action`, `Telegram Bot Connection`, `Embedded Template Registration`?**
+  _High betweenness centrality (0.142) - this node is a cross-community bridge._
+- **Why does `RsCliConfig` connect `RsCli Config Loading` to `Project Action Pipeline`, `SQL Connection Pattern Wiring`, `gRPC Package Discovery`, `Project Name Collection Prompt`, `Environment File Fetching`, `Project Loader`, `Dockerfile Generation & Build Tests`, `CLI Command Wiring (environment)`, `ProjEnv Config Access`, `Project Init Command`, `Dependency AppendToProject (Sqlite/Env)`, `Git Init Action`, `SQL Connection (pattern, dup)`, `Env Install Command (unwired)`?**
+  _High betweenness centrality (0.114) - this node is a cross-community bridge._
+- **What connects `Proc`, `Proc`, `go.vervstack.ru/verv` to the rest of the system?**
+  _287 weakly-connected nodes found - possible documentation gaps or missing edges._

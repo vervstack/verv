@@ -15,8 +15,6 @@ type ServersManager struct {
 	grpcServer
 	httpServer
 
-	errGroup *errgroup.Group
-
 	mux cmux.CMux
 }
 
@@ -24,11 +22,8 @@ func NewServerManager(ctx context.Context, listener net.Listener) (*ServersManag
 	mainMux := cmux.New(listener)
 	httpMux := http.NewServeMux()
 
-	errGroup, _ := errgroup.WithContext(ctx)
-
 	s := &ServersManager{
-		errGroup: errGroup,
-		mux:      mainMux,
+		mux: mainMux,
 
 		grpcServer: newGrpcServer(mainMux.Match(cmux.HTTP2()), httpMux),
 		httpServer: newHttpServer(mainMux.Match(cmux.Any()), httpMux),
@@ -40,11 +35,22 @@ func NewServerManager(ctx context.Context, listener net.Listener) (*ServersManag
 func (m *ServersManager) Start() error {
 	log.Info().Msg("Starting server at http://0.0.0.0" + m.grpcServer.listener.Addr().String()[4:])
 
-	m.errGroup.Go(m.mux.Serve)
-	m.errGroup.Go(m.grpcServer.start)
-	m.errGroup.Go(m.httpServer.start)
+	errGroup, _ := errgroup.WithContext(context.Background())
 
-	err := m.errGroup.Wait()
+	errGroup.Go(func() error {
+		err := m.mux.Serve()
+		if err != nil {
+			if !rerrors.Is(err, cmux.ErrServerClosed) && !rerrors.Is(err, cmux.ErrListenerClosed) {
+				return rerrors.Wrap(err, "mux failed to serve")
+			}
+		}
+
+		return nil
+	})
+	errGroup.Go(m.grpcServer.start)
+	errGroup.Go(m.httpServer.start)
+
+	err := errGroup.Wait()
 	if err != nil {
 		return rerrors.Wrap(err, "error returned from errgroup when starting servers ")
 	}
@@ -53,11 +59,13 @@ func (m *ServersManager) Start() error {
 }
 
 func (m *ServersManager) Stop() error {
-	m.errGroup.Go(m.grpcServer.stop)
-	m.errGroup.Go(m.httpServer.stop)
-	m.errGroup.Go(func() error { m.mux.Close(); return nil })
+	errGroup, _ := errgroup.WithContext(context.Background())
 
-	err := m.errGroup.Wait()
+	errGroup.Go(m.grpcServer.stop)
+	errGroup.Go(m.httpServer.stop)
+	errGroup.Go(func() error { m.mux.Close(); return nil })
+
+	err := errGroup.Wait()
 	if err != nil {
 		return rerrors.Wrap(err, "error stopping server")
 	}

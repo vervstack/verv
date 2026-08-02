@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/soheilhy/cmux"
 	"go.redsock.ru/rerrors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -64,14 +65,14 @@ func (s *grpcServer) start() error {
 		impl.Register(server)
 	}
 
+	s.stopCall = server.GracefulStop
+
 	err := server.Serve(s.listener)
 	if err != nil {
-		if !rerrors.Is(err, http.ErrServerClosed) {
+		if !rerrors.Is(err, cmux.ErrServerClosed) && !rerrors.Is(err, cmux.ErrListenerClosed) {
 			return rerrors.Wrap(err, "error serving grpc server")
 		}
 	}
-
-	s.stopCall = server.GracefulStop
 
 	return nil
 }

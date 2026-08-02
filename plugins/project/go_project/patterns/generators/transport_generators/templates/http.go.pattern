@@ -7,6 +7,7 @@ import (
 	"text/template"
 
 	"github.com/rs/cors"
+	"github.com/soheilhy/cmux"
 	"go.redsock.ru/rerrors"
 )
 
@@ -47,7 +48,7 @@ func (s *httpServer) start() error {
 
 	err := s.server.Serve(s.listener)
 	if err != nil {
-		if !rerrors.Is(err, http.ErrServerClosed) {
+		if !rerrors.Is(err, cmux.ErrServerClosed) && !rerrors.Is(err, cmux.ErrListenerClosed) {
 			return rerrors.Wrap(err, "error listening http server")
 		}
 	}
