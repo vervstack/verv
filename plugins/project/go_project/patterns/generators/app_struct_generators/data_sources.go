@@ -106,7 +106,7 @@ func redisInitFunc(res resources.Resource, appContent *AppContent) (fc InitFuncC
 		"proj_name/internal/clients/redis": "",
 	}
 
-	appContent.Imports["github.com/go-redis/redis"] = ""
+	appContent.Imports["github.com/redis/go-redis/v9"] = ""
 
 	return
 }

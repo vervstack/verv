@@ -1,9 +1,10 @@
 package redis
 
 import (
+	"context"
 	"strconv"
 
-	"github.com/go-redis/redis"
+	"github.com/redis/go-redis/v9"
 	"go.redsock.ru/rerrors"
 	"go.redsock.ru/toolbox/closer"
 	"go.vervstack.ru/matreshka/pkg/matreshka/resources"
@@ -19,12 +20,14 @@ func New(cfg *resources.Redis) (*redis.Client, error) {
 	}
 	c := redis.NewClient(opts)
 
-	res, err := c.Ping().Result()
+	ctx := context.Background()
+
+	res, err := c.Ping(ctx).Result()
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error checking connection to redis")
 	}
 
-	if res != "pong" {
+	if res != "PONG" {
 		return nil, rerrors.Wrapf(ErrUnexpectedPing, "not a pong has returned but %s", res)
 	}
 

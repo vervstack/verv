@@ -6,6 +6,7 @@ import ({{ range $key, $value := .Imports }}
     {{ $value }} "{{ $key }}"{{ end }}
 )
 
+// {{ .InitFunctionName }} initializes this app's configured dependencies.
 func (a *App) {{ .InitFunctionName }}() (err error) { {{ range .Functions }}
     	a.{{ .ResultName }}, err = {{ .FuncName }}({{ .Args }})
     	if err != nil {

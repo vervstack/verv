@@ -1,6 +1,14 @@
 package go_actions
 
 import (
+	"bytes"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+
+	"golang.org/x/tools/imports"
+
 	"go.redsock.ru/rerrors"
 
 	"go.vervstack.ru/verv/internal/cmd"
@@ -12,18 +20,54 @@ import (
 
 const (
 	goBin = "go"
+
+	formattedFileMode fs.FileMode = 0o644
 )
 
 type GoFmt struct{}
 
+// Do walks every *.go file under the project path and runs it through
+// golang.org/x/tools/imports (the goimports library, in-process), which is a
+// strict superset of gofmt: it fixes formatting like gofmt AND fixes import
+// grouping/ordering, which bare `go fmt` never touches.
 func (a GoFmt) Do(p project.IProject) error {
-	_, err := cmd.Execute(cmd.Request{
-		Tool:    goBin,
-		Args:    []string{"fmt", "./..."},
-		WorkDir: p.GetProjectPath(),
+	root := p.GetProjectPath()
+
+	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+
+		if d.IsDir() {
+			if d.Name() == ".git" || d.Name() == "vendor" {
+				return filepath.SkipDir
+			}
+
+			return nil
+		}
+
+		if !strings.HasSuffix(path, ".go") {
+			return nil
+		}
+
+		src, readErr := os.ReadFile(path)
+		if readErr != nil {
+			return rerrors.Wrap(readErr, "error reading go file")
+		}
+
+		formatted, procErr := imports.Process(path, src, nil)
+		if procErr != nil {
+			return rerrors.Wrap(procErr, "error running goimports on "+path)
+		}
+
+		if bytes.Equal(src, formatted) {
+			return nil
+		}
+
+		return os.WriteFile(path, formatted, formattedFileMode)
 	})
 	if err != nil {
-		return rerrors.Wrap(err)
+		return rerrors.Wrap(err, "error formatting project")
 	}
 
 	return nil

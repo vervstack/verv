@@ -32,6 +32,7 @@ import (
      "time"
 )
 
+// EnvironmentConfig holds parsed configuration values for this section.
 type EnvironmentConfig struct { 
     One int
     Two time.Duration

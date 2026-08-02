@@ -7,6 +7,7 @@ import (
      "proj_name/internal/clients/sqldb"
 )
 
+// InitDataSources initializes this app's configured dependencies.
 func (a *App) InitDataSources() (err error) { 
     	a.SqliteTest, err = sqldb.New(a.Cfg.DataSources.SqliteTest)
     	if err != nil {

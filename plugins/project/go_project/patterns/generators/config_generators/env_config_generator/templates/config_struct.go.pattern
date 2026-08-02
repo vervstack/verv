@@ -6,12 +6,14 @@ import ( {{ range $key, $value := .Imports }}
     {{ $value }} "{{ $key }}"{{ end }}
 )
 {{end}}
+// {{ .StructName }} holds parsed configuration values for this section.
 type {{ .StructName }} struct { {{ range .Fields }}
     {{ .Key }} {{ .Value }}{{ end }}
 }
 {{ if .Enums }}{{ range $enumIdx, $enum := .Enums }}
+// {{$enum.Name}} enumerates the allowed values for the {{$enum.Name}} field.
 const ( {{range $valIdx, $enumVal := $enum.Values }}
-    {{$enum.Name}}_{{$enumVal.Key}} = {{ $enumVal.Value }}{{ end }}
+    {{$enum.Name}}{{$enumVal.Key}} = {{ $enumVal.Value }}{{ end }}
 )
 {{ end }}
 {{end}}

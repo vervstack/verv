@@ -10,7 +10,7 @@ import (
 func SnakeToPascal(v string) string {
 	parts := strings.Split(v, "_")
 	for i := range parts {
-		if slices.Contains(initialisms, parts[i]) {
+		if slices.Contains(initialisms, strings.ToLower(parts[i])) {
 			parts[i] = strings.ToUpper(parts[i])
 		} else {
 			if parts[i] == "" {
