@@ -16,6 +16,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/dockerfile_generator"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/main_generators"
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/middleware_generators"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/server_generators/impl_gen"
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns/generators/transport_generators"
 )
@@ -134,15 +135,30 @@ func (a PrepareServer) Do(p project.IProject) error {
 		rootF.Add(patterns.Moti.Copy())
 	}
 
-	transportFolder := rootF.GetByPath(patterns.InternalFolder, patterns.TransportFolder)
-	if transportFolder == nil {
-		transportFolder = &folder.Folder{}
+	internalFolder := rootF.GetByPath(patterns.InternalFolder)
+	if internalFolder == nil {
+		internalFolder = &folder.Folder{Name: patterns.InternalFolder}
+		rootF.Add(internalFolder)
 	}
 
-	err := generateTransportFiles(transportFolder)
+	transportFolder := internalFolder.GetByPath(patterns.TransportFolder)
+	if transportFolder == nil {
+		transportFolder = &folder.Folder{Name: patterns.TransportFolder}
+		internalFolder.Add(transportFolder)
+	}
+
+	middlewareFolder := internalFolder.GetByPath(patterns.MiddlewareFolder)
+	if middlewareFolder == nil {
+		middlewareFolder = &folder.Folder{Name: patterns.MiddlewareFolder}
+		internalFolder.Add(middlewareFolder)
+	}
+
+	err := generateTransportFiles(transportFolder, p.GetName())
 	if err != nil {
 		return err
 	}
+
+	generateMiddlewareFiles(middlewareFolder)
 
 	implFolders, err := impl_gen.GenerateImpl(vervconfig.GetConfig(), p)
 	if err != nil {
@@ -154,7 +170,7 @@ func (a PrepareServer) Do(p project.IProject) error {
 	return nil
 }
 
-func generateTransportFiles(transportFolder *folder.Folder) error {
+func generateTransportFiles(transportFolder *folder.Folder, fullProjPath string) error {
 	serverManagerContent, err := transport_generators.GenerateServerManager()
 	if err != nil {
 		return rerrors.Wrap(err, "error generating server manager")
@@ -173,7 +189,28 @@ func generateTransportFiles(transportFolder *folder.Folder) error {
 
 	transportFolder.Add(&folder.Folder{Name: patterns.HttpServerFileName, Content: httpServerContent})
 
+	gatewayMuxContent, err := transport_generators.GenerateGatewayMux(fullProjPath)
+	if err != nil {
+		return rerrors.Wrap(err, "error generating gateway mux")
+	}
+
+	transportFolder.Add(&folder.Folder{Name: patterns.GatewayMuxFileName, Content: gatewayMuxContent})
+
 	return nil
+}
+
+func generateMiddlewareFiles(middlewareFolder *folder.Folder) {
+	cookieNamesContent := middleware_generators.GenerateCookieNames()
+	middlewareFolder.Add(&folder.Folder{Name: patterns.CookieNamesFileName, Content: cookieNamesContent})
+
+	cookieAnnotatorContent := middleware_generators.GenerateCookieAnnotator()
+	middlewareFolder.Add(&folder.Folder{Name: patterns.CookieAnnotatorFileName, Content: cookieAnnotatorContent})
+
+	cookieResponseContent := middleware_generators.GenerateCookieResponse()
+	middlewareFolder.Add(&folder.Folder{Name: patterns.CookieResponseFileName, Content: cookieResponseContent})
+
+	csrfInterceptorContent := middleware_generators.GenerateCSRFInterceptor()
+	middlewareFolder.Add(&folder.Folder{Name: patterns.CSRFInterceptorFileName, Content: csrfInterceptorContent})
 }
 
 func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder.Folder) {

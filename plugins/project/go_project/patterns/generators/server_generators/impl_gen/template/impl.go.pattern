@@ -4,11 +4,11 @@ import (
     "context"
     "net/http"
 
-    "github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
     "github.com/rs/zerolog/log"
     "google.golang.org/grpc"
 
     {{ .GrpcPackage }} "{{ .FullProjPath }}/pkg"
+    "{{ .FullProjPath }}/internal/transport"
 )
 
 type Impl struct {
@@ -24,7 +24,9 @@ func (impl *Impl) Register(server grpc.ServiceRegistrar) {
 }
 
 func (impl *Impl) Gateway(ctx context.Context, endpoint string, opts ...grpc.DialOption) (route string, handler http.Handler) {
-    gwHttpMux := runtime.NewServeMux()
+    // cookieSecure hardcoded false (dev-friendly) — thread real config (e.g.
+    // Environment.CookieSecure) through here once real cookie-setting auth handlers exist.
+    gwHttpMux := transport.NewGatewayMux(false)
 
     err := {{ .GrpcPackage }}.Register{{ .ServiceName }}HandlerFromEndpoint(
         ctx,

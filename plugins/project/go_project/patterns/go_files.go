@@ -24,13 +24,20 @@ const (
 
 	ConnFileName = "conn.go"
 
-	TransportFolder = "transport"
+	TransportFolder  = "transport"
+	MiddlewareFolder = "middleware"
 
 	ServerManagerFileName          = "manager.go"
 	GrpcServerFileName             = "grpc.go"
 	HttpServerFileName             = "http.go"
+	GatewayMuxFileName             = "gateway_mux.go"
 	TelegramListenerFileName       = "listener.go"
 	TelegramVersionHandlerFileName = "handler.go"
+
+	CookieNamesFileName     = "cookie_names.go"
+	CookieAnnotatorFileName = "cookie_annotator.go"
+	CookieResponseFileName  = "cookie_response.go"
+	CSRFInterceptorFileName = "csrf_interceptor.go"
 
 	HandlersFolderName = "handlers"
 	VersionFolderName  = "version"

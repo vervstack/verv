@@ -31,10 +31,24 @@ func GenerateTelegramVersionHandler() ([]byte, error) {
 	return execute(telegramVersionHandlerTemplate)
 }
 
+type gatewayMuxArgs struct {
+	FullProjPath string
+}
+
+func GenerateGatewayMux(fullProjPath string) ([]byte, error) {
+	args := gatewayMuxArgs{FullProjPath: fullProjPath}
+
+	return executeWithData(gatewayMuxTemplate, args)
+}
+
 func execute(t *template.Template) ([]byte, error) {
+	return executeWithData(t, nil)
+}
+
+func executeWithData(t *template.Template, data any) ([]byte, error) {
 	out := &rw.RW{}
 
-	err := t.Execute(out, nil)
+	err := t.Execute(out, data)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error generating "+t.Name())
 	}

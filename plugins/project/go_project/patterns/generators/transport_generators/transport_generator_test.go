@@ -44,3 +44,14 @@ func Test_GenerateTelegramVersionHandler(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, telegramVersionHandlerPattern, string(got))
 }
+
+func Test_GenerateGatewayMux(t *testing.T) {
+	t.Parallel()
+
+	const fullProjPath = "go.vervstack.ru/test_project"
+
+	got, err := GenerateGatewayMux(fullProjPath)
+	require.NoError(t, err)
+	require.Contains(t, string(got), `"`+fullProjPath+`/internal/middleware"`)
+	require.Contains(t, string(got), "func NewGatewayMux(cookieSecure bool) *runtime.ServeMux {")
+}

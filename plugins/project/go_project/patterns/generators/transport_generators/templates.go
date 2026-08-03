@@ -26,6 +26,10 @@ var (
 	//go:embed templates/telegram/version/handler.go.pattern
 	telegramVersionHandlerPattern  string
 	telegramVersionHandlerTemplate *template.Template
+
+	//go:embed templates/gateway_mux.go.pattern
+	gatewayMuxPattern  string
+	gatewayMuxTemplate *template.Template
 )
 
 //nolint:gochecknoinits // one-time compile of embedded templates into package-level *template.Template values
@@ -41,4 +45,8 @@ func init() {
 	telegramVersionHandlerTemplate = template.Must(
 		template.New("telegram_version_handler").
 			Parse(telegramVersionHandlerPattern))
+
+	gatewayMuxTemplate = template.Must(
+		template.New("gateway_mux").
+			Parse(gatewayMuxPattern))
 }
