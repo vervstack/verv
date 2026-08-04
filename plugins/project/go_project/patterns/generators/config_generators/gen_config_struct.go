@@ -17,7 +17,7 @@ type loadConfigFileGenArgs struct {
 
 type internalConfigGenerator func() (generators.InternalConfig, *folder.Folder, error)
 
-func GenerateConfigFolder(cfg *config.Config) (*folder.Folder, error) {
+func GenerateConfigFolder(cfg *config.Config, configYamlBytes []byte) (*folder.Folder, error) {
 	args := loadConfigFileGenArgs{}
 
 	configFolder := &folder.Folder{}
@@ -49,9 +49,16 @@ func GenerateConfigFolder(cfg *config.Config) (*folder.Folder, error) {
 		args.Configs = append(args.Configs, ic)
 	}
 
+	skeletonGoFile, skeletonYamlFile, err := newGenerateConfigSkeleton(configYamlBytes)()
+	if err != nil {
+		return nil, rerrors.Wrap(err, "error generating config skeleton")
+	}
+
+	configFolder.Add(skeletonGoFile, skeletonYamlFile)
+
 	autoLoadFile := &rw.RW{}
 
-	err := configAutoLoadTemplate.Execute(autoLoadFile, args)
+	err = configAutoLoadTemplate.Execute(autoLoadFile, args)
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error generating load-config file ")
 	}

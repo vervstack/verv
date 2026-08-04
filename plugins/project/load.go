@@ -89,7 +89,7 @@ func LoadProjectConfig(projectPath string, cfg *vervconfig.VervConfig) (c *confi
 		return configOrder[configsPaths[i]] > configOrder[configsPaths[j]]
 	})
 
-	c.AppConfig, err = matreshka.ReadConfigs(configsPaths...) // TODO
+	c.AppConfig, err = matreshka.ReadConfig(matreshka.WithConfigPaths(configsPaths...))
 	if err != nil {
 		return nil, rerrors.Wrap(err, "error parsing config")
 	}

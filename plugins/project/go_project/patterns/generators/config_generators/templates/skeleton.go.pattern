@@ -1,0 +1,8 @@
+{{ .GenTag }}
+
+package config
+
+import _ "embed"
+
+//go:embed skeleton.yaml
+var skeletonYAML []byte

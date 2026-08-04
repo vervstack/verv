@@ -109,7 +109,19 @@ func (a GenerateProjectConfig) NameInAction() string {
 type PrepareConfigFolder struct{}
 
 func (a PrepareConfigFolder) Do(p project.IProject) (err error) {
-	cfgFolder, err := config_generators.GenerateConfigFolder(p.GetConfig())
+	// generateConfigYamlFile must run before GenerateConfigFolder: it's what
+	// (re)computes config.yaml's content for *this* run into the in-memory
+	// folder tree (p.GetFolder()) — the real filesystem isn't touched until
+	// the whole action pipeline flushes at the end. GenerateConfigFolder
+	// embeds a byte-for-byte copy of that content as the config skeleton
+	// (internal/config/skeleton.yaml), so it needs the up-to-date bytes, not
+	// whatever was on disk from the previous generation run.
+	err = a.generateConfigYamlFile(p)
+	if err != nil {
+		return rerrors.Wrap(err, "error generating config yaml-files")
+	}
+
+	cfgFolder, err := config_generators.GenerateConfigFolder(p.GetConfig(), a.resolveConfigYamlBytes(p))
 	if err != nil {
 		return rerrors.Wrap(err, "error generating config folder")
 	}
@@ -117,11 +129,6 @@ func (a PrepareConfigFolder) Do(p project.IProject) (err error) {
 	cfgFolder.Name = path.Join(patterns.InternalFolder, patterns.ConfigsFolder)
 
 	p.GetFolder().Add(cfgFolder)
-
-	err = a.generateConfigYamlFile(p)
-	if err != nil {
-		return rerrors.Wrap(err, "error generating config yaml-files")
-	}
 
 	err = a.generateEnvExampleFile(p)
 	if err != nil {
@@ -132,6 +139,24 @@ func (a PrepareConfigFolder) Do(p project.IProject) (err error) {
 }
 func (a PrepareConfigFolder) NameInAction() string {
 	return "Preparing config folder"
+}
+
+// resolveConfigYamlBytes returns the just-generated config.yaml content from
+// the in-memory folder tree (populated by generateConfigYamlFile, which must
+// run before this is called). Returns nil if it's genuinely absent — callers
+// treat that as "no config content yet" and fall back to a stub.
+func (a PrepareConfigFolder) resolveConfigYamlBytes(p project.IProject) []byte {
+	configFolder := p.GetFolder().GetByPath(patterns.ConfigsFolder)
+	if configFolder == nil {
+		return nil
+	}
+
+	configFile := configFolder.GetByPath(patterns.ConfigMasterYamlFile)
+	if configFile == nil {
+		return nil
+	}
+
+	return configFile.Content
 }
 
 func (a PrepareConfigFolder) generateConfigYamlFile(p project.IProject) (err error) {

@@ -40,6 +40,11 @@ func scaffoldComboProject(t *testing.T) string {
 		dependencies.DependencyNameTelegram,
 	)
 
+	// TEMPORARY: see addLocalMatreshkaReplace's doc comment in compile_test.go
+	// — required until matreshka.ReadConfig/WithConfigPaths/WithConfigBytes is
+	// released.
+	addLocalMatreshkaReplace(t, projDir)
+
 	return projDir
 }
 
@@ -200,7 +205,14 @@ func Test_GeneratedProject_GolangciLintClean(t *testing.T) {
 		t.Fatalf("copying project to %s: %v", copyDir, err)
 	}
 
-	cmd := exec.CommandContext(t.Context(), lintBin, "run")
+	// TEMPORARY: --disable=gomoddirectives is only here because
+	// scaffoldComboProject's addLocalMatreshkaReplace call leaves a local
+	// `replace go.vervstack.ru/matreshka => ...` line in the scaffolded
+	// go.mod (required until matreshka.ReadConfig et al. is released — see
+	// that function's doc comment in compile_test.go), which gomoddirectives
+	// correctly flags. Remove this flag along with addLocalMatreshkaReplace
+	// once that dependency is released and this replace goes away.
+	cmd := exec.CommandContext(t.Context(), lintBin, "run", "--disable=gomoddirectives")
 	cmd.Dir = copyDir
 	// Every run scaffolds byte-identical generated source into a fresh temp
 	// dir, so golangci-lint's own result cache (~/Library/Caches/golangci-lint

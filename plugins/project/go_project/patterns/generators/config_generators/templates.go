@@ -22,6 +22,10 @@ var (
 	//go:embed templates/grpc_client.go.pattern
 	grpcConnectionPattern  string
 	grpcConnectionTemplate *template.Template
+
+	//go:embed templates/skeleton.go.pattern
+	configSkeletonPattern  string
+	configSkeletonTemplate *template.Template
 )
 
 //nolint:gochecknoinits // one-time compile of embedded templates into package-level *template.Template values
@@ -37,4 +41,8 @@ func init() {
 	grpcConnectionTemplate = template.Must(
 		template.New("grpc_connection").
 			Parse(grpcConnectionPattern))
+
+	configSkeletonTemplate = template.Must(
+		template.New("config_skeleton").
+			Parse(configSkeletonPattern))
 }

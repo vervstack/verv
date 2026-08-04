@@ -51,5 +51,8 @@ const (
 	ConfigServersFileName     = "servers.go"
 	ConfigEnvExampleFile      = ".env.example"
 
+	ConfigSkeletonGoFileName   = "skeleton.go"
+	ConfigSkeletonYamlFileName = "skeleton.yaml"
+
 	GoMod = "go.mod"
 )

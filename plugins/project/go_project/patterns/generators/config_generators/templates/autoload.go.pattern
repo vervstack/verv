@@ -100,7 +100,10 @@ func Load(configsPaths ...string) (Config, error) {
         err error
     )
 
-    cfg.MatreshkaConfig, err = matreshka.ReadConfigs(configsPaths...)
+    cfg.MatreshkaConfig, err = matreshka.ReadConfig(
+        matreshka.WithConfigPaths(configsPaths...),
+        matreshka.WithConfigBytes(skeletonYAML),
+    )
     if err != nil {
         return cfg, rerrors.Wrap(err, "error reading matreshka config")
     }
