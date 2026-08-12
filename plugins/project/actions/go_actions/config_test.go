@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 	"go.vervstack.ru/verv/tests/project_mock"
 )
 
@@ -50,4 +51,44 @@ func Test_GenerateProjectConfig_ServerEnvVars(t *testing.T) {
 			require.NotEqual(t, CookieSecureEvonName, v.Name, "cookie_secure must not be registered without servers")
 		}
 	})
+}
+
+func Test_PrepareConfigFolder_DotEnv(t *testing.T) {
+	t.Parallel()
+
+	t.Run("with .env: generated load.go wires matreshka.WithEnvFile", func(t *testing.T) {
+		t.Parallel()
+
+		proj := project_mock.GetMockProject(t, project_mock.WithFile(".env", []byte("FOO=bar\n")))
+
+		err := PrepareConfigFolder{}.Do(proj)
+		require.NoError(t, err)
+
+		loadGoContent := resolveLoadGoContent(t, proj)
+		require.Contains(t, string(loadGoContent), "WithEnvFile")
+	})
+
+	t.Run("without .env: generated load.go does not reference WithEnvFile", func(t *testing.T) {
+		t.Parallel()
+
+		proj := project_mock.GetMockProject(t)
+
+		err := PrepareConfigFolder{}.Do(proj)
+		require.NoError(t, err)
+
+		loadGoContent := resolveLoadGoContent(t, proj)
+		require.NotContains(t, string(loadGoContent), "WithEnvFile")
+	})
+}
+
+func resolveLoadGoContent(t *testing.T, proj *project_mock.MockProject) []byte {
+	t.Helper()
+
+	cfgFolder := proj.GetFolder().GetByPath(patterns.InternalFolder + "/" + patterns.ConfigsFolder)
+	require.NotNil(t, cfgFolder, "internal/config folder must be generated")
+
+	loadFile := cfgFolder.GetByPath(patterns.ConfigLoadFileName)
+	require.NotNil(t, loadFile, "load.go must be generated")
+
+	return loadFile.Content
 }

@@ -54,5 +54,6 @@ const (
 	ConfigSkeletonGoFileName   = "skeleton.go"
 	ConfigSkeletonYamlFileName = "skeleton.yaml"
 
-	GoMod = "go.mod"
+	GoMod   = "go.mod"
+	EnvFile = ".env"
 )

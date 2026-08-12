@@ -12,13 +12,15 @@ import (
 )
 
 type loadConfigFileGenArgs struct {
-	Configs []generators.InternalConfig
+	Configs   []generators.InternalConfig
+	HasDotEnv bool
 }
 
 type internalConfigGenerator func() (generators.InternalConfig, *folder.Folder, error)
 
-func GenerateConfigFolder(cfg *config.Config, configYamlBytes []byte) (*folder.Folder, error) {
+func GenerateConfigFolder(cfg *config.Config, configYamlBytes []byte, hasDotEnv bool) (*folder.Folder, error) {
 	args := loadConfigFileGenArgs{}
+	args.HasDotEnv = hasDotEnv
 
 	configFolder := &folder.Folder{}
 
