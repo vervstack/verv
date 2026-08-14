@@ -13,7 +13,7 @@ require (
 	go.redsock.ru/evon v0.0.30
 	go.redsock.ru/rerrors v0.0.8
 	go.redsock.ru/toolbox v0.0.11
-	go.vervstack.ru/matreshka v1.0.98
+	go.vervstack.ru/matreshka v1.0.100
 	golang.org/x/tools v0.48.0
 	gopkg.in/yaml.v3 v3.0.1
 )

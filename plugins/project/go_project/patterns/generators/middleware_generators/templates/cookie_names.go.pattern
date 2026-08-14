@@ -37,6 +37,14 @@ const (
 // not a token, so a fixed sentinel is enough.
 const ClearAuthCookiesValue = "1"
 
+// RequestSecureKey is the gRPC metadata key RequestSchemeAnnotator sets whenever it determined
+// the originating HTTP request was secure (HTTPS, directly or via a trusted X-Forwarded-Proto).
+// Absence of the key means false — there is no "0" sentinel value.
+const RequestSecureKey = "x-request-secure"
+
+// RequestSecureValue is the fixed value paired with RequestSecureKey.
+const RequestSecureValue = "1"
+
 // AuthViaCookieMarkerKey is the gRPC metadata key CookieToMetadataAnnotator sets whenever it
 // supplied the "authorization" credential from a cookie rather than a header. GrpcCSRFInterceptor
 // only enforces CSRF checks when this marker is present, so native gRPC/CLI callers presenting a

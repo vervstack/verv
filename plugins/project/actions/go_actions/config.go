@@ -32,15 +32,13 @@ const (
 	LogFormatJSON     = "JSON"
 	LogFormatTEXT     = "TEXT"
 
-	// AllowedOriginsEvonName and CookieSecureEvonName are only registered when the project
-	// has at least one server (len(cfg.Servers) != 0) — they're meaningless without an
-	// HTTP/gateway server. They're one *available* source for the allowedOrigins/cookieSecure
-	// values a project author can wire into their hand-written custom.go call to
-	// NewServerManager/transport.NewGatewayMux — nothing generated reads them automatically
-	// (see transport_generators/templates/http.go.pattern's CORS change: allowedOrigins is a
-	// plain function parameter, no baked-in default or auto-wired source).
+	// AllowedOriginsEvonName is only registered when the project has at least one server
+	// (len(cfg.Servers) != 0) — it's meaningless without an HTTP/gateway server. It's one
+	// *available* source for the allowedOrigins value a project author can wire into their
+	// hand-written custom.go call to NewServerManager — nothing generated reads it
+	// automatically (see transport_generators/templates/http.go.pattern's CORS change:
+	// allowedOrigins is a plain function parameter, no baked-in default or auto-wired source).
 	AllowedOriginsEvonName = "allowed_origins"
-	CookieSecureEvonName   = "cookie_secure"
 )
 
 type GenerateProjectConfig struct {
@@ -88,15 +86,6 @@ func (a GenerateProjectConfig) Do(p project.IProject) error {
 				"No default — wire it into your custom.go call to NewServerManager."
 
 			cfg.Environment = append(cfg.Environment, allowedOrigins)
-		}
-
-		if envVars[CookieSecureEvonName] == nil {
-			cookieSecure := environment.MustNewVariable(CookieSecureEvonName, true)
-
-			cookieSecure.Comment = "Secure attribute on auth cookies set by transport.NewGatewayMux. " +
-				"Set false only for plain-HTTP local dev."
-
-			cfg.Environment = append(cfg.Environment, cookieSecure)
 		}
 	}
 

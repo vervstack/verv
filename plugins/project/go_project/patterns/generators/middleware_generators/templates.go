@@ -16,4 +16,7 @@ var (
 
 	//go:embed templates/csrf_interceptor.go.pattern
 	csrfInterceptorFile []byte
+
+	//go:embed templates/request_scheme_annotator.go.pattern
+	requestSchemeAnnotatorFile []byte
 )

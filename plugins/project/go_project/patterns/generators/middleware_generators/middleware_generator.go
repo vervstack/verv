@@ -16,6 +16,10 @@ func GenerateCSRFInterceptor() []byte {
 	return copyBytes(csrfInterceptorFile)
 }
 
+func GenerateRequestSchemeAnnotator() []byte {
+	return copyBytes(requestSchemeAnnotatorFile)
+}
+
 func copyBytes(src []byte) []byte {
 	res := make([]byte, len(src))
 	copy(res, src)

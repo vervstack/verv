@@ -34,10 +34,11 @@ const (
 	TelegramListenerFileName       = "listener.go"
 	TelegramVersionHandlerFileName = "handler.go"
 
-	CookieNamesFileName     = "cookie_names.go"
-	CookieAnnotatorFileName = "cookie_annotator.go"
-	CookieResponseFileName  = "cookie_response.go"
-	CSRFInterceptorFileName = "csrf_interceptor.go"
+	CookieNamesFileName            = "cookie_names.go"
+	CookieAnnotatorFileName        = "cookie_annotator.go"
+	CookieResponseFileName         = "cookie_response.go"
+	CSRFInterceptorFileName        = "csrf_interceptor.go"
+	RequestSchemeAnnotatorFileName = "request_scheme_annotator.go"
 
 	HandlersFolderName = "handlers"
 	VersionFolderName  = "version"

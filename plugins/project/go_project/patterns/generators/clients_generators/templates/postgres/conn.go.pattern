@@ -32,6 +32,25 @@ func Migrate(cfg *resources.Postgres) error {
 	}
 	defer conn.Close()
 
+	schema := cfg.Schema
+	if schema == "" {
+		schema = "public"
+	}
+
+	var schemaExists bool
+
+	err = conn.QueryRow(
+		"SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_namespace WHERE nspname = $1)",
+		schema,
+	).Scan(&schemaExists)
+	if err != nil {
+		return rerrors.Wrap(err, "error checking schema existence")
+	}
+
+	if !schemaExists {
+		return rerrors.New("schema %q does not exist - create it before running migrations", schema)
+	}
+
 	goose.SetLogger(sqlLogger{})
 
 	err = goose.SetDialect("postgres")

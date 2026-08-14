@@ -49,6 +49,7 @@ func Test_PrepareServer_AttachesTransportFolder(t *testing.T) {
 		patterns.CookieAnnotatorFileName,
 		patterns.CookieResponseFileName,
 		patterns.CSRFInterceptorFileName,
+		patterns.RequestSchemeAnnotatorFileName,
 	} {
 		f := middlewareFolder.GetByPath(fileName)
 		require.NotNilf(t, f, "internal/middleware/%s must exist", fileName)

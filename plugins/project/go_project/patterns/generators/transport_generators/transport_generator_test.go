@@ -53,5 +53,6 @@ func Test_GenerateGatewayMux(t *testing.T) {
 	got, err := GenerateGatewayMux(fullProjPath)
 	require.NoError(t, err)
 	require.Contains(t, string(got), `"`+fullProjPath+`/internal/middleware"`)
-	require.Contains(t, string(got), "func NewGatewayMux(cookieSecure bool) *runtime.ServeMux {")
+	require.Contains(t, string(got), "func NewGatewayMux() *runtime.ServeMux {")
+	require.Contains(t, string(got), "middleware.RequestSchemeAnnotator")
 }

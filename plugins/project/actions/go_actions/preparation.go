@@ -211,6 +211,9 @@ func generateMiddlewareFiles(middlewareFolder *folder.Folder) {
 
 	csrfInterceptorContent := middleware_generators.GenerateCSRFInterceptor()
 	middlewareFolder.Add(&folder.Folder{Name: patterns.CSRFInterceptorFileName, Content: csrfInterceptorContent})
+
+	requestSchemeAnnotatorContent := middleware_generators.GenerateRequestSchemeAnnotator()
+	middlewareFolder.Add(&folder.Folder{Name: patterns.RequestSchemeAnnotatorFileName, Content: requestSchemeAnnotatorContent})
 }
 
 func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder.Folder) {

@@ -24,9 +24,7 @@ func (impl *Impl) Register(server grpc.ServiceRegistrar) {
 }
 
 func (impl *Impl) Gateway(ctx context.Context, endpoint string, opts ...grpc.DialOption) (route string, handler http.Handler) {
-    // cookieSecure hardcoded false (dev-friendly) — thread real config (e.g.
-    // Environment.CookieSecure) through here once real cookie-setting auth handlers exist.
-    gwHttpMux := transport.NewGatewayMux(false)
+    gwHttpMux := transport.NewGatewayMux()
 
     err := {{ .GrpcPackage }}.Register{{ .ServiceName }}HandlerFromEndpoint(
         ctx,

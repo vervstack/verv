@@ -33,3 +33,10 @@ func Test_GenerateCSRFInterceptor(t *testing.T) {
 	got := GenerateCSRFInterceptor()
 	require.Equal(t, csrfInterceptorFile, got)
 }
+
+func Test_GenerateRequestSchemeAnnotator(t *testing.T) {
+	t.Parallel()
+
+	got := GenerateRequestSchemeAnnotator()
+	require.Equal(t, requestSchemeAnnotatorFile, got)
+}
