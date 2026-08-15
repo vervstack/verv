@@ -110,9 +110,7 @@ func (a PrepareConfigFolder) Do(p project.IProject) (err error) {
 		return rerrors.Wrap(err, "error generating config yaml-files")
 	}
 
-	hasDotEnv := p.GetFolder().GetByPath(patterns.EnvFile) != nil
-
-	cfgFolder, err := config_generators.GenerateConfigFolder(p.GetConfig(), a.resolveConfigYamlBytes(p), hasDotEnv)
+	cfgFolder, err := config_generators.GenerateConfigFolder(p.GetConfig(), a.resolveConfigYamlBytes(p))
 	if err != nil {
 		return rerrors.Wrap(err, "error generating config folder")
 	}

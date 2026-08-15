@@ -54,6 +54,9 @@ func Test_GenerateProjectConfig_ServerEnvVars(t *testing.T) {
 func Test_PrepareConfigFolder_DotEnv(t *testing.T) {
 	t.Parallel()
 
+	// .env presence is checked by the generated app at runtime (os.Stat), not
+	// by tidy, so load.go must wire matreshka.WithEnvFile the same way whether
+	// or not the project happens to have a .env file when tidy runs.
 	t.Run("with .env: generated load.go wires matreshka.WithEnvFile", func(t *testing.T) {
 		t.Parallel()
 
@@ -66,7 +69,7 @@ func Test_PrepareConfigFolder_DotEnv(t *testing.T) {
 		require.Contains(t, string(loadGoContent), "WithEnvFile")
 	})
 
-	t.Run("without .env: generated load.go does not reference WithEnvFile", func(t *testing.T) {
+	t.Run("without .env: generated load.go still wires matreshka.WithEnvFile", func(t *testing.T) {
 		t.Parallel()
 
 		proj := project_mock.GetMockProject(t)
@@ -75,7 +78,7 @@ func Test_PrepareConfigFolder_DotEnv(t *testing.T) {
 		require.NoError(t, err)
 
 		loadGoContent := resolveLoadGoContent(t, proj)
-		require.NotContains(t, string(loadGoContent), "WithEnvFile")
+		require.Contains(t, string(loadGoContent), "WithEnvFile")
 	})
 }
 

@@ -11,7 +11,7 @@ import (
 	"go.vervstack.ru/verv/plugins/project/go_project/patterns"
 )
 
-func Test_GenerateConfigFolder_HasDotEnv(t *testing.T) {
+func Test_GenerateConfigFolder_DotEnv(t *testing.T) {
 	t.Parallel()
 
 	cfg := &config.Config{
@@ -20,33 +20,17 @@ func Test_GenerateConfigFolder_HasDotEnv(t *testing.T) {
 
 	configYamlBytes := []byte("app_info:\n  name: my-app\n")
 
-	t.Run("hasDotEnv=true: load.go wires matreshka.WithEnvFile and is valid Go", func(t *testing.T) {
-		t.Parallel()
+	cfgFolder, err := GenerateConfigFolder(cfg, configYamlBytes)
+	require.NoError(t, err)
 
-		cfgFolder, err := GenerateConfigFolder(cfg, configYamlBytes, true)
-		require.NoError(t, err)
+	loadFile := cfgFolder.GetByPath(patterns.ConfigLoadFileName)
+	require.NotNil(t, loadFile)
 
-		loadFile := cfgFolder.GetByPath(patterns.ConfigLoadFileName)
-		require.NotNil(t, loadFile)
+	// .env detection happens at application runtime (os.Stat on envFilePath),
+	// not at generation time, so the wiring is unconditional here.
+	require.Contains(t, string(loadFile.Content), "matreshka.WithEnvFile(envFilePath)")
+	require.Contains(t, string(loadFile.Content), "os.Stat(envFilePath)")
 
-		require.Contains(t, string(loadFile.Content), "WithEnvFile")
-
-		_, err = format.Source(loadFile.Content)
-		require.NoError(t, err, "generated load.go must be valid Go source")
-	})
-
-	t.Run("hasDotEnv=false: load.go does not reference matreshka.WithEnvFile and is valid Go", func(t *testing.T) {
-		t.Parallel()
-
-		cfgFolder, err := GenerateConfigFolder(cfg, configYamlBytes, false)
-		require.NoError(t, err)
-
-		loadFile := cfgFolder.GetByPath(patterns.ConfigLoadFileName)
-		require.NotNil(t, loadFile)
-
-		require.NotContains(t, string(loadFile.Content), "WithEnvFile")
-
-		_, err = format.Source(loadFile.Content)
-		require.NoError(t, err, "generated load.go must be valid Go source")
-	})
+	_, err = format.Source(loadFile.Content)
+	require.NoError(t, err, "generated load.go must be valid Go source")
 }
