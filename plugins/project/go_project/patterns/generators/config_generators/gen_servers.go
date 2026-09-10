@@ -18,7 +18,7 @@ func newGenerateServerConfigStruct(srv matreshka.Servers) internalConfigGenerato
 			FieldName:    "Servers",
 			StructName:   "ServersConfig",
 			From:         getTypeName(matreshka.Servers{}),
-			ErrorMessage: "Error parsing servers to config",
+			ErrorMessage: "error parsing servers to config",
 		}
 
 		ecg := newConfigStructGenArgs(ic.StructName)
