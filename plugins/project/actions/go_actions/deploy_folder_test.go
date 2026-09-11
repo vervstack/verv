@@ -10,12 +10,12 @@ import (
 	"go.vervstack.ru/verv/tests/project_mock"
 )
 
-func Test_PrepareDeployMarker(t *testing.T) {
+func Test_PrepareDeployFolder(t *testing.T) {
 	t.Parallel()
 
 	proj := project_mock.GetMockProject(t)
 
-	action := PrepareDeployMarker{}
+	action := PrepareDeployFolder{}
 
 	require.NoError(t, action.Do(proj))
 

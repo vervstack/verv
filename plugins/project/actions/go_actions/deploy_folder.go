@@ -10,9 +10,12 @@ import (
 	"go.vervstack.ru/verv/plugins/project"
 )
 
-type PrepareDeployMarker struct{}
+// PrepareDeployFolder scaffolds .verv/deploy — the folder future deploy
+// tooling (e.g. verv rp update) reads and writes its own state in. For now it
+// only seeds a basic vervonomicon file with the service name.
+type PrepareDeployFolder struct{}
 
-func (a PrepareDeployMarker) Do(p project.IProject) error {
+func (a PrepareDeployFolder) Do(p project.IProject) error {
 	content, err := yaml.Marshal(project.Vervonomicon{Name: p.GetName()})
 	if err != nil {
 		return rerrors.Wrap(err, "error marshalling deploy vervonomicon marker")
@@ -26,6 +29,6 @@ func (a PrepareDeployMarker) Do(p project.IProject) error {
 	return nil
 }
 
-func (a PrepareDeployMarker) NameInAction() string {
-	return "Writing deploy marker"
+func (a PrepareDeployFolder) NameInAction() string {
+	return "Preparing deploy folder"
 }

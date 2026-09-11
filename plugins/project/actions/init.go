@@ -20,8 +20,8 @@ func InitProject(pt project.Type, fast, dirty, deploy bool) []Action {
 // and callers that only want to validate codegen shouldn't pay for it. When
 // dirty is true (and fast is false), git.InitGit still runs but skips its final
 // commit so the caller can review/amend the generated changes before
-// committing manually. When deploy is true, a generic deploy marker is written
-// under .verv/deploy for future deploy tooling to key off of.
+// committing manually. When deploy is true, a .verv/deploy folder is scaffolded
+// for future deploy tooling to read and write its own state in.
 func initVirtualGoProject(fast, dirty, deploy bool) []Action {
 	acts := []Action{
 		go_actions.PrepareProjectStructure{}, // basic go project structure
@@ -35,7 +35,7 @@ func initVirtualGoProject(fast, dirty, deploy bool) []Action {
 	}
 
 	if deploy {
-		acts = append(acts, go_actions.PrepareDeployMarker{})
+		acts = append(acts, go_actions.PrepareDeployFolder{})
 	}
 
 	acts = append(acts,

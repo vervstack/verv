@@ -49,7 +49,7 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 
 	c.Flags().Bool(
 		processor.VervDeployFlag, false,
-		`write a generic .verv/deploy marker for future deploy tooling to key off of`)
+		`scaffold a .verv/deploy folder for future deploy tooling to key off of`)
 
 	return c
 }

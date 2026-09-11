@@ -63,8 +63,8 @@ func Test_InitProject_Deploy(t *testing.T) {
 		deploy     bool
 		wantDeploy bool
 	}{
-		{name: "deploy flag adds deploy marker", deploy: true, wantDeploy: true},
-		{name: "no deploy flag skips deploy marker", deploy: false, wantDeploy: false},
+		{name: "deploy flag adds deploy folder", deploy: true, wantDeploy: true},
+		{name: "no deploy flag skips deploy folder", deploy: false, wantDeploy: false},
 	}
 
 	for _, tt := range tests {
@@ -74,15 +74,15 @@ func Test_InitProject_Deploy(t *testing.T) {
 			acts := InitProject(project.TypeGo, false, false, tt.deploy)
 			require.NotEmpty(t, acts)
 
-			hasDeployMarker := false
+			hasDeployFolder := false
 
 			for _, a := range acts {
-				if _, ok := a.(go_actions.PrepareDeployMarker); ok {
-					hasDeployMarker = true
+				if _, ok := a.(go_actions.PrepareDeployFolder); ok {
+					hasDeployFolder = true
 				}
 			}
 
-			require.Equal(t, tt.wantDeploy, hasDeployMarker)
+			require.Equal(t, tt.wantDeploy, hasDeployFolder)
 		})
 	}
 }
