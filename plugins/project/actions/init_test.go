@@ -7,6 +7,7 @@ import (
 
 	"go.vervstack.ru/verv/plugins/project"
 	"go.vervstack.ru/verv/plugins/project/actions/git"
+	"go.vervstack.ru/verv/plugins/project/actions/go_actions"
 )
 
 func Test_InitProject_Fast(t *testing.T) {
@@ -29,7 +30,7 @@ func Test_InitProject_Fast(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			acts := InitProject(project.TypeGo, tt.fast, tt.dirty)
+			acts := InitProject(project.TypeGo, tt.fast, tt.dirty, false)
 			require.NotEmpty(t, acts)
 
 			hasGitInit := false
@@ -50,6 +51,38 @@ func Test_InitProject_Fast(t *testing.T) {
 func Test_InitProject_UnknownType(t *testing.T) {
 	t.Parallel()
 
-	acts := InitProject(project.Type("unknown"), false, false)
+	acts := InitProject(project.Type("unknown"), false, false, false)
 	require.Nil(t, acts)
+}
+
+func Test_InitProject_Deploy(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name       string
+		deploy     bool
+		wantDeploy bool
+	}{
+		{name: "deploy flag adds deploy folder", deploy: true, wantDeploy: true},
+		{name: "no deploy flag skips deploy folder", deploy: false, wantDeploy: false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			acts := InitProject(project.TypeGo, false, false, tt.deploy)
+			require.NotEmpty(t, acts)
+
+			hasDeployFolder := false
+
+			for _, a := range acts {
+				if _, ok := a.(go_actions.PrepareDeployFolder); ok {
+					hasDeployFolder = true
+				}
+			}
+
+			require.Equal(t, tt.wantDeploy, hasDeployFolder)
+		})
+	}
 }
