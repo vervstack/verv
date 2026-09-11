@@ -11,6 +11,8 @@ import (
 const (
 	VervMarkerDir    = ".verv"
 	VervonomiconFile = "vervonomicon.yaml"
+
+	VervDeployDir = "deploy"
 )
 
 type Vervonomicon struct {

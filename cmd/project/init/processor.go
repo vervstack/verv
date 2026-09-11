@@ -47,6 +47,10 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 		processor.DirtyFlag, "d", false,
 		`skip git commit after codegen (repo is still initialized/hooks installed)`)
 
+	c.Flags().Bool(
+		processor.VervDeployFlag, false,
+		`write a generic .verv/deploy marker for future deploy tooling to key off of`)
+
 	return c
 }
 
@@ -74,7 +78,12 @@ func (p *Proc) run(cmd *cobra.Command, cmdArgs []string) (err error) {
 		return rerrors.Wrap(err, "error reading dirty flag")
 	}
 
-	proj, err := p.createProject(cArgs, fast, dirty)
+	deploy, err := cmd.Flags().GetBool(processor.VervDeployFlag)
+	if err != nil {
+		return rerrors.Wrap(err, "error reading verv-deploy flag")
+	}
+
+	proj, err := p.createProject(cArgs, fast, dirty, deploy)
 	if err != nil {
 		return rerrors.Wrap(err, "error building project")
 	}

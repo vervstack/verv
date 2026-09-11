@@ -13,9 +13,10 @@ import (
 )
 
 const (
-	PathFlag  = "path"
-	FastFlag  = "fast"
-	DirtyFlag = "dirty"
+	PathFlag       = "path"
+	FastFlag       = "fast"
+	DirtyFlag      = "dirty"
+	VervDeployFlag = "verv-deploy"
 )
 
 // Processor - represents a single process of execution.
