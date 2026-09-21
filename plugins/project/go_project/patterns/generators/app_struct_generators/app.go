@@ -137,9 +137,9 @@ func (a *AppFileGenArgs) mergeContentImports() error {
 		for importPath, dependencyAlias := range ac.Imports {
 			appAlias, ok := a.Imports[importPath]
 			if ok && appAlias != dependencyAlias {
-				return rerrors.New("Fatal error: app already imported package " +
+				return rerrors.New("app already imported package " +
 					importPath + " with alias " + appAlias +
-					". But dependency requires this package to be imported as " +
+					", but dependency requires this package to be imported as " +
 					dependencyAlias)
 			}
 

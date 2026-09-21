@@ -14,9 +14,9 @@ var distFS embed.FS
 func NewServer() (http.Handler, error) {
 	mux := http.NewServeMux()
 
-	distSub, err := fs.Sub(distFS, {{ .DistPath }})
+	distSub, err := fs.Sub(distFS, "{{ .DistPath }}")
 	if err != nil {
-	return nil, rerrors.Wrap(err, "error creating dist fs")
+		return nil, rerrors.Wrap(err, "error creating dist fs")
 	}
 
 	ffs := http.FileServer(http.FS(distSub))

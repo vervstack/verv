@@ -221,15 +221,13 @@ func (f *Folder) isUnchangedFromOlderVersion() bool {
 		return false
 	}
 
-	var idx int
-
-	for idx = range f.olderVersion {
+	for idx := range f.olderVersion {
 		if f.olderVersion[idx] != f.Content[idx] {
-			break
+			return false
 		}
 	}
 
-	return len(f.olderVersion) != idx-1
+	return true
 }
 
 func (f *Folder) buildDir(pth string) error {

@@ -9,3 +9,7 @@ test:
 
 gen:
 	go generate ./
+
+deploy-proxy:
+	scp local/*.ssl.conf germ:~/web/configs/
+	ssh germ 'cd web && make reload'

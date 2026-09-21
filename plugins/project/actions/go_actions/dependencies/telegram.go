@@ -79,7 +79,7 @@ func (t Telegram) applyClient(proj Project) error {
 func (t Telegram) applyFolder(proj Project) error {
 	ok, err := containsDependencyFolder(t.Cfg.Env.PathToServers, proj.GetFolder(), t.GetFolderName())
 	if err != nil {
-		return err
+		return rerrors.Wrap(err, "error finding Dependency path")
 	}
 
 	if ok {
