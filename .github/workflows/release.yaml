@@ -9,14 +9,50 @@ jobs:
   tag-release:
     runs-on: ${{ vars.UBUNTU_IMAGE }}
     outputs:
-      tag: ${{ steps.release.outputs.tag }}
+      tag: ${{ steps.confirm-tag.outputs.tag }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # RedSockActions/release_tag's own internal checkout is shallow and
+      # fetches no tags, so `git describe` inside it fails and it never sets
+      # a usable outputs.tag — it still creates the release fine (a Python
+      # string-comparison quirk makes the version check pass regardless),
+      # just without a reliable signal for downstream jobs. Determine "was a
+      # new tag actually cut this run" ourselves instead, from the remote
+      # tag's existence before and after the release step.
+      - name: Read target version
+        id: version
+        run: |
+          VERSION=$(python3 -c "import yaml; print(yaml.safe_load(open('version/version.yaml'))['app_info']['version'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check tag state before release
+        id: before
+        run: |
+          EXISTED=""
+          if git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.version }}" | grep -q .; then
+            EXISTED="true"
+          fi
+          echo "existed=$EXISTED" >> "$GITHUB_OUTPUT"
+
       - name: Release
         id: release
         uses: RedSockActions/release_tag@v0.0.5
         with:
           token: ${{ github.token }}
           config_path: version/version.yaml
+
+      - name: Confirm new tag was created
+        id: confirm-tag
+        run: |
+          TAG=""
+          if [ -z "${{ steps.before.outputs.existed }}" ]; then
+            if git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.version }}" | grep -q .; then
+              TAG="${{ steps.version.outputs.version }}"
+            fi
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
   build-binaries:
     needs: [tag-release]
