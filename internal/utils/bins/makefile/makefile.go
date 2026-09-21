@@ -51,7 +51,7 @@ func Run(wd, mkFilePath string, command string) (string, error) {
 
 	msg, err := cmd.Execute(req)
 	if err != nil {
-		return "", rerrors.Wrap(err, "error running command:"+command+". "+err.Error())
+		return "", rerrors.Wrap(err, "error running command: "+command)
 	}
 
 	return msg, nil

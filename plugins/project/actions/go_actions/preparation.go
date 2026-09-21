@@ -229,7 +229,7 @@ func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder
 		}
 
 		if !exists {
-			transportFolder.Add(implFolders...)
+			transportFolder.Add(implF)
 		}
 	}
 }

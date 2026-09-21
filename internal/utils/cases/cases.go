@@ -39,6 +39,10 @@ var initialisms = []string{"acl", "api", "ascii", "cpu", "css", "dns",
 	"xss", "sip", "rtp", "amqp", "db", "ts"}
 
 func ToPascal(newName string) string {
+	if newName == "" {
+		return ""
+	}
+
 	pascalNameSB := bytes.Buffer{}
 	nameRuned := []rune(newName)
 

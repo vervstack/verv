@@ -23,8 +23,7 @@ func generateServerInitFileAndArgs(servers matreshka.Servers) (InitServerListene
 	for _, server := range servers {
 		if serversMustHaveNames && server.Name == "" {
 			return InitServerListenersArgs{}, nil,
-				rerrors.Wrap(ErrServerMustHaveName,
-					"server \""+server.Name+"\" doesn't exist in config")
+				ErrServerMustHaveName
 		}
 
 		name := matreshka.ServerName(server.Name)
