@@ -11,6 +11,7 @@ import (
 	addProject "go.vervstack.ru/verv/cmd/project/add"
 	initProject "go.vervstack.ru/verv/cmd/project/init"
 	tidyProject "go.vervstack.ru/verv/cmd/project/tidy"
+	deployVelez "go.vervstack.ru/verv/cmd/velez/deploy"
 	"go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/colors"
@@ -64,6 +65,7 @@ Run this to install it:
 	root.AddCommand(initProject.NewCommand(basicProc))
 	root.AddCommand(tidyProject.NewCommand(basicProc))
 	root.AddCommand(addProject.NewCommand(basicProc))
+	root.AddCommand(deployVelez.NewCommand(basicProc))
 
 	if len(os.Args) == 1 {
 		code, exit := runCommandMenu(root, basicProc)
