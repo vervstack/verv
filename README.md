@@ -6,6 +6,11 @@
  go install go.vervstack.ru/verv@latest
  ```
 
+Or, without a Go toolchain, install a prebuilt binary:
+```shell
+wget -qO- https://github.com/vervstack/verv/releases/latest/download/install.sh | bash
+```
+
 
 ### Features: 
   - create and manage a Golang projects

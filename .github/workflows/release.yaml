@@ -8,9 +8,58 @@ on:
 jobs:
   tag-release:
     runs-on: ${{ vars.UBUNTU_IMAGE }}
+    outputs:
+      tag: ${{ steps.release.outputs.tag }}
     steps:
       - name: Release
+        id: release
         uses: RedSockActions/release_tag@v0.0.5
         with:
           token: ${{ github.token }}
           config_path: version/version.yaml
+
+  build-binaries:
+    needs: [tag-release]
+    if: ${{ needs.tag-release.outputs.tag != '' }}
+    runs-on: ${{ vars.UBUNTU_IMAGE }}
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        goos: [linux, darwin]
+        goarch: [amd64, arm64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+
+      - name: Build
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: 0
+        run: go build -o dist/verv_${{ matrix.goos }}_${{ matrix.goarch }} .
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.tag-release.outputs.tag }}
+          files: dist/verv_${{ matrix.goos }}_${{ matrix.goarch }}
+
+  publish-install-script:
+    needs: [tag-release]
+    if: ${{ needs.tag-release.outputs.tag != '' }}
+    runs-on: ${{ vars.UBUNTU_IMAGE }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.tag-release.outputs.tag }}
+          files: scripts/install.sh
