@@ -2,13 +2,14 @@
 ## verv - is a simple cli tool for managing Go projects
 
 ### Installation
-``` shell
- go install go.vervstack.ru/verv@latest
- ```
-
-Or, without a Go toolchain, install a prebuilt binary:
 ```shell
 wget -qO- https://github.com/vervstack/verv/releases/latest/download/install.sh | bash
+```
+Detects your OS/arch (Linux/macOS, amd64/arm64) and installs the matching binary to `/usr/local/bin/verv`.
+
+Or, with a Go toolchain:
+```shell
+go install go.vervstack.ru/verv@latest
 ```
 
 
