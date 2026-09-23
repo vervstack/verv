@@ -46,7 +46,10 @@ func matchesAnyPattern(patterns []string, name, parent string) bool {
 			continue
 		}
 
-		if strings.Contains(pattern, "/") {
+		anchored := strings.HasPrefix(pattern, "/")
+		pattern = strings.TrimPrefix(pattern, "/")
+
+		if anchored || strings.Contains(pattern, "/") {
 			if matched, _ := path.Match(pattern, relPath); matched {
 				return true
 			}

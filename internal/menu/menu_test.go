@@ -51,6 +51,7 @@ func Test_BuildEntries_FiltersHiddenAndDeprecated(t *testing.T) {
 	require.Same(t, initCmd, entries[0].Cmd)
 	require.Equal(t, "🚀", entries[0].Emoji)
 	require.False(t, entries[0].RequiresProject)
+	require.Equal(t, menu.GroupProject, entries[0].Group)
 
 	require.Equal(t, "tidy", entries[1].Name)
 	require.Equal(t, tidyCmd.Short, entries[1].Short)
@@ -58,6 +59,22 @@ func Test_BuildEntries_FiltersHiddenAndDeprecated(t *testing.T) {
 	require.Same(t, tidyCmd, entries[1].Cmd)
 	require.Equal(t, "🧹", entries[1].Emoji)
 	require.True(t, entries[1].RequiresProject)
+	require.Equal(t, menu.GroupProject, entries[1].Group)
+}
+
+func Test_BuildEntries_ReadsGroupAnnotation(t *testing.T) {
+	t.Parallel()
+
+	deployCmd := &cobra.Command{
+		Use:         "deploy-velez",
+		Run:         noopRun,
+		Annotations: map[string]string{"verv:group": menu.GroupVelez},
+	}
+
+	entries := menu.BuildEntries([]*cobra.Command{deployCmd})
+
+	require.Len(t, entries, 1)
+	require.Equal(t, menu.GroupVelez, entries[0].Group)
 }
 
 func Test_BuildEntries_DefaultEmojiWhenUnset(t *testing.T) {

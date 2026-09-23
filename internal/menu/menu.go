@@ -5,14 +5,20 @@ import (
 )
 
 const (
-	// annotationEmoji and annotationRequiresProject are the cobra.Command
-	// Annotations keys commands set to opt into a picker icon and/or a
-	// "needs an existing verv project" gate, keeping BuildEntries free of a
-	// hardcoded command-name list.
+	// annotationEmoji, annotationRequiresProject, and annotationGroup are the
+	// cobra.Command Annotations keys commands set to opt into a picker icon,
+	// a "needs an existing verv project" gate, and/or a picker section,
+	// keeping BuildEntries free of a hardcoded command-name list.
 	annotationEmoji           = "verv:emoji"
 	annotationRequiresProject = "verv:requiresProject"
+	annotationGroup           = "verv:group"
 
 	defaultEntryEmoji = "▫️"
+
+	// GroupProject and GroupVelez are the picker section keys. A command with
+	// no verv:group annotation defaults to GroupProject.
+	GroupProject = "project"
+	GroupVelez   = "velez"
 )
 
 // Entry describes a single top-level command as presented in the interactive
@@ -24,6 +30,7 @@ type Entry struct {
 	Cmd             *cobra.Command
 	Emoji           string
 	RequiresProject bool
+	Group           string
 }
 
 // BuildEntries converts cobra commands into menu Entry values, filtering out
@@ -44,6 +51,11 @@ func BuildEntries(cmds []*cobra.Command) []Entry {
 			emoji = defaultEntryEmoji
 		}
 
+		group := c.Annotations[annotationGroup]
+		if group == "" {
+			group = GroupProject
+		}
+
 		entries = append(entries, Entry{
 			Name:            c.Name(),
 			Short:           c.Short,
@@ -51,6 +63,7 @@ func BuildEntries(cmds []*cobra.Command) []Entry {
 			Cmd:             c,
 			Emoji:           emoji,
 			RequiresProject: c.Annotations[annotationRequiresProject] == "true",
+			Group:           group,
 		})
 	}
 

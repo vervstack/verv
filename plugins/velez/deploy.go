@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"go.redsock.ru/rerrors"
 
@@ -18,6 +19,12 @@ const (
 	dockerSockMount = "/var/run/docker.sock:/var/run/docker.sock"
 	diskMount       = "/dev/disk:/dev/disk"
 	runMount        = "/run:/run"
+
+	// pullTimeout overrides cmd.Execute's 5s default, which is sized for
+	// quick admin commands (docker ps/stop/rm) — a multi-layer image pull
+	// over the network routinely runs longer and was getting SIGKILLed
+	// mid-layer by the expiring context.
+	pullTimeout = 10 * time.Minute
 )
 
 // Deploy pulls the given vervstack/velez image tag, stops and removes any
@@ -50,8 +57,9 @@ func pullImage(printer io.IO, image string) error {
 	spinner.Start("Pulling " + image)
 
 	_, err := cmd.Execute(cmd.Request{
-		Tool: "docker",
-		Args: []string{"pull", image},
+		Tool:    "docker",
+		Args:    []string{"pull", image},
+		Timeout: pullTimeout,
 	})
 	if err != nil {
 		spinner.Stop(false, "Pulling "+image+" — failed")

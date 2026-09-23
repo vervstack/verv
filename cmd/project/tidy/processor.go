@@ -27,7 +27,7 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 	c := &cobra.Command{
 		Use:   "tidy",
 		Short: "Cleans project",
-		Long:  "Can be used clean project",
+		Long:  "Can be used to regenerate config, Makefile, Dockerfile, and other generated project files",
 
 		RunE: proc.run,
 

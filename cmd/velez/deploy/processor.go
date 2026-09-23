@@ -11,6 +11,7 @@ import (
 	"go.redsock.ru/rerrors"
 
 	"go.vervstack.ru/verv/internal/io"
+	"go.vervstack.ru/verv/internal/menu"
 	"go.vervstack.ru/verv/internal/processor"
 	"go.vervstack.ru/verv/plugins/velez"
 )
@@ -47,7 +48,7 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 
 		RunE: proc.run,
 
-		Annotations: map[string]string{"verv:emoji": "🛰️"},
+		Annotations: map[string]string{"verv:emoji": "🛰️", "verv:group": menu.GroupVelez},
 
 		Hidden: runtime.GOOS != "linux",
 
