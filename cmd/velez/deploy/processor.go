@@ -78,7 +78,7 @@ func (p *velezDeploy) run(cmd *cobra.Command, _ []string) error {
 		return rerrors.Wrap(err, "error fetching velez tags")
 	}
 
-	version, aborted, err := selectVersion(tags)
+	version, aborted, err := selectVersion(p.io, tags)
 	if err != nil {
 		return rerrors.Wrap(err, "error selecting velez version")
 	}
@@ -139,7 +139,7 @@ func (p *velezDeploy) resolvePort(cmd *cobra.Command) (port int, aborted bool, e
 		return port, false, nil
 	}
 
-	portStr, aborted, err := promptWithDefault("Host port for the Velez node", strconv.Itoa(port))
+	portStr, aborted, err := promptWithDefault(p.io, "Host port for the Velez node", strconv.Itoa(port))
 	if err != nil {
 		return 0, false, rerrors.Wrap(err, "error prompting for port")
 	}
@@ -163,7 +163,7 @@ func (p *velezDeploy) resolveKeyPath(cmd *cobra.Command) (keyPath string, aborte
 	}
 
 	if !cmd.Flags().Changed(KeyPathFlag) {
-		keyPath, aborted, err = promptWithDefault("Path to store Velez's keys", keyPath)
+		keyPath, aborted, err = promptWithDefault(p.io, "Path to store Velez's keys", keyPath)
 		if err != nil {
 			return "", false, rerrors.Wrap(err, "error prompting for key path")
 		}
