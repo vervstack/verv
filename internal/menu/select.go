@@ -2,7 +2,6 @@ package menu
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 
@@ -118,7 +117,7 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 		header:         headerText,
 	}
 
-	_, err := tea.NewProgram(model, tea.WithOutput(os.Stderr), tea.WithAltScreen()).Run()
+	_, err := tea.NewProgram(model, tea.WithOutput(os.Stderr)).Run()
 	if err != nil {
 		if errors.Is(err, tea.ErrInterrupted) {
 			return nil, nil
@@ -126,13 +125,6 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 
 		return nil, rerrors.Wrap(err, "error running command picker")
 	}
-
-	// The picker's whole frame, header included, lived on the alt-screen
-	// buffer and vanishes with it once the program exits — reprint it on the
-	// normal buffer so whatever the chosen command prints next still has it
-	// for context.
-	fmt.Println(headerText)
-	fmt.Println()
 
 	if form.State == huh.StateAborted {
 		return nil, nil
@@ -160,10 +152,10 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 //     after every keystroke, bypassing that mechanism entirely.
 //
 // It also renders the header itself, rather than the caller Println-ing it
-// to the normal screen buffer before the program starts: tea.WithAltScreen
-// swaps to a separate buffer immediately, which would hide that output for
-// the whole picker session and only reveal it again — with no picker output
-// mixed in — once the program exits.
+// before the program starts: bubbletea's inline (non-alt-screen) renderer
+// repaints its own view region every frame, so a header printed beforehand
+// would get overwritten by the first repaint unless it's part of the same
+// View().
 type navModel struct {
 	form           *huh.Form
 	sel            *huh.Select[*cobra.Command]
