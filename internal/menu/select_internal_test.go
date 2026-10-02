@@ -10,6 +10,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const (
+	tidyName = "tidy"
+)
+
 func Test_OrderedGroups_Scenarios(t *testing.T) {
 	t.Parallel()
 
@@ -18,8 +22,8 @@ func Test_OrderedGroups_Scenarios(t *testing.T) {
 		headlessLinux bool
 		want          []string
 	}{
-		{"headless linux leads with velez", true, []string{GroupVelez, GroupProject}},
-		{"otherwise leads with project", false, []string{GroupProject, GroupVelez}},
+		{"headless linux leads with velez", true, []string{GroupVelez, GroupProject, GroupSettings}},
+		{"otherwise leads with project", false, []string{GroupProject, GroupVelez, GroupSettings}},
 	}
 
 	for _, tc := range cases {
@@ -36,11 +40,11 @@ func Test_OrderedGroups_Scenarios(t *testing.T) {
 func Test_GroupedOptions_InsertsHeaderPerNonEmptySection(t *testing.T) {
 	t.Parallel()
 
-	tidyCmd := &cobra.Command{Use: "tidy"}
+	tidyCmd := &cobra.Command{Use: tidyName}
 	deployCmd := &cobra.Command{Use: "deploy-velez"}
 
 	entries := []Entry{
-		{Name: "tidy", Cmd: tidyCmd, Group: GroupProject},
+		{Name: tidyName, Cmd: tidyCmd, Group: GroupProject},
 		{Name: "deploy-velez", Cmd: deployCmd, Group: GroupVelez},
 	}
 
@@ -56,8 +60,8 @@ func Test_GroupedOptions_InsertsHeaderPerNonEmptySection(t *testing.T) {
 func Test_GroupedOptions_SkipsEmptySection(t *testing.T) {
 	t.Parallel()
 
-	tidyCmd := &cobra.Command{Use: "tidy"}
-	entries := []Entry{{Name: "tidy", Cmd: tidyCmd, Group: GroupProject}}
+	tidyCmd := &cobra.Command{Use: tidyName}
+	entries := []Entry{{Name: tidyName, Cmd: tidyCmd, Group: GroupProject}}
 
 	options := groupedOptions(entries, []string{GroupVelez, GroupProject}, Header{})
 
@@ -69,10 +73,10 @@ func Test_GroupedOptions_SkipsEmptySection(t *testing.T) {
 func Test_FirstSelectable_SkipsHeaders(t *testing.T) {
 	t.Parallel()
 
-	tidyCmd := &cobra.Command{Use: "tidy"}
+	tidyCmd := &cobra.Command{Use: tidyName}
 	options := []huh.Option[*cobra.Command]{
 		huh.NewOption("Project", (*cobra.Command)(nil)),
-		huh.NewOption("tidy", tidyCmd),
+		huh.NewOption(tidyName, tidyCmd),
 	}
 
 	got := firstSelectable(options)
@@ -83,8 +87,8 @@ func Test_FirstSelectable_SkipsHeaders(t *testing.T) {
 func Test_GroupedOptions_HeaderPlainAndOptionsIndented(t *testing.T) {
 	t.Parallel()
 
-	tidyCmd := &cobra.Command{Use: "tidy", Short: "🧹 tidy"}
-	entries := []Entry{{Name: "tidy", Emoji: "🧹", Cmd: tidyCmd, Group: GroupProject}}
+	tidyCmd := &cobra.Command{Use: tidyName, Short: "🧹 tidy"}
+	entries := []Entry{{Name: tidyName, Emoji: "🧹", Cmd: tidyCmd, Group: GroupProject}}
 
 	options := groupedOptions(entries, []string{GroupProject}, Header{})
 
@@ -140,6 +144,7 @@ func Test_NavModel_SkipsHeaderOnDown(t *testing.T) {
 		Value(&chosen)
 
 	form := huh.NewForm(huh.NewGroup(sel))
+
 	form.SubmitCmd = tea.Quit
 	form.CancelCmd = tea.Interrupt
 
@@ -178,6 +183,7 @@ func Test_NavModel_UpdatesDescriptionOnEveryNavStep(t *testing.T) {
 		Value(&chosen)
 
 	form := huh.NewForm(huh.NewGroup(sel))
+
 	form.SubmitCmd = tea.Quit
 	form.CancelCmd = tea.Interrupt
 
@@ -196,7 +202,41 @@ func Test_NavModel_UpdatesDescriptionOnEveryNavStep(t *testing.T) {
 	// without that rebuild and miss the bug entirely.
 	updated, _ := model.Update(tea.KeyMsg{Type: tea.KeyDown})
 
-	navUpdated := updated.(navModel)
+	navUpdated, ok := updated.(navModel)
+	require.True(t, ok)
 	require.Contains(t, navUpdated.View(), "description B")
 	require.NotContains(t, navUpdated.View(), "description A")
+}
+
+func Test_RenderHeader_ShowsUpdateNoticeUnderLogo(t *testing.T) {
+	t.Parallel()
+
+	got := renderHeader(Header{Path: "~/x", UpdateVersion: "v9.9.9"})
+
+	require.Contains(t, got, "Update available: v9.9.9")
+	require.Less(t, strings.Index(got, "╚═══╝"), strings.Index(got, "Update available"))
+}
+
+func Test_RenderHeader_OmitsUpdateNoticeWhenUpToDate(t *testing.T) {
+	t.Parallel()
+
+	got := renderHeader(Header{Path: "~/x"})
+
+	require.NotContains(t, got, "Update available")
+}
+
+func Test_GroupedOptions_PlacesSettingsLast(t *testing.T) {
+	t.Parallel()
+
+	tidyCmd := &cobra.Command{Use: tidyName}
+	upgradeCmd := &cobra.Command{Use: "upgrade"}
+	entries := []Entry{
+		{Name: "upgrade", Cmd: upgradeCmd, Group: GroupSettings},
+		{Name: tidyName, Cmd: tidyCmd, Group: GroupProject},
+	}
+
+	options := groupedOptions(entries, orderedGroups(false), Header{})
+
+	require.Len(t, options, 4)
+	require.Same(t, upgradeCmd, options[3].Value)
 }

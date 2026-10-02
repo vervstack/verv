@@ -15,10 +15,11 @@ const (
 
 	defaultEntryEmoji = "▫️"
 
-	// GroupProject and GroupVelez are the picker section keys. A command with
+	// GroupProject, GroupVelez and GroupSettings are the picker section keys. A command with
 	// no verv:group annotation defaults to GroupProject.
-	GroupProject = "project"
-	GroupVelez   = "velez"
+	GroupProject  = "project"
+	GroupVelez    = "velez"
+	GroupSettings = "settings"
 )
 
 // Entry describes a single top-level command as presented in the interactive

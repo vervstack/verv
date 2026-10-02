@@ -23,6 +23,9 @@ type Header struct {
 	Version       string
 	Path          string
 	Emoji         string
+
+	// UpdateVersion is the newer release tag when one is available, "" otherwise.
+	UpdateVersion string
 }
 
 // BuildHeader inspects wd for the .verv/vervonomicon.yaml marker (the strict
@@ -52,7 +55,7 @@ func BuildHeader(wd string, cfg *vervconfig.VervConfig) Header {
 
 	conf, err := project.LoadProjectConfig(wd, cfg)
 	if err == nil {
-		h.Version = conf.AppConfig.AppInfo.Version
+		h.Version = conf.Version
 	}
 
 	return h

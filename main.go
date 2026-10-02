@@ -11,6 +11,7 @@ import (
 	addProject "go.vervstack.ru/verv/cmd/project/add"
 	initProject "go.vervstack.ru/verv/cmd/project/init"
 	tidyProject "go.vervstack.ru/verv/cmd/project/tidy"
+	upgradeVerv "go.vervstack.ru/verv/cmd/upgrade"
 	deployVelez "go.vervstack.ru/verv/cmd/velez/deploy"
 	"go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/internal/io"
@@ -36,12 +37,8 @@ func run() int {
 	}()
 
 	newVersion, canUpdate := version.CanUpdate()
-	if canUpdate {
-		io.StdIO{}.Println(`
-⚙️⚙️⚙️ Update is available ⚙️⚙️⚙️
-Run this to install it:
-	go install go.vervstack.ru/verv@` + newVersion + `
-`)
+	if !canUpdate {
+		newVersion = ""
 	}
 
 	root := &cobra.Command{
@@ -66,9 +63,10 @@ Run this to install it:
 	root.AddCommand(tidyProject.NewCommand(basicProc))
 	root.AddCommand(addProject.NewCommand(basicProc))
 	root.AddCommand(deployVelez.NewCommand(basicProc))
+	root.AddCommand(upgradeVerv.NewCommand(basicProc, newVersion))
 
 	if len(os.Args) == 1 {
-		code, exit := runCommandMenu(root, basicProc)
+		code, exit := runCommandMenu(root, basicProc, newVersion)
 		if exit {
 			return code
 		}
@@ -88,8 +86,10 @@ Run this to install it:
 // `verv` invocation. It returns the exit code to use and whether run should
 // return immediately with it; when exit is false, root has been prepared
 // (via SetArgs) for the caller's normal root.Execute() call.
-func runCommandMenu(root *cobra.Command, basicProc processor.Processor) (code int, exit bool) {
+func runCommandMenu(root *cobra.Command, basicProc processor.Processor, updateVersion string) (code int, exit bool) {
 	header := menu.BuildHeader(basicProc.WD, basicProc.VervConfig)
+
+	header.UpdateVersion = updateVersion
 
 	entry, err := menu.Select(menu.BuildEntries(root.Commands()), header)
 	if err != nil {

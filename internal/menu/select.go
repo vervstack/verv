@@ -15,20 +15,33 @@ import (
 const (
 	disabledSuffix = " (needs a verv project)"
 	optionIndent   = "  "
+
+	wordmark = `
+██╗   ██╗███████╗██████╗ ██╗   ██╗
+██║   ██║██╔════╝██╔══██╗██║   ██║
+██║   ██║█████╗  ██████╔╝██║   ██║
+╚██╗ ██╔╝██╔══╝  ██╔══██╗╚██╗ ██╔╝
+ ╚████╔╝ ███████╗██║  ██║ ╚████╔╝
+  ╚═══╝  ╚══════╝╚═╝  ╚═╝  ╚═══╝  `
 )
 
-var errGroupHeaderNotSelectable = rerrors.New("that's a section header — pick an option below it")
-
-// groupLabels names each picker section header, in GroupProject's default
-// display order (headless Linux swaps this — see orderedGroups).
-var groupLabels = map[string]string{
-	GroupProject: "Project",
-	GroupVelez:   "Velez node",
-}
-
 var (
+	errGroupHeaderNotSelectable = rerrors.New("that's a section header — pick an option below it")
+
+	// groupLabels names each picker section header, in GroupProject's default
+	// display order (headless Linux swaps this — see orderedGroups).
+	groupLabels = map[string]string{
+		GroupProject:  "Project",
+		GroupVelez:    "Velez node",
+		GroupSettings: "Settings",
+	}
+
 	headerStyle   = lipgloss.NewStyle().Bold(true)
 	selectorStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("212")).SetString("◆─ ")
+	wordmarkStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("212"))
+	badgeStyle    = lipgloss.NewStyle().Bold(true)
+	pathStyle     = lipgloss.NewStyle().Faint(true)
+	updateStyle   = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("214"))
 )
 
 // Theme returns huh's default (Charm) theme with the selected-row cursor
@@ -42,42 +55,20 @@ func Theme() *huh.Theme {
 	return t
 }
 
-const wordmark = `
-██╗   ██╗███████╗██████╗ ██╗   ██╗
-██║   ██║██╔════╝██╔══██╗██║   ██║
-██║   ██║█████╗  ██████╔╝██║   ██║
-╚██╗ ██╔╝██╔══╝  ██╔══██╗╚██╗ ██╔╝
- ╚████╔╝ ███████╗██║  ██║ ╚████╔╝
-  ╚═══╝  ╚══════╝╚═╝  ╚═╝  ╚═══╝  `
-
-var (
-	wordmarkStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("212"))
-	badgeStyle    = lipgloss.NewStyle().Bold(true)
-	pathStyle     = lipgloss.NewStyle().Faint(true)
-)
+func updateNotice(tag string) string {
+	return "⬆ Update available: " + tag + " — pick Settings > upgrade"
+}
 
 // Select renders an arrow-key-navigable picker over entries and returns the
 // chosen Entry. It returns (nil, nil) if the user aborts (Ctrl+C/Esc) — a
 // quiet abort rather than an error — and (nil, err) on any other failure.
 func Select(entries []Entry, header Header) (*Entry, error) {
-	headerText := renderHeader(header)
-
 	options := groupedOptions(entries, orderedGroups(runningHeadlessLinux()), header)
 
 	chosen := firstSelectable(options)
 
-	entryFor := func(cmd *cobra.Command) *Entry {
-		for i := range entries {
-			if entries[i].Cmd == cmd {
-				return &entries[i]
-			}
-		}
-
-		return nil
-	}
-
 	descriptionFor := func() string {
-		e := entryFor(chosen)
+		e := findEntry(entries, chosen)
 		if e == nil {
 			return ""
 		}
@@ -90,30 +81,11 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 		Options(options...).
 		Value(&chosen).
 		Description(descriptionFor()).
-		Validate(func(cmd *cobra.Command) error {
-			if cmd == nil {
-				return rerrors.Wrap(errGroupHeaderNotSelectable)
-			}
-
-			e := entryFor(cmd)
-			if e != nil && e.RequiresProject && !header.IsVervProject {
-				return rerrors.New(e.Name + " needs an existing verv project — run `verv init` first")
-			}
-
-			return nil
-		})
-
-	km := huh.NewDefaultKeyMap()
-	km.Quit.SetKeys("ctrl+c", "esc")
-	km.Select.Filter.SetEnabled(false)
-	km.Select.GotoTop.SetEnabled(false)
-	km.Select.GotoBottom.SetEnabled(false)
-	km.Select.HalfPageUp.SetEnabled(false)
-	km.Select.HalfPageDown.SetEnabled(false)
+		Validate(validateChoice(entries, header))
 
 	form := huh.NewForm(huh.NewGroup(sel)).
 		WithShowHelp(false).
-		WithKeyMap(km).
+		WithKeyMap(pickerKeyMap()).
 		WithTheme(Theme())
 
 	// Run our own tea.Program instead of form.Run(), wrapped in navModel, so
@@ -129,7 +101,7 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 		chosen:         &chosen,
 		descriptionFor: descriptionFor,
 		maxSkip:        len(options),
-		header:         headerText,
+		header:         renderHeader(header),
 	}
 
 	_, err := tea.NewProgram(model, tea.WithOutput(os.Stderr)).Run()
@@ -145,13 +117,55 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 		return nil, nil
 	}
 
+	return findEntry(entries, chosen), nil
+}
+
+func findEntry(entries []Entry, cmd *cobra.Command) *Entry {
 	for i := range entries {
-		if entries[i].Cmd == chosen {
-			return &entries[i], nil
+		if entries[i].Cmd == cmd {
+			return &entries[i]
 		}
 	}
 
-	return nil, nil
+	return nil
+}
+
+func validateChoice(entries []Entry, header Header) func(*cobra.Command) error {
+	return func(cmd *cobra.Command) error {
+		if cmd == nil {
+			return rerrors.Wrap(errGroupHeaderNotSelectable)
+		}
+
+		e := findEntry(entries, cmd)
+		if e != nil && e.RequiresProject && !header.IsVervProject {
+			return rerrors.New(e.Name + " needs an existing verv project — run `verv init` first")
+		}
+
+		return nil
+	}
+}
+
+func pickerKeyMap() *huh.KeyMap {
+	km := huh.NewDefaultKeyMap()
+	km.Quit.SetKeys("ctrl+c", "esc")
+	km.Select.Filter.SetEnabled(false)
+	km.Select.GotoTop.SetEnabled(false)
+	km.Select.GotoBottom.SetEnabled(false)
+	km.Select.HalfPageUp.SetEnabled(false)
+	km.Select.HalfPageDown.SetEnabled(false)
+
+	return km
+}
+
+// asForm narrows a tea.Model returned by huh.Form.Update back to the form,
+// keeping the previous form if huh ever returns something else.
+func asForm(model tea.Model, fallback *huh.Form) *huh.Form {
+	f, ok := model.(*huh.Form)
+	if !ok {
+		return fallback
+	}
+
+	return f
 }
 
 // navModel wraps a *huh.Form to work around two gaps in huh's Select field:
@@ -187,18 +201,19 @@ func (m navModel) Init() tea.Cmd {
 func (m navModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if !isSelectNavKey(msg) {
 		newForm, cmd := m.form.Update(msg)
-		m.form = newForm.(*huh.Form)
+
+		m.form = asForm(newForm, m.form)
 
 		return m, cmd
 	}
 
 	var cmd tea.Cmd
 
-	for i := 0; i < m.maxSkip; i++ {
+	for range m.maxSkip {
 		var newForm tea.Model
 
 		newForm, cmd = m.form.Update(msg)
-		m.form = newForm.(*huh.Form)
+		m.form = asForm(newForm, m.form)
 
 		if *m.chosen != nil || m.form.State != huh.StateNormal {
 			break
@@ -213,7 +228,8 @@ func (m navModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	// more (unhandled, no-op) message through to force a rebuild against the
 	// description we just set.
 	newForm, _ := m.form.Update(refreshMsg{})
-	m.form = newForm.(*huh.Form)
+
+	m.form = asForm(newForm, m.form)
 
 	return m, cmd
 }
@@ -246,13 +262,13 @@ func isSelectNavKey(msg tea.Msg) bool {
 
 // orderedGroups returns the picker section order. On a headless Linux
 // machine — the profile of a server someone is deploying a Velez node onto —
-// the Velez section leads; everywhere else Project leads.
+// the Velez section leads; everywhere else Project leads. Settings always comes last.
 func orderedGroups(headlessLinux bool) []string {
 	if headlessLinux {
-		return []string{GroupVelez, GroupProject}
+		return []string{GroupVelez, GroupProject, GroupSettings}
 	}
 
-	return []string{GroupProject, GroupVelez}
+	return []string{GroupProject, GroupVelez, GroupSettings}
 }
 
 // groupedOptions renders entries as huh options, section by section in the
@@ -307,6 +323,10 @@ func firstSelectable(options []huh.Option[*cobra.Command]) *cobra.Command {
 // marker counts), or just the plain working directory path otherwise.
 func renderHeader(header Header) string {
 	lines := []string{wordmarkStyle.Render(wordmark)}
+
+	if header.UpdateVersion != "" {
+		lines = append(lines, updateStyle.Render(updateNotice(header.UpdateVersion)))
+	}
 
 	if !header.IsVervProject {
 		lines = append(lines, pathStyle.Render(header.Path))

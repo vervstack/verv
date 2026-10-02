@@ -16,9 +16,9 @@ func Test_IsHeadlessLinux_Scenarios(t *testing.T) {
 		waylandDisplay string
 		want           bool
 	}{
-		{"linux, no session", "linux", "", "", true},
-		{"linux, X11 session", "linux", ":0", "", false},
-		{"linux, wayland session", "linux", "", "wayland-0", false},
+		{"linux, no session", osLinux, "", "", true},
+		{"linux, X11 session", osLinux, ":0", "", false},
+		{"linux, wayland session", osLinux, "", "wayland-0", false},
 		{"darwin", "darwin", "", "", false},
 	}
 
