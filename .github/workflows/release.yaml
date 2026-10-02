@@ -4,55 +4,50 @@ on:
   push:
     branches:
       - master
+    # A hand-pushed vX.Y.Z tag is how a minor/major release is cut; master pushes only ever bump patch.
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+concurrency:
+  group: release
 
 jobs:
   tag-release:
     runs-on: ${{ vars.UBUNTU_IMAGE }}
+    permissions:
+      contents: write
     outputs:
-      tag: ${{ steps.confirm-tag.outputs.tag }}
+      tag: ${{ steps.next-tag.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      # RedSockActions/release_tag's own internal checkout is shallow and
-      # fetches no tags, so `git describe` inside it fails and it never sets
-      # a usable outputs.tag — it still creates the release fine (a Python
-      # string-comparison quirk makes the version check pass regardless),
-      # just without a reliable signal for downstream jobs. Determine "was a
-      # new tag actually cut this run" ourselves instead, from the remote
-      # tag's existence before and after the release step.
-      - name: Read target version
-        id: version
-        run: |
-          VERSION=$(python3 -c "import yaml; print(yaml.safe_load(open('version/version.yaml'))['app_info']['version'])")
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Check tag state before release
-        id: before
-        run: |
-          EXISTED=""
-          if git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.version }}" | grep -q .; then
-            EXISTED="true"
-          fi
-          echo "existed=$EXISTED" >> "$GITHUB_OUTPUT"
-
-      - name: Release
-        id: release
-        uses: RedSockActions/release_tag@v0.0.5
         with:
-          token: ${{ github.token }}
-          config_path: version/version.yaml
+          fetch-depth: 0
 
-      - name: Confirm new tag was created
-        id: confirm-tag
+      # The version lives in git tags only. A tag push releases that tag; a master push releases the
+      # next patch after the latest tag, unless HEAD is already tagged (nothing new to release).
+      - name: Resolve tag to release
+        id: next-tag
         run: |
+          git fetch --tags --force
           TAG=""
-          if [ -z "${{ steps.before.outputs.existed }}" ]; then
-            if git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.version }}" | grep -q .; then
-              TAG="${{ steps.version.outputs.version }}"
-            fi
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            TAG="$GITHUB_REF_NAME"
+          elif ! git tag --points-at HEAD | grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            LAST=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -1)
+            LAST=${LAST:-v0.0.0}
+            IFS=. read -r MAJOR MINOR PATCH <<<"${LAST#v}"
+            TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Create release and tag
+        if: ${{ steps.next-tag.outputs.tag != '' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.next-tag.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: true
 
   build-binaries:
     needs: [tag-release]
@@ -76,7 +71,10 @@ jobs:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
           CGO_ENABLED: 0
-        run: go build -o dist/verv_${{ matrix.goos }}_${{ matrix.goarch }} .
+        run: >
+          go build
+          -ldflags "-X go.vervstack.ru/verv/version.version=${{ needs.tag-release.outputs.tag }}"
+          -o dist/verv_${{ matrix.goos }}_${{ matrix.goarch }} .
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v2

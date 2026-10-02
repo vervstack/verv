@@ -68,7 +68,7 @@ func CanUpdate() (string, bool) {
 		return "", false
 	}
 
-	localVersion, err := v.NewVersion(version)
+	localVersion, err := v.NewVersion(GetVersion())
 	if err != nil {
 		return "", false
 	}

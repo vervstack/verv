@@ -1,29 +1,38 @@
 package version
 
 import (
-	_ "embed"
-
-	"gopkg.in/yaml.v3"
+	"runtime/debug"
+	"strings"
 )
 
-var (
-	//go:embed version.yaml
-	versionConfig []byte
-	version       string
+const (
+	devVersion = "dev"
 )
 
-//nolint:gochecknoinits // one-time parse of embedded version.yaml into the package-level version string
-func init() {
-	versionsMap := map[string]map[string]string{}
+// version is set at release build time: -ldflags "-X go.vervstack.ru/verv/version.version=<tag>".
+var version string
 
-	err := yaml.Unmarshal(versionConfig, versionsMap)
-	if err != nil {
-		panic("error parsing version config" + err.Error())
+// GetVersion returns the release tag baked in at build time. A `go install ...@vX` build carries
+// no ldflags, so it falls back to the module version Go embeds; any other build reports "dev".
+func GetVersion() string {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		info = &debug.BuildInfo{}
 	}
 
-	version = versionsMap["app_info"]["version"]
+	return resolveVersion(version, info.Main.Version)
 }
 
-func GetVersion() string {
-	return version
+// resolveVersion prefers the baked-in tag, then a clean tagged module version. Pseudo-versions
+// ("v0.0.50-0.2026...") and dirty builds ("+dirty") are local builds, not releases.
+func resolveVersion(baked, moduleVersion string) string {
+	if baked != "" {
+		return baked
+	}
+
+	if moduleVersion == "" || moduleVersion == "(devel)" || strings.ContainsAny(moduleVersion, "-+") {
+		return devVersion
+	}
+
+	return moduleVersion
 }
