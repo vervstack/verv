@@ -170,50 +170,77 @@ func (a PrepareServer) Do(p project.IProject) error {
 	return nil
 }
 
+// generateTransportFiles scaffolds internal/transport's fixed files once. None of them carry a
+// "Code generated" header - like custom.go (see app_struct_generators.GenerateAppFiles), they're
+// a starting point meant to be hand-edited after the first scaffold, so each is only generated
+// when it doesn't already exist: overwriting on every tidy silently discarded prior edits (see
+// the bug report that motivated this guard).
 func generateTransportFiles(transportFolder *folder.Folder, fullProjPath string) error {
-	serverManagerContent, err := transport_generators.GenerateServerManager()
-	if err != nil {
-		return rerrors.Wrap(err, "error generating server manager")
+	if transportFolder.GetByPath(patterns.ServerManagerFileName) == nil {
+		serverManagerContent, err := transport_generators.GenerateServerManager()
+		if err != nil {
+			return rerrors.Wrap(err, "error generating server manager")
+		}
+
+		transportFolder.Add(&folder.Folder{Name: patterns.ServerManagerFileName, Content: serverManagerContent})
 	}
 
-	transportFolder.Add(&folder.Folder{Name: patterns.ServerManagerFileName, Content: serverManagerContent})
+	if transportFolder.GetByPath(patterns.GrpcServerFileName) == nil {
+		grpcServerContent := transport_generators.GenerateGrpcServer()
 
-	grpcServerContent := transport_generators.GenerateGrpcServer()
-
-	transportFolder.Add(&folder.Folder{Name: patterns.GrpcServerFileName, Content: grpcServerContent})
-
-	httpServerContent, err := transport_generators.GenerateHttpServer()
-	if err != nil {
-		return rerrors.Wrap(err, "error generating http server")
+		transportFolder.Add(&folder.Folder{Name: patterns.GrpcServerFileName, Content: grpcServerContent})
 	}
 
-	transportFolder.Add(&folder.Folder{Name: patterns.HttpServerFileName, Content: httpServerContent})
+	if transportFolder.GetByPath(patterns.HttpServerFileName) == nil {
+		httpServerContent, err := transport_generators.GenerateHttpServer()
+		if err != nil {
+			return rerrors.Wrap(err, "error generating http server")
+		}
 
-	gatewayMuxContent, err := transport_generators.GenerateGatewayMux(fullProjPath)
-	if err != nil {
-		return rerrors.Wrap(err, "error generating gateway mux")
+		transportFolder.Add(&folder.Folder{Name: patterns.HttpServerFileName, Content: httpServerContent})
 	}
 
-	transportFolder.Add(&folder.Folder{Name: patterns.GatewayMuxFileName, Content: gatewayMuxContent})
+	if transportFolder.GetByPath(patterns.GatewayMuxFileName) == nil {
+		gatewayMuxContent, err := transport_generators.GenerateGatewayMux(fullProjPath)
+		if err != nil {
+			return rerrors.Wrap(err, "error generating gateway mux")
+		}
+
+		transportFolder.Add(&folder.Folder{Name: patterns.GatewayMuxFileName, Content: gatewayMuxContent})
+	}
 
 	return nil
 }
 
+// generateMiddlewareFiles scaffolds internal/middleware's fixed files once - same "generate only
+// if missing" rationale as generateTransportFiles above.
 func generateMiddlewareFiles(middlewareFolder *folder.Folder) {
-	cookieNamesContent := middleware_generators.GenerateCookieNames()
-	middlewareFolder.Add(&folder.Folder{Name: patterns.CookieNamesFileName, Content: cookieNamesContent})
+	if middlewareFolder.GetByPath(patterns.CookieNamesFileName) == nil {
+		cookieNamesContent := middleware_generators.GenerateCookieNames()
+		middlewareFolder.Add(&folder.Folder{Name: patterns.CookieNamesFileName, Content: cookieNamesContent})
+	}
 
-	cookieAnnotatorContent := middleware_generators.GenerateCookieAnnotator()
-	middlewareFolder.Add(&folder.Folder{Name: patterns.CookieAnnotatorFileName, Content: cookieAnnotatorContent})
+	if middlewareFolder.GetByPath(patterns.CookieAnnotatorFileName) == nil {
+		cookieAnnotatorContent := middleware_generators.GenerateCookieAnnotator()
+		middlewareFolder.Add(&folder.Folder{Name: patterns.CookieAnnotatorFileName, Content: cookieAnnotatorContent})
+	}
 
-	cookieResponseContent := middleware_generators.GenerateCookieResponse()
-	middlewareFolder.Add(&folder.Folder{Name: patterns.CookieResponseFileName, Content: cookieResponseContent})
+	if middlewareFolder.GetByPath(patterns.CookieResponseFileName) == nil {
+		cookieResponseContent := middleware_generators.GenerateCookieResponse()
+		middlewareFolder.Add(&folder.Folder{Name: patterns.CookieResponseFileName, Content: cookieResponseContent})
+	}
 
-	csrfInterceptorContent := middleware_generators.GenerateCSRFInterceptor()
-	middlewareFolder.Add(&folder.Folder{Name: patterns.CSRFInterceptorFileName, Content: csrfInterceptorContent})
+	if middlewareFolder.GetByPath(patterns.CSRFInterceptorFileName) == nil {
+		csrfInterceptorContent := middleware_generators.GenerateCSRFInterceptor()
+		middlewareFolder.Add(&folder.Folder{Name: patterns.CSRFInterceptorFileName, Content: csrfInterceptorContent})
+	}
 
-	requestSchemeAnnotatorContent := middleware_generators.GenerateRequestSchemeAnnotator()
-	middlewareFolder.Add(&folder.Folder{Name: patterns.RequestSchemeAnnotatorFileName, Content: requestSchemeAnnotatorContent})
+	if middlewareFolder.GetByPath(patterns.RequestSchemeAnnotatorFileName) == nil {
+		requestSchemeAnnotatorContent := middleware_generators.GenerateRequestSchemeAnnotator()
+		middlewareFolder.Add(
+			&folder.Folder{Name: patterns.RequestSchemeAnnotatorFileName, Content: requestSchemeAnnotatorContent},
+		)
+	}
 }
 
 func addMissingImplFolders(transportFolder *folder.Folder, implFolders []*folder.Folder) {

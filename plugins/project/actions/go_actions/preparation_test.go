@@ -56,3 +56,56 @@ func Test_PrepareServer_AttachesTransportFolder(t *testing.T) {
 		require.NotEmptyf(t, f.Content, "internal/middleware/%s must have content", fileName)
 	}
 }
+
+// Test_PrepareServer_KeepsExistingTransportAndMiddlewareFiles proves the fix for a bug where
+// PrepareServer.Do unconditionally re-generated manager.go, http.go and the cookie middleware
+// files on every tidy run, silently discarding hand edits - none of these files carry a
+// "Code generated" header, so (like custom.go, see app_struct_generators.GenerateAppFiles) they
+// are meant to be scaffolded once and then left alone.
+func Test_PrepareServer_KeepsExistingTransportAndMiddlewareFiles(t *testing.T) {
+	t.Parallel()
+
+	const customManager = "package transport\n// hand-edited, must survive tidy\n"
+
+	const customCookieResponse = "package middleware\n// hand-edited, must survive tidy\n"
+
+	proj := project_mock.GetMockProject(t, project_mock.WithGrpcServer(50051),
+		project_mock.WithFile(
+			patterns.InternalFolder+"/"+patterns.TransportFolder+"/"+patterns.ServerManagerFileName,
+			[]byte(customManager),
+		),
+		project_mock.WithFile(
+			patterns.InternalFolder+"/"+patterns.MiddlewareFolder+"/"+patterns.CookieResponseFileName,
+			[]byte(customCookieResponse),
+		),
+	)
+
+	err := PrepareServer{}.Do(proj)
+	require.NoError(t, err)
+
+	transportFolder := proj.GetFolder().GetByPath(patterns.InternalFolder, patterns.TransportFolder)
+	manager := transportFolder.GetByPath(patterns.ServerManagerFileName)
+	require.Equal(t, customManager, string(manager.Content), "manager.go must not be regenerated if it already exists")
+
+	middlewareFolder := proj.GetFolder().GetByPath(patterns.InternalFolder, patterns.MiddlewareFolder)
+	cookieResponse := middlewareFolder.GetByPath(patterns.CookieResponseFileName)
+	require.Equal(t, customCookieResponse, string(cookieResponse.Content),
+		"cookie_response.go must not be regenerated if it already exists")
+
+	// Files that weren't already present are still scaffolded normally.
+	stillScaffolded := []string{patterns.GrpcServerFileName, patterns.HttpServerFileName, patterns.GatewayMuxFileName}
+	for _, fileName := range stillScaffolded {
+		f := transportFolder.GetByPath(fileName)
+		require.NotNilf(t, f, "internal/transport/%s must still be generated", fileName)
+		require.NotEmptyf(t, f.Content, "internal/transport/%s must have content", fileName)
+	}
+
+	for _, fileName := range []string{
+		patterns.CookieNamesFileName, patterns.CookieAnnotatorFileName,
+		patterns.CSRFInterceptorFileName, patterns.RequestSchemeAnnotatorFileName,
+	} {
+		f := middlewareFolder.GetByPath(fileName)
+		require.NotNilf(t, f, "internal/middleware/%s must still be generated", fileName)
+		require.NotEmptyf(t, f.Content, "internal/middleware/%s must have content", fileName)
+	}
+}
