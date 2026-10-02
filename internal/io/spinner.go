@@ -56,6 +56,24 @@ func (s *Spinner) Start(label string) {
 
 // Stop halts the animation and prints a final, static line summarizing the step.
 func (s *Spinner) Stop(success bool, finalMsg string) {
+	mark := "✅"
+	color := colors.ColorGreen
+
+	if !success {
+		mark = "❌"
+		color = colors.ColorRed
+	}
+
+	s.stop(mark, color, finalMsg)
+}
+
+// StopInfo halts the animation and prints a final, static informational line
+// — for a step that neither succeeded nor failed, just reported a fact.
+func (s *Spinner) StopInfo(finalMsg string) {
+	s.stop("ℹ", colors.ColorCyan, finalMsg)
+}
+
+func (s *Spinner) stop(mark string, color colors.Color, finalMsg string) {
 	s.mu.Lock()
 
 	if !s.running {
@@ -70,14 +88,6 @@ func (s *Spinner) Stop(success bool, finalMsg string) {
 
 	close(s.stopCh)
 	<-s.doneCh
-
-	mark := "✅"
-	color := colors.ColorGreen
-
-	if !success {
-		mark = "❌"
-		color = colors.ColorRed
-	}
 
 	s.printer.Print(clearLine)
 	s.printer.PrintlnColored(color, fmt.Sprintf("%s %s", mark, finalMsg))

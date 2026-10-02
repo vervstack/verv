@@ -9,6 +9,7 @@ import (
 
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/internal/menu"
 )
 
 const (
@@ -38,7 +39,7 @@ func selectVersion(printer io.IO, tags []string) (version string, aborted bool, 
 		Options(options...).
 		Value(&chosen)
 
-	form := huh.NewForm(huh.NewGroup(sel)).WithShowHelp(false)
+	form := huh.NewForm(huh.NewGroup(sel)).WithShowHelp(false).WithTheme(menu.Theme())
 
 	err = form.Run()
 	if err != nil {

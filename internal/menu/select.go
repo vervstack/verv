@@ -26,7 +26,21 @@ var groupLabels = map[string]string{
 	GroupVelez:   "Velez node",
 }
 
-var headerStyle = lipgloss.NewStyle().Bold(true)
+var (
+	headerStyle   = lipgloss.NewStyle().Bold(true)
+	selectorStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("212")).SetString("◆─ ")
+)
+
+// Theme returns huh's default (Charm) theme with the selected-row cursor
+// swapped for a diamond-and-dash marker instead of the plain "> " arrow.
+func Theme() *huh.Theme {
+	t := huh.ThemeCharm()
+
+	t.Focused.SelectSelector = selectorStyle
+	t.Blurred.SelectSelector = selectorStyle
+
+	return t
+}
 
 const wordmark = `
 ██╗   ██╗███████╗██████╗ ██╗   ██╗
@@ -99,7 +113,8 @@ func Select(entries []Entry, header Header) (*Entry, error) {
 
 	form := huh.NewForm(huh.NewGroup(sel)).
 		WithShowHelp(false).
-		WithKeyMap(km)
+		WithKeyMap(km).
+		WithTheme(Theme())
 
 	// Run our own tea.Program instead of form.Run(), wrapped in navModel, so
 	// that Up/Down (and their j/k/ctrl+n/ctrl+p aliases) step over the

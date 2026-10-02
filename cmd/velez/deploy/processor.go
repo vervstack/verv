@@ -124,7 +124,7 @@ func (p *velezDeploy) fetchTags(ctx context.Context) ([]string, error) {
 		return nil, rerrors.Wrap(err)
 	}
 
-	spinner.Stop(true, fmt.Sprintf("Found %d Velez version(s)", len(tags)))
+	spinner.StopInfo(fmt.Sprintf("Found %d Velez version(s)", len(tags)))
 
 	return tags, nil
 }
