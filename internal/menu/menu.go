@@ -12,6 +12,7 @@ const (
 	annotationEmoji           = "verv:emoji"
 	annotationRequiresProject = "verv:requiresProject"
 	annotationGroup           = "verv:group"
+	annotationRequiresDocker  = "verv:requiresDocker"
 
 	defaultEntryEmoji = "▫️"
 
@@ -31,6 +32,7 @@ type Entry struct {
 	Cmd             *cobra.Command
 	Emoji           string
 	RequiresProject bool
+	RequiresDocker  bool
 	Group           string
 }
 
@@ -64,6 +66,7 @@ func BuildEntries(cmds []*cobra.Command) []Entry {
 			Cmd:             c,
 			Emoji:           emoji,
 			RequiresProject: c.Annotations[annotationRequiresProject] == "true",
+			RequiresDocker:  c.Annotations[annotationRequiresDocker] == "true",
 			Group:           group,
 		})
 	}

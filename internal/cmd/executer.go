@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"io"
+	"os"
 	"os/exec"
+	"strings"
 	"time"
 
 	"go.redsock.ru/rerrors"
@@ -16,6 +18,16 @@ type Request struct {
 	WorkDir string
 	// Timeout overrides the default command timeout. Zero uses the default.
 	Timeout time.Duration
+	// Stdin is fed to the command's standard input when non-empty.
+	Stdin string
+	// Env lists extra KEY=VALUE entries appended to the current environment.
+	Env []string
+}
+
+func IsInstalled(tool string) bool {
+	_, err := exec.LookPath(tool)
+
+	return err == nil
 }
 
 func Execute(r Request) (message string, err error) {
@@ -27,6 +39,14 @@ func Execute(r Request) (message string, err error) {
 	cmd := exec.CommandContext(ctx, r.Tool, r.Args...)
 	if r.WorkDir != "" {
 		cmd.Dir = r.WorkDir
+	}
+
+	if r.Stdin != "" {
+		cmd.Stdin = strings.NewReader(r.Stdin)
+	}
+
+	if len(r.Env) > 0 {
+		cmd.Env = append(os.Environ(), r.Env...)
 	}
 
 	errRW := &RW{}

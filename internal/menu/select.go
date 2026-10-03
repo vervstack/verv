@@ -13,8 +13,9 @@ import (
 )
 
 const (
-	disabledSuffix = " (needs a verv project)"
-	optionIndent   = "  "
+	disabledSuffix       = " (needs a verv project)"
+	dockerDisabledSuffix = " (needs docker engine)"
+	optionIndent         = "  "
 
 	wordmark = `
 ██╗   ██╗███████╗██████╗ ██╗   ██╗
@@ -27,6 +28,8 @@ const (
 
 var (
 	errGroupHeaderNotSelectable = rerrors.New("that's a section header — pick an option below it")
+	errDockerRequired           = rerrors.New(
+		"Can't run without docker engine - install via setup server option or install docker manually")
 
 	// groupLabels names each picker section header, in GroupProject's default
 	// display order (headless Linux swaps this — see orderedGroups).
@@ -139,6 +142,10 @@ func validateChoice(entries []Entry, header Header) func(*cobra.Command) error {
 		e := findEntry(entries, cmd)
 		if e != nil && e.RequiresProject && !header.IsVervProject {
 			return rerrors.New(e.Name + " needs an existing verv project — run `verv init` first")
+		}
+
+		if e != nil && e.RequiresDocker && !header.IsDockerInstalled {
+			return rerrors.Wrap(errDockerRequired)
 		}
 
 		return nil
@@ -289,6 +296,10 @@ func groupedOptions(entries []Entry, groups []string, header Header) []huh.Optio
 			label := optionIndent + e.Emoji + " " + e.Name
 			if e.RequiresProject && !header.IsVervProject {
 				label += disabledSuffix
+			}
+
+			if e.RequiresDocker && !header.IsDockerInstalled {
+				label += dockerDisabledSuffix
 			}
 
 			groupOptions = append(groupOptions, huh.NewOption(label, e.Cmd))

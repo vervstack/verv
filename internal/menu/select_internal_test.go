@@ -240,3 +240,36 @@ func Test_GroupedOptions_PlacesSettingsLast(t *testing.T) {
 	require.Len(t, options, 4)
 	require.Same(t, upgradeCmd, options[3].Value)
 }
+
+func Test_ValidateChoice_DockerRequiredWithoutDocker(t *testing.T) {
+	t.Parallel()
+
+	deployCmd := &cobra.Command{Use: "deploy-velez"}
+	entries := []Entry{{Name: "deploy-velez", Cmd: deployCmd, RequiresDocker: true}}
+
+	err := validateChoice(entries, Header{IsDockerInstalled: false})(deployCmd)
+
+	require.ErrorIs(t, err, errDockerRequired)
+}
+
+func Test_ValidateChoice_DockerRequiredWithDocker(t *testing.T) {
+	t.Parallel()
+
+	deployCmd := &cobra.Command{Use: "deploy-velez"}
+	entries := []Entry{{Name: "deploy-velez", Cmd: deployCmd, RequiresDocker: true}}
+
+	err := validateChoice(entries, Header{IsDockerInstalled: true})(deployCmd)
+
+	require.NoError(t, err)
+}
+
+func Test_GroupedOptions_MarksDockerEntryWithoutDocker(t *testing.T) {
+	t.Parallel()
+
+	deployCmd := &cobra.Command{Use: "deploy-velez"}
+	entries := []Entry{{Name: "deploy-velez", Cmd: deployCmd, Group: GroupVelez, RequiresDocker: true}}
+
+	options := groupedOptions(entries, []string{GroupVelez}, Header{})
+
+	require.True(t, strings.HasSuffix(options[1].Key, dockerDisabledSuffix))
+}

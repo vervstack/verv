@@ -114,3 +114,20 @@ func Test_BuildEntries_PreservesOrder(t *testing.T) {
 	require.Equal(t, "init", entries[1].Name)
 	require.Equal(t, "tidy", entries[2].Name)
 }
+
+func Test_BuildEntries_ReadsRequiresDockerAnnotation(t *testing.T) {
+	t.Parallel()
+
+	deployCmd := &cobra.Command{
+		Use:         "deploy-velez",
+		Run:         noopRun,
+		Annotations: map[string]string{"verv:requiresDocker": "true"},
+	}
+	plainCmd := &cobra.Command{Use: "plain", Run: noopRun}
+
+	entries := menu.BuildEntries([]*cobra.Command{deployCmd, plainCmd})
+
+	require.Len(t, entries, 2)
+	require.True(t, entries[0].RequiresDocker)
+	require.False(t, entries[1].RequiresDocker)
+}

@@ -11,6 +11,7 @@ import (
 	addProject "go.vervstack.ru/verv/cmd/project/add"
 	initProject "go.vervstack.ru/verv/cmd/project/init"
 	tidyProject "go.vervstack.ru/verv/cmd/project/tidy"
+	setupServer "go.vervstack.ru/verv/cmd/server/setup"
 	upgradeVerv "go.vervstack.ru/verv/cmd/upgrade"
 	deployVelez "go.vervstack.ru/verv/cmd/velez/deploy"
 	"go.vervstack.ru/verv/internal/config"
@@ -64,9 +65,11 @@ func run() int {
 	root.AddCommand(addProject.NewCommand(basicProc))
 	deployVelezCmd := deployVelez.NewCommand(basicProc)
 	upgradeVelezCmd := deployVelez.NewUpgradeCommand(basicProc)
+	setupServerCmd := setupServer.NewCommand(basicProc, deployVelezCmd)
 
 	root.AddCommand(deployVelezCmd)
 	root.AddCommand(upgradeVelezCmd)
+	root.AddCommand(setupServerCmd)
 	root.AddCommand(upgradeVerv.NewCommand(basicProc, newVersion))
 
 	if len(os.Args) == 1 {

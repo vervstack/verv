@@ -48,7 +48,11 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 
 		RunE: proc.run,
 
-		Annotations: map[string]string{"verv:emoji": "🛰️", "verv:group": menu.GroupVelez},
+		Annotations: map[string]string{
+			"verv:emoji":          "🛰️",
+			"verv:group":          menu.GroupVelez,
+			"verv:requiresDocker": "true",
+		},
 
 		Hidden: runtime.GOOS != "linux",
 

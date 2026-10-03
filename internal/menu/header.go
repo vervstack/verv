@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"go.vervstack.ru/verv/internal/cmd"
 	vervconfig "go.vervstack.ru/verv/internal/config"
 	"go.vervstack.ru/verv/plugins/project"
 )
@@ -24,6 +25,8 @@ type Header struct {
 	Path          string
 	Emoji         string
 
+	IsDockerInstalled bool
+
 	// UpdateVersion is the newer release tag when one is available, "" otherwise.
 	UpdateVersion string
 }
@@ -34,7 +37,8 @@ type Header struct {
 // fails the whole header; it's simply left blank.
 func BuildHeader(wd string, cfg *vervconfig.VervConfig) Header {
 	h := Header{
-		Path: displayPath(wd),
+		Path:              displayPath(wd),
+		IsDockerInstalled: cmd.IsInstalled("docker"),
 	}
 
 	h.IsVervProject = project.IsVervProject(wd)
