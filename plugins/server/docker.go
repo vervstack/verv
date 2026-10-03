@@ -35,8 +35,6 @@ func installDocker(ctx context.Context, _ Options) (string, error) {
 
 	args := []string{
 		"install", "-y",
-		"-o", "Dpkg::Options::=--force-confdef",
-		"-o", "Dpkg::Options::=--force-confold",
 		"docker-ce", "docker-ce-cli", "containerd.io", "docker-buildx-plugin", "docker-compose-plugin",
 	}
 

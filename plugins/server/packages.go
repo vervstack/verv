@@ -12,6 +12,11 @@ import (
 const (
 	noninteractiveEnv = "DEBIAN_FRONTEND=noninteractive"
 
+	// Any apt-get call can finish configuring a package left half-installed by an earlier
+	// failure, and dpkg then asks about modified conffiles on a stdin that is closed.
+	keepConfDefOption = "Dpkg::Options::=--force-confdef"
+	keepConfOldOption = "Dpkg::Options::=--force-confold"
+
 	// aptTimeout overrides cmd.Execute's 5s default, sized for quick admin
 	// commands — package installs routinely run for minutes.
 	aptTimeout = 10 * time.Minute
@@ -32,9 +37,11 @@ func installBasePackages(_ context.Context, _ Options) (string, error) {
 }
 
 func aptGet(args ...string) error {
+	dpkgArgs := []string{"-o", keepConfDefOption, "-o", keepConfOldOption}
+
 	req := cmd.Request{
 		Tool:    "apt-get",
-		Args:    args,
+		Args:    append(dpkgArgs, args...),
 		Env:     []string{noninteractiveEnv},
 		Timeout: aptTimeout,
 	}

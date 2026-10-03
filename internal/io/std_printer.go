@@ -50,7 +50,7 @@ func (p StdIO) PrintColored(color colors.Color, in string) {
 func (p StdIO) Error(in string) {
 	p.Println("")
 
-	_, _ = os.Stderr.WriteString(in)
+	_, _ = os.Stderr.WriteString(in + colors.TerminalColor(colors.ColorDefault))
 }
 func (p StdIO) GetInput() (string, error) {
 	out, err := bufio.NewReader(os.Stdin).ReadString('\n')
