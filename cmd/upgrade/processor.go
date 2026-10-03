@@ -2,12 +2,15 @@ package upgrade
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"net/http"
 	"os"
 	"path/filepath"
 	"runtime"
+	"syscall"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -142,11 +145,48 @@ func install(ctx context.Context, url, dest string) error {
 		return rerrors.Wrap(err, "error writing release asset")
 	}
 
+	err = matchDestination(tmpPath, dest)
+	if err != nil {
+		_ = os.Remove(tmpPath)
+
+		return rerrors.Wrap(err, "error matching permissions of the replaced binary")
+	}
+
 	err = os.Rename(tmpPath, dest)
 	if err != nil {
 		_ = os.Remove(tmpPath)
 
 		return rerrors.Wrap(err, "error replacing binary")
+	}
+
+	return nil
+}
+
+// matchDestination copies the permission bits and owner of the file being replaced onto the new
+// one, so an upgrade keeps restrictions set at install time (e.g. root:verv 0750).
+func matchDestination(tmpPath, dest string) error {
+	info, err := os.Stat(dest)
+	if errors.Is(err, fs.ErrNotExist) {
+		return nil
+	}
+
+	if err != nil {
+		return rerrors.Wrap(err, "error reading current binary")
+	}
+
+	err = os.Chmod(tmpPath, info.Mode().Perm())
+	if err != nil {
+		return rerrors.Wrap(err, "error copying mode")
+	}
+
+	stat, ok := info.Sys().(*syscall.Stat_t)
+	if !ok {
+		return nil
+	}
+
+	err = os.Chown(tmpPath, int(stat.Uid), int(stat.Gid))
+	if err != nil {
+		return rerrors.Wrap(err, "error copying owner")
 	}
 
 	return nil

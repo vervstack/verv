@@ -33,6 +33,7 @@ func Setup(printer io.IO, opts Options) error {
 		{label: "Installing base packages", run: installBasePackages},
 		{label: "Installing Docker", run: installDocker},
 		{label: "Adding " + opts.UserName + " to docker and sudo groups", run: addUserToGroups},
+		{label: "Installing verv for " + opts.UserName, run: installVervBinary},
 	}
 
 	if opts.SshKeyUrl == "" {
