@@ -19,6 +19,7 @@ const (
 	dockerSockMount = "/var/run/docker.sock:/var/run/docker.sock"
 	diskMount       = "/dev/disk:/dev/disk"
 	runMount        = "/run:/run"
+	keysMountTarget = "/tmp/velez"
 
 	// pullTimeout overrides cmd.Execute's 5s default, which is sized for
 	// quick admin commands (docker ps/stop/rm) — a multi-layer image pull
@@ -127,7 +128,7 @@ func runContainer(printer io.IO, image string, port int, keyPath string) error {
 	spinner.Start("Starting " + containerName)
 
 	portMapping := strconv.Itoa(port) + ":" + containerPort
-	keyPathMount := keyPath + ":/tmp/velez"
+	keyPathMount := keyPath + ":" + keysMountTarget
 
 	args := []string{
 		"run",

@@ -62,10 +62,16 @@ func run() int {
 	root.AddCommand(initProject.NewCommand(basicProc))
 	root.AddCommand(tidyProject.NewCommand(basicProc))
 	root.AddCommand(addProject.NewCommand(basicProc))
-	root.AddCommand(deployVelez.NewCommand(basicProc))
+	deployVelezCmd := deployVelez.NewCommand(basicProc)
+	upgradeVelezCmd := deployVelez.NewUpgradeCommand(basicProc)
+
+	root.AddCommand(deployVelezCmd)
+	root.AddCommand(upgradeVelezCmd)
 	root.AddCommand(upgradeVerv.NewCommand(basicProc, newVersion))
 
 	if len(os.Args) == 1 {
+		deployVelez.PreferUpgrade(deployVelezCmd, upgradeVelezCmd)
+
 		code, exit := runCommandMenu(root, basicProc, newVersion)
 		if exit {
 			return code

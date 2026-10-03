@@ -26,7 +26,7 @@ const (
 // selectVersion renders an arrow-key-navigable picker over the given Velez
 // image tags and returns the chosen one. aborted is true if the user
 // aborted (Ctrl+C/Esc) — a quiet abort rather than an error.
-func selectVersion(printer io.IO, tags []string) (version string, aborted bool, err error) {
+func selectVersion(printer io.IO, title string, tags []string) (version string, aborted bool, err error) {
 	options := make([]huh.Option[string], 0, len(tags))
 	for _, t := range tags {
 		options = append(options, huh.NewOption(t, t))
@@ -35,7 +35,7 @@ func selectVersion(printer io.IO, tags []string) (version string, aborted bool, 
 	var chosen string
 
 	sel := huh.NewSelect[string]().
-		Title("Which Velez version would you like to deploy?").
+		Title(title).
 		Options(options...).
 		Value(&chosen)
 

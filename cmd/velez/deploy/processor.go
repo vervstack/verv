@@ -78,7 +78,7 @@ func (p *velezDeploy) run(cmd *cobra.Command, _ []string) error {
 		return rerrors.Wrap(err, "error fetching velez tags")
 	}
 
-	version, aborted, err := selectVersion(p.io, tags)
+	version, aborted, err := selectVersion(p.io, "Which Velez version would you like to deploy?", tags)
 	if err != nil {
 		return rerrors.Wrap(err, "error selecting velez version")
 	}
