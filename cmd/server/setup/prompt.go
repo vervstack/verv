@@ -16,16 +16,25 @@ const stepDone = "✅"
 
 var errEmptyPassword = rerrors.New("password must not be empty")
 
-// promptPassword asks for the password with masked echo. aborted is true if
-// the user aborted (Ctrl+C/Esc) — a quiet abort rather than an error.
-func promptPassword(printer io.IO, userName string) (password string, aborted bool, err error) {
+// promptPassword asks for the password with masked echo. For an existing
+// user an empty answer is valid and means "keep the current password". aborted
+// is true if the user aborted (Ctrl+C/Esc) — a quiet abort rather than an error.
+func promptPassword(
+	printer io.IO, userName string, isExistingUser bool,
+) (password string, aborted bool, err error) {
 	title := "Password for " + userName
 
 	input := huh.NewInput().
 		Title(title).
 		EchoMode(huh.EchoModePassword).
-		Validate(validatePassword).
 		Value(&password)
+
+	if isExistingUser {
+		title = "New password for " + userName
+		input.Title(title).Description("Leave empty to keep the current password")
+	} else {
+		input.Validate(validatePassword)
+	}
 
 	form := huh.NewForm(huh.NewGroup(input)).WithShowHelp(false)
 
@@ -36,6 +45,12 @@ func promptPassword(printer io.IO, userName string) (password string, aborted bo
 		}
 
 		return "", false, rerrors.Wrap(err, "error running password prompt")
+	}
+
+	if password == "" {
+		printer.PrintlnColored(colors.ColorGreen, fmt.Sprintf("%s %s: keeping current", stepDone, title))
+
+		return "", false, nil
 	}
 
 	printer.PrintlnColored(colors.ColorGreen, fmt.Sprintf("%s %s: ****", stepDone, title))

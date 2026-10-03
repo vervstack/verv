@@ -113,7 +113,9 @@ func (p *serverSetup) resolveOptions(cmd *cobra.Command) (opts server.Options, a
 		return opts, false, nil
 	}
 
-	opts.Password, aborted, err = promptPassword(p.io, opts.UserName)
+	isExistingUser := server.UserExists(opts.UserName)
+
+	opts.Password, aborted, err = promptPassword(p.io, opts.UserName, isExistingUser)
 	if err != nil {
 		return server.Options{}, false, rerrors.Wrap(err, "error prompting for password")
 	}

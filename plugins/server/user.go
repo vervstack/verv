@@ -15,16 +15,16 @@ func homeDir(userName string) string {
 	return filepath.Join(homeRoot, userName)
 }
 
-func userExists(userName string) bool {
+func UserExists(userName string) bool {
 	err := run("id", "-u", userName)
 
 	return err == nil
 }
 
 func ensureUser(_ context.Context, opts Options) (string, error) {
-	doneMessage := "User " + opts.UserName + " already existed, password updated"
+	doneMessage := "User " + opts.UserName + " already existed, password kept"
 
-	if !userExists(opts.UserName) {
+	if !UserExists(opts.UserName) {
 		err := run("adduser", "--quiet", "--disabled-password", "--shell", "/bin/bash",
 			"--home", homeDir(opts.UserName), "--gecos", opts.UserName, opts.UserName)
 		if err != nil {
@@ -32,6 +32,10 @@ func ensureUser(_ context.Context, opts Options) (string, error) {
 		}
 
 		doneMessage = "User " + opts.UserName + " created"
+	}
+
+	if opts.Password == "" {
+		return doneMessage, nil
 	}
 
 	req := cmd.Request{

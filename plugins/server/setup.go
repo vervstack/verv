@@ -106,7 +106,7 @@ func checkPreconditions(opts Options) error {
 		return rerrors.Wrap(errEmptyUserName)
 	}
 
-	if opts.Password == "" {
+	if opts.Password == "" && !UserExists(opts.UserName) {
 		return rerrors.Wrap(errEmptyPassword)
 	}
 
