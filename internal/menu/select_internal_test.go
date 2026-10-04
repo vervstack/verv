@@ -273,3 +273,44 @@ func Test_GroupedOptions_MarksDockerEntryWithoutDocker(t *testing.T) {
 
 	require.True(t, strings.HasSuffix(options[1].Key, dockerDisabledSuffix))
 }
+
+func Test_GroupedOptions_SetupProgressSuffix(t *testing.T) {
+	t.Parallel()
+
+	cases := []struct {
+		name       string
+		done       int
+		total      int
+		wantSuffix string
+	}{
+		{"incomplete shows progress", 2, 7, " [2/7 setup steps complete]"},
+		{"complete shows nothing", 7, 7, ""},
+		{"unknown total shows nothing", 0, 0, ""},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			setupCmd := &cobra.Command{Use: "setup-server"}
+			entries := []Entry{{Name: "setup-server", Cmd: setupCmd, Group: GroupVelez, ShowsSetupProgress: true}}
+			header := Header{SetupDone: tc.done, SetupTotal: tc.total}
+
+			options := groupedOptions(entries, []string{GroupVelez}, header)
+
+			require.Len(t, options, 2)
+			require.True(t, strings.HasSuffix(options[1].Key, "setup-server"+tc.wantSuffix))
+		})
+	}
+}
+
+func Test_GroupedOptions_SetupProgressSuffixOnlyForMarkedEntry(t *testing.T) {
+	t.Parallel()
+
+	tidyCmd := &cobra.Command{Use: tidyName}
+	entries := []Entry{{Name: tidyName, Cmd: tidyCmd, Group: GroupProject}}
+
+	options := groupedOptions(entries, []string{GroupProject}, Header{SetupDone: 1, SetupTotal: 7})
+
+	require.NotContains(t, options[1].Key, "setup steps complete")
+}

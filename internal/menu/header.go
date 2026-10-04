@@ -29,6 +29,11 @@ type Header struct {
 
 	// UpdateVersion is the newer release tag when one is available, "" otherwise.
 	UpdateVersion string
+
+	// SetupDone and SetupTotal count completed setup-server steps; a zero SetupTotal means
+	// unknown or not applicable.
+	SetupDone  int
+	SetupTotal int
 }
 
 // BuildHeader inspects wd for the .verv/vervonomicon.yaml marker (the strict

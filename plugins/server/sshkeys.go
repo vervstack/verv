@@ -13,6 +13,21 @@ import (
 	"go.redsock.ru/rerrors"
 )
 
+func areSshKeysInstalled(_ context.Context, opts Options) bool {
+	keysPath := filepath.Join(homeDir(opts.UserName), ".ssh", "authorized_keys")
+
+	content, err := os.ReadFile(keysPath)
+	if err != nil {
+		return false
+	}
+
+	return hasAuthorizedKeys(string(content))
+}
+
+func hasAuthorizedKeys(content string) bool {
+	return strings.TrimSpace(content) != ""
+}
+
 func installSshKeys(ctx context.Context, opts Options) (string, error) {
 	userName := opts.UserName
 

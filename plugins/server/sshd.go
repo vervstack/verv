@@ -13,6 +13,19 @@ const (
 	sshdConfigMode = 0o644
 )
 
+func isSshdSetUp(_ context.Context, _ Options) bool {
+	content, err := os.ReadFile(sshdConfigPath)
+	if err != nil {
+		return false
+	}
+
+	return isPubkeyAuthEnabled(string(content))
+}
+
+func isPubkeyAuthEnabled(content string) bool {
+	return !strings.Contains(content, "#PubkeyAuthentication yes")
+}
+
 func enablePubkeyAuthInSshd(_ context.Context, _ Options) (string, error) {
 	content, err := os.ReadFile(sshdConfigPath)
 	if err != nil {

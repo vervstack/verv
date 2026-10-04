@@ -14,6 +14,12 @@ const (
 	annotationGroup           = "verv:group"
 	annotationRequiresDocker  = "verv:requiresDocker"
 
+	// annotationShowsSetupProgress marks the command whose picker label shows how many
+	// setup steps are complete.
+	annotationShowsSetupProgress = "verv:showsSetupProgress"
+
+	annotationTrue = "true"
+
 	defaultEntryEmoji = "▫️"
 
 	// GroupProject, GroupVelez and GroupSettings are the picker section keys. A command with
@@ -34,6 +40,8 @@ type Entry struct {
 	RequiresProject bool
 	RequiresDocker  bool
 	Group           string
+
+	ShowsSetupProgress bool
 }
 
 // BuildEntries converts cobra commands into menu Entry values, filtering out
@@ -65,9 +73,11 @@ func BuildEntries(cmds []*cobra.Command) []Entry {
 			Long:            c.Long,
 			Cmd:             c,
 			Emoji:           emoji,
-			RequiresProject: c.Annotations[annotationRequiresProject] == "true",
-			RequiresDocker:  c.Annotations[annotationRequiresDocker] == "true",
+			RequiresProject: c.Annotations[annotationRequiresProject] == annotationTrue,
+			RequiresDocker:  c.Annotations[annotationRequiresDocker] == annotationTrue,
 			Group:           group,
+
+			ShowsSetupProgress: c.Annotations[annotationShowsSetupProgress] == annotationTrue,
 		})
 	}
 

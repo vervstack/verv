@@ -12,7 +12,10 @@ import (
 	"go.vervstack.ru/verv/internal/io/colors"
 )
 
-const stepDone = "✅"
+const (
+	stepDone              = "✅"
+	sysboxSuggestionCount = 3
+)
 
 var errEmptyPassword = rerrors.New("password must not be empty")
 
@@ -84,6 +87,67 @@ func confirmDeploy() (isConfirmed bool, aborted bool, err error) {
 		}
 
 		return false, false, rerrors.Wrap(err, "error running deploy confirmation")
+	}
+
+	return isConfirmed, false, nil
+}
+
+// promptSysboxVersion asks for a sysbox version with the newest ones as Tab suggestions; an empty answer
+// means the latest. versions is newest first and must not be empty.
+func promptSysboxVersion(printer io.IO, versions []string) (version string, aborted bool, err error) {
+	suggestions := versions[:min(sysboxSuggestionCount, len(versions))]
+
+	input := huh.NewInput().
+		Title("Sysbox version").
+		Placeholder("empty = latest (" + versions[0] + ")").
+		Description("Recent: " + strings.Join(suggestions, ", ") + " (Tab to complete)").
+		Suggestions(suggestions).
+		Value(&version)
+
+	form := huh.NewForm(huh.NewGroup(input)).WithShowHelp(false)
+
+	err = form.Run()
+	if err != nil {
+		if errors.Is(err, huh.ErrUserAborted) {
+			return "", true, nil
+		}
+
+		return "", false, rerrors.Wrap(err, "error running sysbox version prompt")
+	}
+
+	version = strings.TrimSpace(version)
+
+	shown := version
+	if shown == "" {
+		shown = "latest"
+	}
+
+	printer.PrintlnColored(colors.ColorGreen, fmt.Sprintf("%s Sysbox version: %s", stepDone, shown))
+
+	return version, false, nil
+}
+
+// confirmDockerRestart asks whether stopping the running containers by a Docker restart is acceptable,
+// defaulting to no. aborted is true if the user aborted (Ctrl+C/Esc).
+func confirmDockerRestart(containers int) (isConfirmed bool, aborted bool, err error) {
+	title := fmt.Sprintf("%d container(s) are running. Installing sysbox restarts Docker and stops them. Continue?",
+		containers)
+
+	confirm := huh.NewConfirm().
+		Title(title).
+		Affirmative("Yes").
+		Negative("No").
+		Value(&isConfirmed)
+
+	form := huh.NewForm(huh.NewGroup(confirm)).WithShowHelp(false)
+
+	err = form.Run()
+	if err != nil {
+		if errors.Is(err, huh.ErrUserAborted) {
+			return false, true, nil
+		}
+
+		return false, false, rerrors.Wrap(err, "error running docker restart confirmation")
 	}
 
 	return isConfirmed, false, nil

@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"go.redsock.ru/rerrors"
@@ -20,7 +21,11 @@ const (
 	// aptTimeout overrides cmd.Execute's 5s default, sized for quick admin
 	// commands — package installs routinely run for minutes.
 	aptTimeout = 10 * time.Minute
+
+	dpkgInstalledStatus = "install ok installed"
 )
+
+var basePackages = []string{"curl", sudoGroup, "ca-certificates", "gnupg"}
 
 func installBasePackages(_ context.Context, _ Options) (string, error) {
 	err := aptGet("update")
@@ -28,12 +33,31 @@ func installBasePackages(_ context.Context, _ Options) (string, error) {
 		return "", rerrors.Wrap(err, "error updating package index")
 	}
 
-	err = aptGet("install", "-y", "curl", "sudo", "ca-certificates", "gnupg")
+	installArgs := append([]string{"install", "-y"}, basePackages...)
+
+	err = aptGet(installArgs...)
 	if err != nil {
 		return "", rerrors.Wrap(err, "error installing base packages")
 	}
 
 	return "Base packages installed", nil
+}
+
+func areBasePackagesInstalled(_ context.Context, _ Options) bool {
+	for _, pkg := range basePackages {
+		req := cmd.Request{Tool: "dpkg-query", Args: []string{"-W", "-f", "${Status}", pkg}}
+
+		status, err := cmd.Execute(req)
+		if err != nil || !isDpkgInstalled(status) {
+			return false
+		}
+	}
+
+	return true
+}
+
+func isDpkgInstalled(status string) bool {
+	return strings.Contains(status, dpkgInstalledStatus)
 }
 
 func aptGet(args ...string) error {

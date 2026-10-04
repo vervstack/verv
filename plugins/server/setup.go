@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"os"
 
 	"go.redsock.ru/rerrors"
@@ -25,26 +26,23 @@ func Setup(printer io.IO, opts Options) error {
 	}
 
 	ctx := context.Background()
-	summary := make([]string, 0, 6)
-
-	steps := []step{
-		{label: "Creating user " + opts.UserName, run: ensureUser},
-		{label: "Setting up ssh", run: enablePubkeyAuthInSshd},
-		{label: "Installing base packages", run: installBasePackages},
-		{label: "Installing Docker", run: installDocker},
-		{label: "Adding " + opts.UserName + " to docker and sudo groups", run: addUserToGroups},
-		{label: "Installing verv for " + opts.UserName, run: installVervBinary},
-	}
+	steps := buildSteps(opts)
+	summary := make([]string, 0, len(steps))
 
 	if opts.SshKeyUrl == "" {
 		printer.PrintlnColored(colors.ColorYellow,
 			"variable SSH_KEY_URL is empty. You will need to install ssh key manually")
-	} else {
-		keysStep := step{label: "Installing ssh keys for " + opts.UserName, run: installSshKeys}
-		steps = append(steps, keysStep)
 	}
 
 	for _, s := range steps {
+		if isStepSkippable(ctx, opts, s) {
+			printer.PrintlnColored(colors.ColorGreen, "✅ "+s.doneLabel)
+
+			summary = append(summary, s.doneLabel)
+
+			continue
+		}
+
 		done, err := runStep(ctx, printer, s, opts)
 		if err != nil {
 			return rerrors.Wrap(err, "error during step: "+s.label)
@@ -58,9 +56,108 @@ func Setup(printer io.IO, opts Options) error {
 	return nil
 }
 
+// Progress returns how many setup steps are complete on this machine and how many exist.
+// Read-only, no root needed.
+func Progress(ctx context.Context, opts Options) (done, total int) {
+	return countDone(ctx, opts, buildSteps(opts))
+}
+
 type step struct {
 	label string
-	run   func(ctx context.Context, opts Options) (doneMessage string, err error)
+	// check reports the step's end state is already reached. Must be read-only and must work
+	// without root (the menu calls it as a normal user).
+	check func(ctx context.Context, opts Options) bool
+	// forceRun, when non-nil and true, runs the step even if check passes.
+	forceRun func(opts Options) bool
+	// doneLabel is printed when the step is skipped because check passed.
+	doneLabel string
+	run       func(ctx context.Context, opts Options) (doneMessage string, err error)
+}
+
+func buildSteps(opts Options) []step {
+	userName := opts.UserName
+
+	steps := []step{
+		{
+			label:     "Creating user " + userName,
+			check:     isUserSetUp,
+			forceRun:  isPasswordChangeRequested,
+			doneLabel: "User " + userName + " already exists",
+			run:       ensureUser,
+		},
+		{
+			label:     "Setting up ssh",
+			check:     isSshdSetUp,
+			doneLabel: "SSH already set up",
+			run:       enablePubkeyAuthInSshd,
+		},
+		{
+			label:     "Installing base packages",
+			check:     areBasePackagesInstalled,
+			doneLabel: "Base packages already installed",
+			run:       installBasePackages,
+		},
+		{
+			label:     "Installing Docker",
+			check:     isDockerInstalled,
+			doneLabel: "Docker already installed",
+			run:       installDocker,
+		},
+		{
+			label:     "Adding " + userName + " to docker and sudo groups",
+			check:     isUserInDockerAndSudoGroups,
+			doneLabel: userName + " already in docker and sudo groups",
+			run:       addUserToGroups,
+		},
+		{
+			label:     "Installing verv for " + userName,
+			check:     isVervBinaryInstalled,
+			doneLabel: "verv already installed to " + vervInstallPath,
+			run:       installVervBinary,
+		},
+		{
+			label:     "Installing sysbox",
+			check:     isSysboxSetUp,
+			doneLabel: "Sysbox already installed",
+			run:       installSysbox,
+		},
+	}
+
+	if opts.SshKeyUrl != "" {
+		keysStep := step{
+			label:     "Installing ssh keys for " + userName,
+			check:     areSshKeysInstalled,
+			forceRun:  isAlways,
+			doneLabel: "SSH keys already installed for " + userName,
+			run:       installSshKeys,
+		}
+
+		steps = append(steps, keysStep)
+	}
+
+	return steps
+}
+
+func isAlways(_ Options) bool {
+	return true
+}
+
+func isStepSkippable(ctx context.Context, opts Options, s step) bool {
+	if !s.check(ctx, opts) {
+		return false
+	}
+
+	return s.forceRun == nil || !s.forceRun(opts)
+}
+
+func countDone(ctx context.Context, opts Options, steps []step) (done, total int) {
+	for _, s := range steps {
+		if s.check(ctx, opts) {
+			done++
+		}
+	}
+
+	return done, len(steps)
 }
 
 func runStep(ctx context.Context, printer io.IO, s step, opts Options) (string, error) {
@@ -68,6 +165,17 @@ func runStep(ctx context.Context, printer io.IO, s step, opts Options) (string, 
 	spinner.Start(s.label)
 
 	done, err := s.run(ctx, opts)
+
+	var skip *skipError
+
+	if errors.As(err, &skip) {
+		spinner.StopInfo(s.label + " — skipped")
+
+		printer.PrintlnColored(colors.ColorYellow, "⚠ "+s.label+" skipped: "+skip.reason)
+
+		return s.label + " skipped: " + skip.reason, nil
+	}
+
 	if err != nil {
 		spinner.Stop(false, s.label+" — failed")
 

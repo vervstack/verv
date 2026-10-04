@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -99,6 +100,7 @@ func runCommandMenu(root *cobra.Command, basicProc processor.Processor, updateVe
 	header := menu.BuildHeader(basicProc.WD, basicProc.VervConfig)
 
 	header.UpdateVersion = updateVersion
+	header.SetupDone, header.SetupTotal = setupServer.SetupProgress(context.Background())
 
 	entry, err := menu.Select(menu.BuildEntries(root.Commands()), header)
 	if err != nil {

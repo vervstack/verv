@@ -1,6 +1,7 @@
 package setup
 
 import (
+	"context"
 	"os"
 	"runtime"
 
@@ -17,9 +18,13 @@ const (
 	UserFlag      = "user"
 	SshKeyUrlFlag = "ssh-key-url"
 
-	userNameEnv  = "USER_NAME"
-	userPwdEnv   = "USER_PWD"
-	sshKeyUrlEnv = "SSH_KEY_URL"
+	SysboxVersionFlag = "sysbox-version"
+
+	userNameEnv      = "USER_NAME"
+	userPwdEnv       = "USER_PWD"
+	sshKeyUrlEnv     = "SSH_KEY_URL"
+	sysboxVersionEnv = "SYSBOX_VERSION"
+	assumeYesEnv     = "SETUP_ASSUME_YES"
 
 	defaultUserName  = "deployer"
 	defaultSshKeyUrl = "https://github.com/alexskilled.keys"
@@ -40,13 +45,17 @@ func NewCommand(basicProc processor.Processor, deployCmd *cobra.Command) *cobra.
 
 	c := &cobra.Command{
 		Use:   "setup-server",
-		Short: "Prepares this server: deploy user, ssh, docker",
-		Long: "Creates the deploy user, enables public key ssh authentication, installs Docker " +
-			"and the user's ssh keys. Ubuntu only, must run as root",
+		Short: "Prepares this server: deploy user, ssh, docker, sysbox",
+		Long: "Creates the deploy user, enables public key ssh authentication, installs Docker, " +
+			"sysbox and the user's ssh keys. Ubuntu only, must run as root",
 
 		RunE: proc.run,
 
-		Annotations: map[string]string{"verv:emoji": "🖥️", "verv:group": menu.GroupVelez},
+		Annotations: map[string]string{
+			"verv:emoji":              "🖥️",
+			"verv:group":              menu.GroupVelez,
+			"verv:showsSetupProgress": "true",
+		},
 
 		Hidden: runtime.GOOS != "linux",
 
@@ -56,8 +65,24 @@ func NewCommand(basicProc processor.Processor, deployCmd *cobra.Command) *cobra.
 
 	c.Flags().String(UserFlag, defaultUserName, "name of the user to create (env USER_NAME)")
 	c.Flags().String(SshKeyUrlFlag, defaultSshKeyUrl, "url of the public ssh keys to authorize (env SSH_KEY_URL)")
+	c.Flags().String(SysboxVersionFlag, "", "sysbox version to install, empty for the latest (env SYSBOX_VERSION)")
 
 	return c
+}
+
+// SetupProgress reports how many setup-server steps are complete for the default (or env-configured)
+// deploy user; (0, 0) off Linux, where setup-server does not apply.
+func SetupProgress(ctx context.Context) (done, total int) {
+	if runtime.GOOS != "linux" {
+		return 0, 0
+	}
+
+	opts := server.Options{
+		UserName:  resolveValue(false, defaultUserName, os.Getenv(userNameEnv)),
+		SshKeyUrl: resolveValue(false, defaultSshKeyUrl, os.Getenv(sshKeyUrlEnv)),
+	}
+
+	return server.Progress(ctx, opts)
 }
 
 func (p *serverSetup) run(cmd *cobra.Command, _ []string) error {
@@ -105,19 +130,35 @@ func (p *serverSetup) resolveOptions(cmd *cobra.Command) (opts server.Options, a
 		return server.Options{}, false, rerrors.Wrap(err, "error reading ssh-key-url flag")
 	}
 
-	opts.UserName = resolveValue(cmd.Flags().Changed(UserFlag), userFlag, os.Getenv(userNameEnv))
-	opts.SshKeyUrl = resolveValue(cmd.Flags().Changed(SshKeyUrlFlag), keyUrlFlag, os.Getenv(sshKeyUrlEnv))
-	opts.Password = os.Getenv(userPwdEnv)
-
-	if opts.Password != "" {
-		return opts, false, nil
+	versionFlag, err := cmd.Flags().GetString(SysboxVersionFlag)
+	if err != nil {
+		return server.Options{}, false, rerrors.Wrap(err, "error reading sysbox-version flag")
 	}
 
-	isExistingUser := server.UserExists(opts.UserName)
+	opts.UserName = resolveValue(cmd.Flags().Changed(UserFlag), userFlag, os.Getenv(userNameEnv))
+	opts.SshKeyUrl = resolveValue(cmd.Flags().Changed(SshKeyUrlFlag), keyUrlFlag, os.Getenv(sshKeyUrlEnv))
 
-	opts.Password, aborted, err = promptPassword(p.io, opts.UserName, isExistingUser)
+	isVersionChanged := cmd.Flags().Changed(SysboxVersionFlag)
+
+	opts.SysboxVersion = resolveValue(isVersionChanged, versionFlag, os.Getenv(sysboxVersionEnv))
+	opts.Password = os.Getenv(userPwdEnv)
+
+	if opts.Password == "" {
+		isExistingUser := server.UserExists(opts.UserName)
+
+		opts.Password, aborted, err = promptPassword(p.io, opts.UserName, isExistingUser)
+		if err != nil {
+			return server.Options{}, false, rerrors.Wrap(err, "error prompting for password")
+		}
+
+		if aborted {
+			return opts, true, nil
+		}
+	}
+
+	opts, aborted, err = p.resolveSysbox(opts)
 	if err != nil {
-		return server.Options{}, false, rerrors.Wrap(err, "error prompting for password")
+		return server.Options{}, false, rerrors.Wrap(err, "error resolving sysbox options")
 	}
 
 	return opts, aborted, nil

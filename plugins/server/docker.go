@@ -18,6 +18,10 @@ const (
 	dockerRepoUrl  = "https://download.docker.com/linux/ubuntu"
 )
 
+func isDockerInstalled(_ context.Context, _ Options) bool {
+	return cmd.IsInstalled("docker")
+}
+
 func installDocker(ctx context.Context, _ Options) (string, error) {
 	if cmd.IsInstalled("docker") {
 		return "Docker already installed", nil

@@ -2,6 +2,7 @@ package menu
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 
@@ -16,6 +17,7 @@ const (
 	disabledSuffix       = " (needs a verv project)"
 	dockerDisabledSuffix = " (needs docker engine)"
 	optionIndent         = "  "
+	setupProgressFormat  = " [%d/%d setup steps complete]"
 
 	wordmark = `
 ██╗   ██╗███████╗██████╗ ██╗   ██╗
@@ -293,16 +295,7 @@ func groupedOptions(entries []Entry, groups []string, header Header) []huh.Optio
 				continue
 			}
 
-			label := optionIndent + e.Emoji + " " + e.Name
-			if e.RequiresProject && !header.IsVervProject {
-				label += disabledSuffix
-			}
-
-			if e.RequiresDocker && !header.IsDockerInstalled {
-				label += dockerDisabledSuffix
-			}
-
-			groupOptions = append(groupOptions, huh.NewOption(label, e.Cmd))
+			groupOptions = append(groupOptions, huh.NewOption(optionLabel(e, header), e.Cmd))
 		}
 
 		if len(groupOptions) == 0 {
@@ -314,6 +307,23 @@ func groupedOptions(entries []Entry, groups []string, header Header) []huh.Optio
 	}
 
 	return options
+}
+
+func optionLabel(e Entry, header Header) string {
+	label := optionIndent + e.Emoji + " " + e.Name
+	if e.RequiresProject && !header.IsVervProject {
+		label += disabledSuffix
+	}
+
+	if e.RequiresDocker && !header.IsDockerInstalled {
+		label += dockerDisabledSuffix
+	}
+
+	if e.ShowsSetupProgress && header.SetupTotal > 0 && header.SetupDone < header.SetupTotal {
+		label += fmt.Sprintf(setupProgressFormat, header.SetupDone, header.SetupTotal)
+	}
+
+	return label
 }
 
 // firstSelectable returns the first non-header option's value, so the picker

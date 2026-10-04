@@ -1,7 +1,9 @@
 package server
 
 import (
+	"bytes"
 	"context"
+	"crypto/sha256"
 	"errors"
 	"io"
 	"io/fs"
@@ -9,6 +11,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"strconv"
+	"syscall"
 
 	"go.redsock.ru/rerrors"
 )
@@ -21,6 +24,75 @@ const (
 	vervBinaryMode  = 0o750
 	rootUid         = 0
 )
+
+func isVervBinaryInstalled(_ context.Context, opts Options) bool {
+	info, err := os.Stat(vervInstallPath)
+	if err != nil || info.Mode().Perm() != vervBinaryMode {
+		return false
+	}
+
+	group, err := user.LookupGroup(vervGroup)
+	if err != nil {
+		return false
+	}
+
+	stat, ok := info.Sys().(*syscall.Stat_t)
+	if !ok || strconv.FormatUint(uint64(stat.Gid), 10) != group.Gid {
+		return false
+	}
+
+	if !isUserInGroups(opts.UserName, vervGroup) {
+		return false
+	}
+
+	return isInstalledBinaryCurrent()
+}
+
+func isInstalledBinaryCurrent() bool {
+	isInstalled, err := isRunningFromInstallPath()
+	if err != nil {
+		return false
+	}
+
+	if isInstalled {
+		return true
+	}
+
+	source, err := runningBinaryPath()
+	if err != nil {
+		return false
+	}
+
+	sourceSum, err := fileSha256(source)
+	if err != nil {
+		return false
+	}
+
+	installedSum, err := fileSha256(vervInstallPath)
+	if err != nil {
+		return false
+	}
+
+	return bytes.Equal(sourceSum, installedSum)
+}
+
+func fileSha256(path string) ([]byte, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, rerrors.Wrap(err, "error opening "+path)
+	}
+
+	defer func() { _ = file.Close() }()
+
+	hash := sha256.New()
+
+	_, err = io.Copy(hash, file)
+	if err != nil {
+		return nil, rerrors.Wrap(err, "error hashing "+path)
+	}
+
+	return hash.Sum(nil), nil
+}
 
 func installVervBinary(_ context.Context, opts Options) (string, error) {
 	err := run("groupadd", "-f", vervGroup)
