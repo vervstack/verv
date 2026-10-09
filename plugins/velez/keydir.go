@@ -14,7 +14,7 @@ import (
 const (
 	DefaultKeyPath   = "/opt/velez"
 	keyDirGroup      = "verv"
-	keyDirSharedMode = 0o770
+	KeyDirSharedMode = 0o770
 	keyDirPlainMode  = 0o755
 	rootUid          = 0
 	homeLinkName     = "velez"
@@ -59,7 +59,7 @@ func PrepareKeyDir(keyPath string) error {
 		return rerrors.Wrap(err, "error changing key dir owner")
 	}
 
-	err = os.Chmod(keyPath, keyDirSharedMode)
+	err = os.Chmod(keyPath, KeyDirSharedMode)
 	if err != nil {
 		return rerrors.Wrap(err, "error setting key dir mode")
 	}

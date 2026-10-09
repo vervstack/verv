@@ -10,6 +10,7 @@ import (
 	"go.vervstack.ru/verv/internal/cmd"
 	"go.vervstack.ru/verv/internal/io"
 	"go.vervstack.ru/verv/internal/io/colors"
+	"go.vervstack.ru/verv/plugins/velez"
 )
 
 const (
@@ -120,6 +121,12 @@ func buildSteps(opts Options) []step {
 			check:     isVervBinaryInstalled,
 			doneLabel: "verv already installed to " + vervInstallPath,
 			run:       installVervBinary,
+		},
+		{
+			label:     "Preparing " + velez.DefaultKeyPath + " for Velez keys",
+			check:     isVelezKeyDirSetUp,
+			doneLabel: velez.DefaultKeyPath + " already prepared for Velez keys",
+			run:       prepareVelezKeyDir,
 		},
 		{
 			label:     "Installing sysbox",
