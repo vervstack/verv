@@ -2,7 +2,13 @@
 set -e
 
 REPO="vervstack/verv"
-INSTALL_DIR="${HOME}/.local/bin"
+if [ "$(id -u)" -eq 0 ]; then
+    IS_ROOT=1
+    INSTALL_DIR="/usr/local/bin"
+else
+    IS_ROOT=0
+    INSTALL_DIR="${HOME}/.local/bin"
+fi
 BIN_NAME="verv"
 
 uname_os=$(uname -s)
@@ -57,7 +63,7 @@ else
     exit 1
 fi
 
-chmod +x "$TMP_FILE"
+chmod 755 "$TMP_FILE"
 
 mkdir -p "$INSTALL_DIR"
 
@@ -70,6 +76,10 @@ if ! mv "$TMP_FILE" "$DEST"; then
 fi
 
 echo "Installed ${BIN_NAME} to ${DEST}. Run '${BIN_NAME} --version' to confirm."
+
+if [ "$IS_ROOT" -eq 1 ]; then
+    echo "Next: run '${BIN_NAME} setup-server' to create the deploy user and restrict ${BIN_NAME} to the ${BIN_NAME} group."
+fi
 
 case ":${PATH}:" in
     *":${INSTALL_DIR}:"*)

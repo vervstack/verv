@@ -21,8 +21,7 @@ const (
 	KeyPathFlag = "key-path"
 	DebugFlag   = "debug"
 
-	defaultPort    = 53890
-	defaultKeyPath = "~/velez"
+	defaultPort = 53890
 )
 
 var errUnsupportedPlatform = rerrors.New("deploy-velez requires linux (use --debug to override)")
@@ -61,7 +60,11 @@ func NewCommand(basicProc processor.Processor) *cobra.Command {
 	}
 
 	c.Flags().IntP(PortFlag, "p", defaultPort, "host port to bind the Velez node to")
-	c.Flags().String(KeyPathFlag, defaultKeyPath, "path on this machine to store Velez's keys")
+	c.Flags().String(
+		KeyPathFlag,
+		velez.DefaultKeyPath,
+		"path on this machine to store Velez's keys (default /opt/velez, symlinked from ~/velez)",
+	)
 	c.Flags().Bool(DebugFlag, false, "allow running outside Linux, for local dev/testing")
 
 	return c
@@ -109,9 +112,19 @@ func (p *velezDeploy) run(cmd *cobra.Command, _ []string) error {
 		return nil
 	}
 
+	err = velez.PrepareKeyDir(keyPath)
+	if err != nil {
+		return rerrors.Wrap(err, "error preparing key dir")
+	}
+
 	err = velez.Deploy(p.io, version, port, keyPath)
 	if err != nil {
 		return rerrors.Wrap(err, "error deploying velez")
+	}
+
+	err = velez.LinkInHome(keyPath)
+	if err != nil {
+		return rerrors.Wrap(err, "error linking key dir into home")
 	}
 
 	return nil

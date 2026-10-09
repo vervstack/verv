@@ -5,7 +5,7 @@
 ```shell
 wget -qO- https://github.com/vervstack/verv/releases/latest/download/install.sh | bash
 ```
-Detects your OS/arch (Linux/macOS, amd64/arm64) and installs the matching binary to `~/.local/bin/verv` (no sudo needed).
+Detects your OS/arch (Linux/macOS, amd64/arm64) and installs the matching binary to `~/.local/bin/verv` (no sudo needed). Run as root, it installs to `/usr/local/bin/verv` instead; `verv setup-server` then restricts it to the `verv` group.
 
 Or, with a Go toolchain:
 ```shell
