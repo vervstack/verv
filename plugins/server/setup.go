@@ -98,6 +98,12 @@ func buildSteps(opts Options) []step {
 			run:       installBasePackages,
 		},
 		{
+			label:     "Installing vim",
+			check:     isVimSetUp,
+			doneLabel: "vim already installed and configured",
+			run:       installVim,
+		},
+		{
 			label:     "Installing Docker",
 			check:     isDockerInstalled,
 			doneLabel: "Docker already installed",
