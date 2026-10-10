@@ -92,6 +92,35 @@ func confirmDeploy() (isConfirmed bool, aborted bool, err error) {
 	return isConfirmed, false, nil
 }
 
+// confirmSysboxInstall asks whether to install sysbox at all, defaulting to yes. aborted is true if the user
+// aborted (Ctrl+C/Esc).
+func confirmSysboxInstall(printer io.IO) (isConfirmed bool, aborted bool, err error) {
+	isConfirmed = true
+
+	confirm := huh.NewConfirm().
+		Title("Install sysbox?").
+		Affirmative("Yes").
+		Negative("No").
+		Value(&isConfirmed)
+
+	form := huh.NewForm(huh.NewGroup(confirm)).WithShowHelp(false)
+
+	err = form.Run()
+	if err != nil {
+		if errors.Is(err, huh.ErrUserAborted) {
+			return false, true, nil
+		}
+
+		return false, false, rerrors.Wrap(err, "error running sysbox install confirmation")
+	}
+
+	if !isConfirmed {
+		printer.PrintlnColored(colors.ColorGreen, stepDone+" Install sysbox: no")
+	}
+
+	return isConfirmed, false, nil
+}
+
 // promptSysboxVersion asks for a sysbox version with the newest ones as Tab suggestions; an empty answer
 // means the latest. versions is newest first and must not be empty.
 func promptSysboxVersion(printer io.IO, versions []string) (version string, aborted bool, err error) {

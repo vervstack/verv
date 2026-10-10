@@ -15,15 +15,31 @@ const (
 	fetchingVersionsLabel = "Fetching sysbox versions from GitHub"
 )
 
-// resolveSysbox fills the options only the sysbox step needs. Both prompts are skipped once sysbox is set up.
+// resolveSysbox fills the options only the sysbox step needs. All prompts are skipped once sysbox is set up
+// or skipped.
 func (p *serverSetup) resolveSysbox(opts server.Options) (server.Options, bool, error) {
 	ctx := context.Background()
 
-	if server.IsSysboxSetUp(ctx) {
+	if opts.IsSysboxSkipped || server.IsSysboxSetUp(ctx) {
 		return opts, false, nil
 	}
 
 	if opts.SysboxVersion == "" && isStdinTerminal() {
+		isConfirmed, aborted, err := confirmSysboxInstall(p.io)
+		if err != nil {
+			return server.Options{}, false, rerrors.Wrap(err, "error confirming sysbox install")
+		}
+
+		if aborted {
+			return opts, true, nil
+		}
+
+		if !isConfirmed {
+			opts.IsSysboxSkipped = true
+
+			return opts, false, nil
+		}
+
 		version, aborted, err := p.pickSysboxVersion(ctx)
 		if err != nil {
 			return server.Options{}, false, rerrors.Wrap(err, "error picking sysbox version")

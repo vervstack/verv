@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"runtime"
+	"strconv"
 
 	"github.com/spf13/cobra"
 	"go.redsock.ru/rerrors"
@@ -19,11 +20,13 @@ const (
 	SshKeyUrlFlag = "ssh-key-url"
 
 	SysboxVersionFlag = "sysbox-version"
+	SkipSysboxFlag    = "skip-sysbox"
 
 	userNameEnv      = "USER_NAME"
 	userPwdEnv       = "USER_PWD"
 	sshKeyUrlEnv     = "SSH_KEY_URL"
 	sysboxVersionEnv = "SYSBOX_VERSION"
+	skipSysboxEnv    = "SKIP_SYSBOX"
 	assumeYesEnv     = "SETUP_ASSUME_YES"
 
 	defaultUserName  = "deployer"
@@ -66,6 +69,7 @@ func NewCommand(basicProc processor.Processor, deployCmd *cobra.Command) *cobra.
 	c.Flags().String(UserFlag, defaultUserName, "name of the user to create (env USER_NAME)")
 	c.Flags().String(SshKeyUrlFlag, defaultSshKeyUrl, "url of the public ssh keys to authorize (env SSH_KEY_URL)")
 	c.Flags().String(SysboxVersionFlag, "", "sysbox version to install, empty for the latest (env SYSBOX_VERSION)")
+	c.Flags().Bool(SkipSysboxFlag, false, "do not install sysbox (env SKIP_SYSBOX)")
 
 	return c
 }
@@ -135,12 +139,18 @@ func (p *serverSetup) resolveOptions(cmd *cobra.Command) (opts server.Options, a
 		return server.Options{}, false, rerrors.Wrap(err, "error reading sysbox-version flag")
 	}
 
+	skipFlag, err := cmd.Flags().GetBool(SkipSysboxFlag)
+	if err != nil {
+		return server.Options{}, false, rerrors.Wrap(err, "error reading skip-sysbox flag")
+	}
+
 	opts.UserName = resolveValue(cmd.Flags().Changed(UserFlag), userFlag, os.Getenv(userNameEnv))
 	opts.SshKeyUrl = resolveValue(cmd.Flags().Changed(SshKeyUrlFlag), keyUrlFlag, os.Getenv(sshKeyUrlEnv))
 
 	isVersionChanged := cmd.Flags().Changed(SysboxVersionFlag)
 
 	opts.SysboxVersion = resolveValue(isVersionChanged, versionFlag, os.Getenv(sysboxVersionEnv))
+	opts.IsSysboxSkipped = resolveBool(cmd.Flags().Changed(SkipSysboxFlag), skipFlag, os.Getenv(skipSysboxEnv))
 	opts.Password = os.Getenv(userPwdEnv)
 
 	if opts.Password == "" {
@@ -174,4 +184,18 @@ func resolveValue(isFlagChanged bool, flagValue, envValue string) string {
 	}
 
 	return flagValue
+}
+
+// resolveBool mirrors resolveValue for a bool flag; an env value strconv.ParseBool rejects counts as unset.
+func resolveBool(isFlagChanged, flagValue bool, envValue string) bool {
+	if isFlagChanged {
+		return flagValue
+	}
+
+	envBool, err := strconv.ParseBool(envValue)
+	if err != nil {
+		return flagValue
+	}
+
+	return envBool
 }

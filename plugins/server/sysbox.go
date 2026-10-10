@@ -35,6 +35,8 @@ const (
 	minKernelMajor = 5
 	minKernelMinor = 12
 
+	declinedByUserReason = "declined by the user"
+
 	sysboxDownloadTimeout = 10 * time.Minute
 	dockerRestartTimeout  = 2 * time.Minute
 	runtimeWaitTimeout    = 30 * time.Second
@@ -140,6 +142,10 @@ func installSysbox(ctx context.Context, opts Options) (string, error) {
 
 // checkSysboxPreflight returns the dpkg architecture, or a skipError when sysbox cannot be installed here.
 func checkSysboxPreflight(ctx context.Context, opts Options) (arch string, err error) {
+	if opts.IsSysboxSkipped {
+		return "", newSkipError(declinedByUserReason)
+	}
+
 	arch, err = checkSysboxHost()
 	if err != nil {
 		return "", rerrors.Wrap(err)
