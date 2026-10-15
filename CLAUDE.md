@@ -49,6 +49,8 @@ Each subcommand embeds `processor.Processor` which holds the three shared primit
 
 **`plugins/project/go_project/patterns/generators/`** — code generators that produce Go source for config structs, app structs, gRPC servers, Dockerfiles, etc.
 
+**`cmd/deployment/deploy` + `plugins/deployment/`** — `verv deploy`. Interactive mode shows a node picker (nodes live in `~/.verv/nodes.yaml` and the gitignored `.verv/nodes.local.yaml`); CI mode (`CI=true` or no TTY) never prompts and reads `VERV_NODE_URL`, `VERV_NODE_SECRET` and `--environment`. Pipeline: probe node -> registry credentials -> buildx push -> `POST /api/service/deploy/create`. Velez pulls the image and reads `/verv` from it, so the project Dockerfile must `COPY .verv /verv`.
+
 **`internal/config/`** — `VervConfig` loaded from three sources merged in precedence order: built-in embedded `verv.yaml` → environment variables (`VERV_*`) → external config file. Config is a package-level singleton initialized in `init()`.
 
 ### Adding a new `add` dependency

@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"go.redsock.ru/toolbox/closer"
 
+	deployProject "go.vervstack.ru/verv/cmd/deployment/deploy"
 	addProject "go.vervstack.ru/verv/cmd/project/add"
 	initProject "go.vervstack.ru/verv/cmd/project/init"
 	tidyProject "go.vervstack.ru/verv/cmd/project/tidy"
@@ -64,6 +65,7 @@ func run() int {
 	root.AddCommand(initProject.NewCommand(basicProc))
 	root.AddCommand(tidyProject.NewCommand(basicProc))
 	root.AddCommand(addProject.NewCommand(basicProc))
+	root.AddCommand(deployProject.NewCommand(basicProc))
 	deployVelezCmd := deployVelez.NewCommand(basicProc)
 	upgradeVelezCmd := deployVelez.NewUpgradeCommand(basicProc)
 	setupServerCmd := setupServer.NewCommand(basicProc, deployVelezCmd)
