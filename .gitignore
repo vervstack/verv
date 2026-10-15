@@ -38,3 +38,5 @@ graphify-out/*.graphml
 graphify-out/cypher.txt
 
 /tests/test_proj/
+
+CLAUDE.local.md
