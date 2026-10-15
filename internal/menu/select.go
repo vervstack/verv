@@ -36,9 +36,10 @@ var (
 	// groupLabels names each picker section header, in GroupProject's default
 	// display order (headless Linux swaps this — see orderedGroups).
 	groupLabels = map[string]string{
-		GroupProject:  "Project",
-		GroupVelez:    "Velez node",
-		GroupSettings: "Settings",
+		GroupProject:    "Project",
+		GroupDeployment: "Deployment",
+		GroupVelez:      "Velez node",
+		GroupSettings:   "Settings",
 	}
 
 	headerStyle   = lipgloss.NewStyle().Bold(true)
@@ -274,10 +275,10 @@ func isSelectNavKey(msg tea.Msg) bool {
 // the Velez section leads; everywhere else Project leads. Settings always comes last.
 func orderedGroups(headlessLinux bool) []string {
 	if headlessLinux {
-		return []string{GroupVelez, GroupProject, GroupSettings}
+		return []string{GroupVelez, GroupProject, GroupDeployment, GroupSettings}
 	}
 
-	return []string{GroupProject, GroupVelez, GroupSettings}
+	return []string{GroupProject, GroupDeployment, GroupVelez, GroupSettings}
 }
 
 // groupedOptions renders entries as huh options, section by section in the

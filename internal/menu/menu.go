@@ -22,11 +22,12 @@ const (
 
 	defaultEntryEmoji = "▫️"
 
-	// GroupProject, GroupVelez and GroupSettings are the picker section keys. A command with
-	// no verv:group annotation defaults to GroupProject.
-	GroupProject  = "project"
-	GroupVelez    = "velez"
-	GroupSettings = "settings"
+	// GroupProject, GroupDeployment, GroupVelez and GroupSettings are the picker section keys.
+	// A command with no verv:group annotation defaults to GroupProject.
+	GroupProject    = "project"
+	GroupDeployment = "deployment"
+	GroupVelez      = "velez"
+	GroupSettings   = "settings"
 )
 
 // Entry describes a single top-level command as presented in the interactive

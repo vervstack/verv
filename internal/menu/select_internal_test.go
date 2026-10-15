@@ -22,8 +22,8 @@ func Test_OrderedGroups_Scenarios(t *testing.T) {
 		headlessLinux bool
 		want          []string
 	}{
-		{"headless linux leads with velez", true, []string{GroupVelez, GroupProject, GroupSettings}},
-		{"otherwise leads with project", false, []string{GroupProject, GroupVelez, GroupSettings}},
+		{"headless linux leads with velez", true, []string{GroupVelez, GroupProject, GroupDeployment, GroupSettings}},
+		{"otherwise leads with project", false, []string{GroupProject, GroupDeployment, GroupVelez, GroupSettings}},
 	}
 
 	for _, tc := range cases {
